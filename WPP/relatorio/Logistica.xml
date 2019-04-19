@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<RelatorioProperties>
+	<Relatorios>
+		<Relatorio name="RelatorioCartaoRecarga" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="PININICIAL"/>
+				<param mapName="PINFINAL"/>
+				<statement>
+					SELECT ID_RECARGA PIN_CARTAO,
+       					   IDT_MSISDN MSISDN,
+                           to_char(DAT_ORIGEM , 'dd/mm/yyyy hh24:mi:ss') DATA_HORA,
+                           VLR_PAGO VALOR_PAGO
+                      FROM TBL_REC_RECARGAS
+                     WHERE TIP_TRANSACAO = '02000'
+                       AND ID_RECARGA &gt;= ?
+                       AND ID_RECARGA &lt;= ?
+                       ORDER BY ID_RECARGA
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="PIN_CARTAO"		showName="PIN_CARTAO"				type="STRING"/>
+					<campo name="MSISDN"			showName="MSISDN"					type="STRING"/>
+					<campo name="DATA_HORA"			showName="DATA_HORA"				type="STRING"/>
+					<campo name="VALOR_PAGO"		showName="VALOR_PAGO"				type="STRING"/>
+				</registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="RelatorioSubidaTSD" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="MSISDN"/>
+				<param mapName="IMEI"/>
+				<param mapName="ICCID"/>
+				<statement>
+					SELECT NU_MSISDN MSISDN,
+          				   NU_IMEI IMEI,
+                           NU_ICCID ICCID,
+                           to_char(DT_INCLUSAO, 'dd/mm/yyyy hh24:mi:ss') DATA           
+                      FROM hsid.hsid_cliente
+                     WHERE NU_MSISDN like ? 
+                       AND NU_IMEI like ?
+                       AND NU_ICCID like ?
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="MSISDN"		showName="MSISDN"			type="STRING"/>
+					<campo name="IMEI"			showName="IMEI"				type="STRING"/>
+					<campo name="ICCID"			showName="ICCID"			type="STRING"/>
+					<campo name="DATA"			showName="DATA"				type="STRING"/>
+				</registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="RelPlanoTerceiro" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DDD"/>
+				<statement>
+					SELECT TAAT_MSISDN as MSISDN,
+					       TAPT_DESCRICAO as PLANO_TERCEIRO
+					  FROM TBL_APR_ASSINANTE_TERCEIRO,
+					       TBL_APR_PLANO_TERCEIRO
+					 WHERE taat_plano_terceiro = tapt_plano_terceiro
+					   AND TAAT_MSISDN LIKE '55'||?||'%'
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="MSISDN"			showName="MSISDN"			type="STRING"/>
+					<campo name="PLANO_TERCEIRO"	showName="PLANO_TERCEIRO"	type="STRING"/>
+				</registro>
+			</dados>
+		</Relatorio>
+	</Relatorios>
+</RelatorioProperties>

@@ -1,0 +1,19 @@
+#parse("menuVertical.vm")
+<h6><b>Validação de recarga via banco</b></h6>
+<table width="100%">
+	<tr>
+		<td> Código do Assinante</td>
+		<td>$recargaBancoForm.msisdn</td>
+	</tr>
+	<tr>
+		<td> Valor</td>
+		<td>$recargaBancoForm.valor</td>
+	</tr>
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$recargaBancoForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

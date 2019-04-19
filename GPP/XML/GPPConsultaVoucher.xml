@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<GPPConsultaVoucher>
+	<CodigoRetorno> </CodigoRetorno>
+	<NumeroVoucher> </NumeroVoucher>
+	<CodigoStatusVoucher></CodigoStatusVoucher>
+	<DescricaoStatusVoucher> </DescricaoStatusVoucher>
+	<ValorDeFace> </ValorDeFace>
+	<UsadoPor> </UsadoPor>
+	<UltimaAtualizacao> </UltimaAtualizacao>
+	<MotivoBloqueio> </MotivoBloqueio>
+	<DescricaoMotivoBloqueio> </DescricaoMotivoBloqueio>
+</GPPConsultaVoucher>

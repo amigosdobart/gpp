@@ -1,0 +1,31 @@
+#parse("menuVertical.vm")
+<h6><b>Ativação</b></h6>
+<table width="100%">
+<tr>
+		<td> Código do Assinante</td>
+		<td>$aprovisionamentoAtivacaoForm.msisdn</td>
+	</tr>
+	<tr>
+		<td> Simcard / IMSI</td>
+		<td>$aprovisionamentoAtivacaoForm.simcard</td>
+	</tr>
+	<tr>
+		<td> Plano de Preço</td>
+		<td>$aprovisionamentoAtivacaoForm.planoPreco</td>
+	</tr>
+	<tr>
+		<td> Crédito Inicial</td>
+		<td>$aprovisionamentoAtivacaoForm.creditoInicial</td>
+	</tr>
+	<tr>
+		<td> Idioma</td>
+		<td>$aprovisionamentoAtivacaoForm.idioma</td>
+	</tr>
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$aprovisionamentoAtivacaoForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

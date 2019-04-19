@@ -1,0 +1,15 @@
+#parse("menuVertical.vm")
+<h6><b>Bônus Toma Lá Dá Cá</b></h6>
+<table width="100%">
+    <tr>
+		<td>&nbsp;Data de Execução</td>
+		<td>$procBatchEnvioBonusCSP14Form.dataExecucao</td>
+	</tr>
+	<tr>
+		<td><b>&nbsp;Resultado:</b> </td>
+		<td>$procBatchEnvioBonusCSP14Form.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

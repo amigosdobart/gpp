@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+  "http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+    <card id="FLECHADA">
+        <p>
+            <input title="Nome:" type="text" name="NOME" emptyok="false"/>
+            <input title="Numero:" type="text" name="NUMERO" emptyok="false" format="*N" maxlength="11"/>
+            <sendsm>
+                <destaddress value="+889"/>
+                <userdata>FLECHADA $(NOME) $(NUMERO)</userdata>
+            </sendsm>  
+        </p>
+    </card>
+</wml>

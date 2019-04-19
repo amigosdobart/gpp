@@ -1,0 +1,9 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+<!-- DTD PARA EXTRATO --> 
+<!ELEMENT extrato (evento+) >
+<!ELEMENT evento ( numeroLinha, descricao, data, hora ) >
+<!ELEMENT numeroLinha ( #PCDATA ) >
+<!ELEMENT data ( #PCDATA ) >
+<!ELEMENT hora ( #PCDATA ) >
+<!ELEMENT descricao ( #PCDATA ) >
+

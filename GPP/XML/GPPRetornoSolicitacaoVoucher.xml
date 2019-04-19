@@ -1,0 +1,21 @@
+<?xml version=\"1.0\"?>
+<root>
+	<cabecalho>
+		<interface></interface>
+		<remessa></remessa>
+		<ano_operacao></ano_operacao>
+		<cod_atividade></cod_atividade>
+		<cod_ativacao></cod_ativacao>
+		<cod_motivo></cod_motivo>
+		<numero_caixa></numero_caixa>
+		<num_inicial_lote></num_inicial_lote>
+		<num_final_lote></num_final_lote>
+	</cabecalho>
+	<detalhe>
+		<cod_ativacao></cod_ativacao>
+		<numero_caixa></numero_caixa>
+		<num_inicial_lote></num_inicial_lote>
+		<num_final_lote></num_final_lote>
+		<msg_retorno></msg_retorno>
+	</detalhe>
+</root>

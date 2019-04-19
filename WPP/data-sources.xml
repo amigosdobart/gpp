@@ -1,0 +1,16 @@
+<?xml version="1.0" standalone="yes"?>
+<!DOCTYPE data-sources PUBLIC "Orion data-sources" "http://xmlns.oracle.com/ias/dtds/data-sources-9_04.dtd">
+<data-sources>
+	<data-source 
+		class="com.evermind.sql.DriverManagerDataSource" 
+		name="WPP_DS" 
+		location="jdbc/WPP_DS" 
+		xa-location="jdbc/xa/WPP_XADS" 
+		ejb-location="jdbc/WPP_DS" 
+		connection-driver="oracle.jdbc.driver.OracleDriver" 
+		username="pppdev" 
+		password="pppdev" 
+		url="jdbc:oracle:oci8:@brtdev2" 
+		inactivity-timeout="30"
+	/>
+</data-sources>

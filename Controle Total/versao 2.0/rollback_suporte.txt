@@ -1,0 +1,12 @@
+Procedimento de rollback:
+
+1) Finalizar o servico do ServCel, através do Cluster Administrator;
+
+2) Restaurar as copias de seguranca dos diretorios '\ServCel\Aplic'
+    e '\ServCel\Config' (realizadas no item 1 do procedimento de
+    atualizacao);
+
+3) Reiniciar o servico do ServCel, através do Cluster Administrator;
+
+
+O telefone do suporte Servcel 24x7 e' 11-9167-2339.

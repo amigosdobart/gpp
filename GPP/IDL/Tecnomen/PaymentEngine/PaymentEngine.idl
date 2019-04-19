@@ -1,0 +1,244 @@
+/* $Id: PaymentEngine.idl,v 1.33 2004/09/01 13:12:31 gerardon Exp $ */
+
+//
+// NAME		: PaymentEngine.idl
+//
+// CREATED BY	: Attila Madarasz
+// DATE 	: 21/01/2003
+//
+// COPYRIGHT	: 
+//
+// DESCRIPTION	: 
+// This interface describes the PaymentEngine and related IDL intefaces
+//
+#ifndef __PAYMENTENGINE_IDL__
+#define __PAYMENTENGINE_IDL__
+
+#include <Exceptions.idl>
+#include <Types.idl>
+#include <JobMgr.idl>
+#include <TINCdefs.idl>
+#include <TPEDefs.idl>
+
+#ifdef _TINC_MODULE
+module TINC {
+#endif //_TINC_MODULE
+
+// define a container for returned account data
+struct PE_AccountDetails {
+    short       result;		// as described below
+    short       transferResult;	// detailed result code
+    long        accountBalance;
+    short       serviceStatus;
+    short       accountStatus;
+    TDateTime   expiryDate;
+    short       profileId;
+    long        subOptions;
+    TDateTime   ivrQueryExpiryDate;
+    short       ivrQueryCounter;
+    long        amountBalance;	// balance un-applied
+    TDateTime   lastRechargeDate;// TINVER_PP4360
+    long        periodicBalance;// TINVER_PP4360
+    TDateTime   periodicExpiry;	// TINVER_PP4360
+    long        bonusBalance;	// TINVER_PP4360
+    TDateTime   bonusExpiry;	// TINVER_PP4360
+    long        smBalance;	// TINVER_PP4360
+    TDateTime   smExpiry;	// TINVER_PP4360
+    long        dataBalance;	// TINVER_PP4360
+    TDateTime   dataExpiry;	// TINVER_PP4360
+};
+
+/////////////////////////////////////////////////////////
+//
+// PaymentEngine IDL Interface
+//
+// The PaymentEngine interface implements all charging and
+// recharging operations that are defined for the Tecnomen
+// IN system
+//
+/////////////////////////////////////////////////////////
+
+interface PaymentEngine {
+
+
+    /////////////////////////////////////////////////////////
+    //
+    //  - Defined result values are as follows:
+    //
+    //  - 0  - Successful
+    //  - 1  - Incorrect account number.
+    //  - 2  - Account in an invalid state.
+    //  - 3  - Incorrect amount.
+    //  - 4  - Fatal Error
+    //  - 5  - Voucher Queue Full
+    //  - 6  - Service Status Inactive
+    //  - 7  - ServiceOutage
+    //  - 8  - Invalid Voucher
+    //  - 9  - Voucher Not Found
+    //  - 10  - Error Sending a CDR or Mediation File
+    //  - 11  - Successful, amountBalance is non-zero (directDebitTransfer)
+    //
+    /////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL ATTRIBUTES
+    //
+    /////////////////////////////////////////////////////////
+    readonly attribute string<34> version;
+
+    // the engineId is used by the releasePaymentEngine operation
+    // as a secondary key
+    readonly attribute long	engineId;
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL OPERATIONS
+    //
+    /////////////////////////////////////////////////////////
+
+    // A generic 'sequence-of-ANY' type operation that can call
+    // any underlying charging/recharging type operation.
+    // Used to update any of the Subscribers Account Balances
+    long fundTransfer ( in tincSeq pSeq, out tincSeq dSeq )
+	  raises (Pi_exception);
+
+    // Used to query the Subscribers Account Balance
+    PE_AccountDetails accountQuery ( in string<SUBID_LENGTH> subid, in long operatorId )
+	  raises (Pi_exception);
+
+    // Used to update the subscribers accountStatus and expiryDate.  If the accountStatus
+    // is being updated from Normal (2) to RechargeExpired (3), then the subscribers
+    // accountBalance will be reset to 0 balance.
+    PE_AccountDetails accountUpdate( in string<SUBID_LENGTH> subid,
+                        in short accountStatus,
+                        in TDateTime expiryDate,
+                        in short transactionType,
+                        in long operatorId
+                        )
+          raises (Pi_exception);
+
+    // Synchronous voucherRecharge operation, should be used for Tecnomen
+    // vouchers only, due to blocking nature of call
+    PE_AccountDetails voucherRecharge( in string<SUBID_LENGTH> subid,
+			in string<VOUCHER_NUM> voucher,
+			in long operatorId)
+	  raises (Pi_exception);
+
+    // Synchronous cardRecharge operation, should be used for Tecnomen
+    // cards only, due to blocking nature of call
+    PE_AccountDetails cardRecharge( in string<SUBID_LENGTH> subid,
+			in string<CARD_NUM> cardNumber,
+			in string<CARD_TYPE> cardType,
+			in TDateTime cardExpiry,
+			in long amount,
+			in string<CREDIT_AUTH> authCode,
+			in long operatorId)
+	  raises (Pi_exception);
+
+    // Used to transfer funds to or from the subscribers account.  This
+    // operation is compatable with VoucherType Tariffing (VTT), and thus the
+    // amount values must be defined in VoucherDenomination when recharging.
+    PE_AccountDetails onlineFundTransfer( in string<SUBID_LENGTH> subid,
+			in long amount,
+			in short expiryTimer, 
+			in short transactionType,
+			in long operatorId
+			)
+	  raises (Pi_exception);
+
+    // Used to transfer funds to or from the subscribers account.  This
+    // operation is independent of VTT and thus any monetary value, both +ve
+    // and -ve within the normal bounds permitted by the system, can be used.
+    PE_AccountDetails directFundTransfer( in string<SUBID_LENGTH> subid,
+			in long amount,
+			in short rechargeDiscountRate,
+			in TDateTime expiryDate,
+			in short transactionType,
+			in long operatorId
+			)
+	  raises (Pi_exception);
+
+    // This operation implements the Autocontrol feature.  
+    PE_AccountDetails periodFundTransfer( in string<SUBID_LENGTH> subid,
+			in long amount,
+			in TDateTime expiryDate,
+			in long usedAmount,
+			in short transactionType,
+			in long operatorId
+			)
+	  raises (Pi_exception);
+
+    // This operation is used specifically for debitting an account.  The
+    // operation debits the account with the given 'amount' until zero balance
+    // is reached.  Any remaining unchargeable amount is stored in the 
+    // PE_AccountDetails.amountBalance field.
+    PE_AccountDetails directDebitTransfer( in string<SUBID_LENGTH> subid,
+			in long amount,
+			in short transactionType,
+			in long operatorId
+			)
+	  raises (Pi_exception);
+
+    // This operation is used specifically for applying periodic fees to an account.
+    // The operation calculates the fee to be credited and applys the fee.
+    PE_AccountDetails applyPeriodicFee( in string<SUBID_LENGTH> subid,
+			in string<25> methodName,
+			in long operatorId
+                        )
+          raises (Pi_exception);
+
+};
+
+/////////////////////////////////////////////////////////
+//
+// PaymentEngine_Factory IDL Interface
+//
+// This is a public interface given to the external interface
+// upon successful validation (via the authServer)
+//
+/////////////////////////////////////////////////////////
+
+interface PaymentEngine_Factory {
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL Attributes
+    //
+    /////////////////////////////////////////////////////////
+
+    // version of this interface
+    readonly attribute string<40>	version;
+
+    // get/set Trace level on the paymentEngine
+    // 0 value turns tracing off
+    // Values between 1-6 set increasing verbosity
+    //
+    // For internal use only
+    //
+    attribute short			traceLevel;
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL OPERATIONS
+    //
+    /////////////////////////////////////////////////////////
+
+    // call the relevant InitialisationMgr
+    boolean reInit () 
+	    raises (Pi_exception);
+
+    // to get a connection to a PaymentEngine
+    PaymentEngine getPaymentEngine (in long key) 
+	    raises (Pi_exception);
+
+    // release the connection to the PaymentEngine
+    boolean releasePaymentEngine (in long key, in long engineId) 
+	    raises (Pi_exception);
+};
+
+#ifdef _TINC_MODULE
+};
+#endif //_TINC_MODULE
+
+#endif

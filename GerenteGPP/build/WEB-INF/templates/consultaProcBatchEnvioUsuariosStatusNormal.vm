@@ -1,0 +1,15 @@
+#parse("menuVertical.vm")
+<h6><b>Envio de Usuários em Status Normal</b></h6>
+<table width="100%">
+    <tr>
+		<td> Data de Execução</td>
+		<td>$procBatchEnvioUsuariosStatusNormalForm.dataExecucao</td>
+	</tr>
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$procBatchEnvioUsuariosStatusNormalForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

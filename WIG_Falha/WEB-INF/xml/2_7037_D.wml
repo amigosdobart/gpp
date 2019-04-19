@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+  "http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+    <card id="EROS">
+        <p>
+            <select title="eros.chat" name="msg">
+                <option value="38">Cadastrar</option>
+                <option value="39">Procurar</option>
+                <option value="40">Enviar Msg</option>
+                <option value="41">Mural</option>
+                <option value="42">Encontro Esc</option>
+                <option value="43">Curriculo</option>
+                <option value="44">Entrar/Sair</option>
+            </select>
+        </p>
+    <do type="accept">
+        <go href="!WIGC!?bts=2&amp;btc=70$(msg)"/>
+    </do>
+    </card>
+</wml>

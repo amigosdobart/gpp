@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+  <card>
+    <p>
+    Super oferta do Submarino de fone de ouvido sem fio para seu celular. Clique Ok.
+   </p>
+   <p>
+    <select title="Submarino" name="msg">
+        <option onpick="#of">Ver oferta</option>
+        <option onpick="#ds">Disk Submarino</option> 
+      </select>
+    </p>
+</card>
+
+  <card id="of">
+    <p>
+    Em instantes voce recebera uma mensagem com a promocao. Clique OK e selecione a marca do seu celular.
+      <select title="Marca" name="fab">
+        <option value="6">Motorola</option>
+        <option value="7">Nokia</option>
+        <option value="8">Siemens</option>
+        <option value="9">Sony Ericsson</option>
+      </select>
+    <go enterwait="false" href="!CWIG!/msgPromocional?pr=$(fab)&amp;bts=2&amp;btc=4036"/>
+   </p>
+  </card>
+
+<card id="ds">
+<p>
+    Ligacao p/ 0300 do Submarino (0,45/min). Continuar?
+    <setupcall cmdqualifier="if-not-busy">
+        <destaddress value="03007894000" wibenc="SMS-DEFAULT"/>
+    </setupcall>
+</p>
+</card>
+</wml>

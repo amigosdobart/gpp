@@ -1,0 +1,63 @@
+#parse("menuVertical.vm")
+<h6><b>Inserção de recarga via banco para assinante</b></h6>
+<table width="100%">
+<tr>
+		<td> Código do Assinante</td>
+		<td>$recargaBancoAssinanteForm.msisdn</td>
+	</tr>
+	<tr>
+		<td> Tipo da transação</td>
+		<td>$recargaBancoAssinanteForm.tipoTransacao</td>
+	</tr>
+	<tr>
+		<td> Identificador da recarga</td>
+		<td>$recargaBancoAssinanteForm.identificadorRecarga</td>
+	</tr>
+	<tr>
+		<td> Tipo de crédito</td>
+		<td>$recargaBancoAssinanteForm.tipoCredito</td>
+	</tr>
+	<tr>
+		<td> Valor</td>
+		<td>$recargaBancoAssinanteForm.valor</td>
+	</tr>
+	<tr>
+		<td> Data/hora (AAAAMMDDHHMMSS)</td>
+		<td>$recargaBancoAssinanteForm.dataHora</td>
+	</tr>
+	<tr>
+		<td> Nsu instituição</td>
+		<td>$recargaBancoAssinanteForm.nsuInstituicao</td>
+	</tr>	
+	<tr>
+		<td> Código da loja</td>
+		<td>$recargaBancoAssinanteForm.codigoLoja</td>
+	</tr>
+	<tr>
+		<td> Sistema de origem</td>
+		<td>$recargaBancoAssinanteForm.sistemaOrigem</td>
+	</tr>
+	<tr>
+		<td> Terminal</td>
+		<td>$recargaBancoAssinanteForm.terminal</td>
+	</tr>
+	<tr>
+		<td> Tipo do terminal</td>
+		<td>$recargaBancoAssinanteForm.tipoTerminal</td>
+	</tr>	
+	<tr>
+		<td> Data/hora do banco (AAAAMMDDHHMMSS)</td>
+		<td>$recargaBancoAssinanteForm.dataHoraBanco</td>
+	</tr>
+	<tr>
+		<td> Data contábil (MMDD)</td>
+		<td>$recargaBancoAssinanteForm.dataContabil</td>
+	</tr>	
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$recargaBancoAssinanteForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

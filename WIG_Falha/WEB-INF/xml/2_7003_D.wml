@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+<card id="ve">
+<p>
+Ganhe 1 mes de assinatura do Jornal Valor on Line inteiramente Gratis. Clique OK.
+    <select title="Valor Online" name="opt">
+        <option value="2">Assine Gratis</option>
+        <option onpick="#C1">Informacoes</option>
+    </select>
+    Acesse www.valoronline.com.br, utilize como e-mail: BRASILTELECOMGSM e a senha: GSM - Leia as reportagens GRATUITAMENTE.
+</p>
+</card>
+
+<card id="C1">
+    <p>
+        Duvidas sobre a promocao ou para assinar o Jornal Valor Economico disque de um telefone fixo gratuitamente para o numero 08007018888.
+    </p>
+</card>
+
+</wml>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+<wml>
+<card id="Main">
+<p>
+Em alguns instantes você receberá uma mensagem de texto (SMS) com seu cupom de desconto para os jogos do GALO na Segundona. Clique Ok.
+  <do type="accept">
+    <go href="!CWIG!/msgPromocional?pr=1&amp;bts=2&amp;btc=7001"/>
+  </do>
+</p>
+</card>
+</wml>
+

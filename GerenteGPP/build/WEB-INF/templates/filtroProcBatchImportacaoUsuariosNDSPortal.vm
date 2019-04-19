@@ -1,0 +1,12 @@
+#parse("menuVertical.vm")
+<h6><b>Importação de Usuários do NDS para o Portal</b></h6>
+<form name="frm" action="consultaProcBatchImportacaoUsuariosNDSPortal.do" method="post">
+  <table width="100%">
+	<tr>
+		<td><input type="submit" value="Executar" /></td>
+	</tr>
+  </table>
+</form>
+</td>
+</tr>
+</table>

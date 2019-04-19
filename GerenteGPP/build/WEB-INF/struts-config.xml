@@ -1,0 +1,763 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.0//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_0.dtd">
+
+<!--
+     This is the Struts configuration file for the example application,
+     using the proposed new syntax.
+
+     NOTE:  You would only flesh out the details in the "form-bean"
+     declarations if you had a generator tool that used them to create
+     the corresponding Java classes for you.  Otherwise, you would
+     need only the "form-bean" element itself, with the corresponding
+     "name" and "type" attributes.
+-->
+
+
+<struts-config>
+
+	<form-beans>
+		
+		<!-- Forms do menu Aprovisionamento .:. INICIO  -->
+		<form-bean name="aprovisionamentoAtivacaoForm" type="com.brt.clientes.form.aprovisionamento.AtivacaoForm" />
+		<form-bean name="aprovisionamentoDesativacaoForm" type="com.brt.clientes.form.aprovisionamento.DesativacaoForm" />
+		<form-bean name="aprovisionamentoBloqueioForm" type="com.brt.clientes.form.aprovisionamento.BloqueioForm" />
+		<form-bean name="aprovisionamentoDesbloqueioForm" type="com.brt.clientes.form.aprovisionamento.DesbloqueioForm" />
+		<form-bean name="aprovisionamentoTrocaMsisdnForm" type="com.brt.clientes.form.aprovisionamento.TrocaMsisdnForm" />
+		<form-bean name="aprovisionamentoTrocaPlanoPrecosForm" type="com.brt.clientes.form.aprovisionamento.TrocaPlanoPrecosForm" />
+		<form-bean name="aprovisionamentoTrocaSimcardForm" type="com.brt.clientes.form.aprovisionamento.TrocaSimcardForm" />
+		<form-bean name="aprovisionamentoFriendsFamilyForm" type="com.brt.clientes.form.aprovisionamento.FriendsFamilyForm" />
+		<form-bean name="aprovisionamentoTrocaSenhaForm" type="com.brt.clientes.form.aprovisionamento.TrocaSenhaForm" />
+		<form-bean name="aprovisionamentoConsultaAssinanteForm" type="com.brt.clientes.form.aprovisionamento.ConsultaAssinanteForm" />
+		<!-- Forms do menu Aprovisionamento .:. FIM -->
+				
+		<!-- Forms do menu Recarga .:. INICIO -->
+		<form-bean name="recargaGenericaForm" type="com.brt.clientes.form.recarga.RecargaGenericaForm" />
+		<form-bean name="recargaBancoForm" type="com.brt.clientes.form.recarga.RecargaBancoForm" />
+		<form-bean name="recargaBancoAssinanteForm" type="com.brt.clientes.form.recarga.RecargaBancoAssinanteForm" />
+		<form-bean name="recargaAjusteForm" type="com.brt.clientes.form.recarga.RecargaAjusteForm" />
+		<form-bean name="recargaXMLForm" type="com.brt.clientes.form.recarga.RecargaXMLForm" />
+		<form-bean name="recargaAjusteXMLForm" type="com.brt.clientes.form.recarga.RecargaAjusteXMLForm" />
+		<!-- Forms do menu Recarga .:. FIM -->
+		
+		<!-- Forms do menu Consulta .:. INICIO -->
+		<form-bean name="consultaVoucherForm" type="com.brt.clientes.form.consulta.VoucherForm" />
+		<form-bean name="consultaAssinanteForm" type="com.brt.clientes.form.consulta.AssinanteForm" />
+		<form-bean name="consultaRecargaAssinanteXMLForm" type="com.brt.clientes.form.consulta.RecargaAssinanteXMLForm" />
+		<form-bean name="consultaRecargaAssinanteForm" type="com.brt.clientes.form.consulta.RecargaAssinanteForm" />
+		<form-bean name="consultaRecargaAssinanteXMLForm" type="com.brt.clientes.form.consulta.RecargaAssinanteXMLForm" />
+		<form-bean name="consultaComprovanteServicoForm" type="com.brt.clientes.form.consulta.ComprovanteServicoForm" />
+		<!-- Forms do menu Consulta .:. FIM -->
+		
+		<!-- Forms do menu Processos Batch .:. INICIO -->
+		<form-bean name="procBatchEnvioInfosRecargasForm" type="com.brt.clientes.form.processosBatch.ProcBatchEnvioInfosRecargasForm" />
+		<form-bean name="procBatchEnvioBonusCSP14Form" type="com.brt.clientes.form.processosBatch.ProcBatchEnvioBonusCSP14Form" />
+		<form-bean name="procBatchEnvioRecargasConciliacaoForm" type="com.brt.clientes.form.processosBatch.ProcBatchEnvioRecargasConciliacaoForm" />
+		<form-bean name="procBatchContestacaoForm" type="com.brt.clientes.form.processosBatch.ProcBatchContestacaoForm" />
+		<!-- Desativado em 09/09/04 <form-bean name="procBatchEnvioSMSForm" type="com.brt.clientes.form.processosBatch.ProcBatchEnvioSMSForm" /> -->
+		<form-bean name="procBatchEnvioUsuariosStatusNormalForm" type="com.brt.clientes.form.processosBatch.ProcBatchEnvioUsuariosStatusNormalForm" />
+		<form-bean name="procBatchEnvioUsuarioShutdownForm" type="com.brt.clientes.form.processosBatch.ProcBatchEnvioUsuariosStatusShutdownForm" />
+		<form-bean name="procBatchImportacaoAssinantesForm" type="com.brt.clientes.form.processosBatch.ProcBatchImportacaoAssinantesForm" />
+		<form-bean name="procBatchImportacaoCDRForm" type="com.brt.clientes.form.processosBatch.ProcBatchImportacaoCDRForm" />
+		<form-bean name="procBatchImportacaoUsuariosNDSPortalForm" type="com.brt.clientes.form.processosBatch.ProcBatchImportacaoUsuariosNDSPortalForm" />
+		<form-bean name="procBatchRecargaRecorrenteForm" type="com.brt.clientes.form.processosBatch.ProcBatchRecargaRecorrenteForm" />
+		<form-bean name="procBatchSumarizacaoAjustesForm" type="com.brt.clientes.form.processosBatch.ProcBatchSumarizacaoAjustesForm" />
+		<form-bean name="procBatchDiasSemRecargasForm" type="com.brt.clientes.form.processosBatch.ProcBatchDiasSemRecargasForm" />
+		<form-bean name="procBatchSumarizacaoProdutoPlanoForm" type="com.brt.clientes.form.processosBatch.ProcBatchSumarizacaoProdutoPlanoForm" />
+		<form-bean name="procBatchTratarVoucherForm" type="com.brt.clientes.form.processosBatch.ProcBatchTratarVoucherForm" />
+		<form-bean name="procBatchSumarizacaoContabilForm" type="com.brt.clientes.form.processosBatch.ProcBatchSumarizacaoContabilForm" />
+		<form-bean name="procBatchIndiceBonificacaoForm" type="com.brt.clientes.form.processosBatch.ProcBatchIndiceBonificacaoForm" />
+		<form-bean name="procBatchConsolidacaoContabilForm" type="com.brt.clientes.form.processosBatch.ProcBatchConsolidacaoContabilForm" />
+		<form-bean name="procBatchEnvioConsolidacaoSCRGPPForm" type="com.brt.clientes.form.processosBatch.ProcBatchEnvioConsolidacaoSCRGPPForm" />
+		<!-- Forms do menu Processos Batch .:. FIM -->
+		
+	</form-beans>
+	
+  <!-- ========== Global Forward Definitions ============================== -->
+  <global-forwards>
+	<forward name="error"				 path="/showErrorAction.do"/>
+    <forward name="mensagemSistema"		 path="/mensagemSistema.do"/>
+  </global-forwards>
+  
+	<!-- ========== Action Mapping Definitions ============================== -->
+  <action-mappings>
+    
+    <action path="/showErrorAction"
+               type="br.com.brasiltelecom.ppp.action.base.ShowErrorAction"
+              scope="request"
+           validate="false">
+    </action>   
+
+    <action path="/showWelcomeAction"
+               type="com.brt.clientes.action.base.ShowWelcomeAction"
+              scope="request"
+           validate="false">
+    </action>
+    
+	<!-- Actions de exibição dos menus - Pool Conexões .:. INICIO -->
+    <action path="/showPoolConexoes"
+               type="com.brt.consultas.action.poolConexoes.ShowPoolConexoesAction"
+              scope="request"
+           validate="false">
+    </action>
+	
+	<action path="/consultaPoolConexoes"
+			type="com.brt.consultas.action.poolConexoes.ConsultaPoolConexoesAction"
+			scope="request"
+			validate="false">
+			<forward path="/consultaPoolConexoes.vm" name="success" />
+	</action>
+	<!-- Actions de exibição dos menus - Pool Conexões .:. INICIO -->
+	
+	<!-- Actions de exibição dos menus - Consulta de Status .:. INICIO -->
+    <action path="/showStatusConexoes"
+               type="com.brt.consultas.action.consultaStatus.ShowConsultaStatusConexoesAction"
+              scope="request"
+           validate="false">
+    </action>
+	
+	<!-- Actions de exibição dos menus - Cliente .:. INICIO -->	
+    <action path="/showAprovisionamento"
+               type="com.brt.clientes.action.aprovisionamento.ShowAprovisionamentoAction"
+              scope="request"
+           validate="false">
+    </action>
+
+    <action path="/showRecarga"
+               type="com.brt.clientes.action.recarga.ShowRecargaAction"
+              scope="request"
+           validate="false">
+    </action>
+
+    <action path="/showConsulta"
+               type="com.brt.clientes.action.consulta.ShowConsultaAction"
+              scope="request"
+           validate="false">
+    </action>
+
+    <action path="/showProcessosBatch"
+               type="com.brt.clientes.action.processosBatch.ShowProcessosBatchAction"
+              scope="request"
+           validate="false">
+    </action>	
+	<!-- Actions de exibição dos menus - Cliente .:. FIM -->
+	
+	
+	<!-- Actions do menu de Aprovisionamento .:. INICIO -->
+	<action path="/showFiltroAtivacao"
+			type="com.brt.clientes.action.aprovisionamento.ShowFiltroAtivacaoAction"
+			name="aprovisionamentoAtivacaoForm"
+			scope="request"
+			validate="false">
+	</action>
+
+	<action path="/consultaAtivacao"
+			type="com.brt.clientes.action.aprovisionamento.ConsultaAtivacaoAction"
+			name="aprovisionamentoAtivacaoForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaAprovisionamentoAtivacao.vm" name="success" />
+	</action>
+
+	<action path="/showFiltroDesativacao"
+			type="com.brt.clientes.action.aprovisionamento.ShowFiltroDesativacaoAction"
+			name="aprovisionamentoDesativacaoForm"
+			scope="request"
+			validate="false">
+	</action>
+
+	<action path="/consultaDesativacao"
+			type="com.brt.clientes.action.aprovisionamento.ConsultaDesativacaoAction"
+			name="aprovisionamentoDesativacaoForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaAprovisionamentoDesativacao.vm" name="success" />
+	</action>
+
+	<action path="/showFiltroBloqueio"
+			type="com.brt.clientes.action.aprovisionamento.ShowFiltroBloqueioAction"
+			name="aprovisionamentoBloqueioForm"
+			scope="request"
+			validate="false">
+	</action>
+
+	<action path="/consultaBloqueio"
+			type="com.brt.clientes.action.aprovisionamento.ConsultaBloqueioAction"
+			name="aprovisionamentoBloqueioForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaAprovisionamentoBloqueio.vm" name="success" />
+	</action>
+
+	<action path="/showFiltroDesbloqueio"
+			type="com.brt.clientes.action.aprovisionamento.ShowFiltroDesbloqueioAction"
+			name="aprovisionamentoDesbloqueioForm"
+			scope="request"
+			validate="false">
+	</action>
+
+	<action path="/consultaDesbloqueio"
+			type="com.brt.clientes.action.aprovisionamento.ConsultaDesbloqueioAction"
+			name="aprovisionamentoDesbloqueioForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaAprovisionamentoDesbloqueio.vm" name="success" />
+	</action>
+	
+	<action path="/showFiltroTrocaMsisdn"
+			type="com.brt.clientes.action.aprovisionamento.ShowFiltroTrocaMsisdnAction"
+			name="aprovisionamentoTrocaMsisdnForm"
+			scope="request"
+			validate="false">
+	</action>
+
+	<action path="/consultaTrocaMsisdn"
+			type="com.brt.clientes.action.aprovisionamento.ConsultaTrocaMsisdnAction"
+			name="aprovisionamentoTrocaMsisdnForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaAprovisionamentoTrocaMsisdn.vm" name="success" />
+	</action>
+
+	<action path="/showFiltroTrocaPlanoPrecos"
+			type="com.brt.clientes.action.aprovisionamento.ShowFiltroTrocaPlanoPrecosAction"
+			name="aprovisionamentoTrocaPlanoPrecosForm"
+			scope="request"
+			validate="false">
+	</action>
+
+	<action path="/consultaTrocaPlanoPrecos"
+			type="com.brt.clientes.action.aprovisionamento.ConsultaTrocaPlanoPrecosAction"
+			name="aprovisionamentoTrocaPlanoPrecosForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaAprovisionamentoTrocaPlanoPrecos.vm" name="success" />
+	</action>
+
+	<action path="/showFiltroTrocaSimcard"
+			type="com.brt.clientes.action.aprovisionamento.ShowFiltroTrocaSimcardAction"
+			name="aprovisionamentoTrocaSimcardForm"
+			scope="request"
+			validate="false">
+	</action>
+
+	<action path="/consultaTrocaSimcard"
+			type="com.brt.clientes.action.aprovisionamento.ConsultaTrocaSimcardAction"
+			name="aprovisionamentoTrocaSimcardForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaAprovisionamentoTrocaSimcard.vm" name="success" />
+	</action>
+
+	<action path="/showFiltroFriendsFamily"
+			type="com.brt.clientes.action.aprovisionamento.ShowFiltroFriendsFamilyAction"
+			name="aprovisionamentoFriendsFamilyForm"
+			scope="request"
+			validate="false">
+	</action>
+
+	<action path="/consultaFriendsFamily"
+			type="com.brt.clientes.action.aprovisionamento.ConsultaFriendsFamilyAction"
+			name="aprovisionamentoFriendsFamilyForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaAprovisionamentoFriendsFamily.vm" name="success" />
+	</action>
+
+	<action path="/showFiltroTrocaSenha"
+			type="com.brt.clientes.action.aprovisionamento.ShowFiltroTrocaSenhaAction"
+			name="aprovisionamentoTrocaSenhaForm"
+			scope="request"
+			validate="false">
+	</action>
+
+	<action path="/consultaTrocaSenha"
+			type="com.brt.clientes.action.aprovisionamento.ConsultaTrocaSenhaAction"
+			name="aprovisionamentoTrocaSenhaForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaAprovisionamentoTrocaSenha.vm" name="success" />
+	</action>
+
+	<action path="/showFiltroConsultaAssinante"
+			type="com.brt.clientes.action.aprovisionamento.ShowFiltroConsultaAssinanteAction"
+			name="aprovisionamentoConsultaAssinanteForm"
+			scope="request"
+			validate="false">
+	</action>
+
+	<action path="/consultaConsultaAssinante"
+			type="com.brt.clientes.action.aprovisionamento.ConsultaConsultaAssinanteAction"
+			name="aprovisionamentoConsultaAssinanteForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaAprovisionamentoConsultaAssinante.vm" name="success" />
+	</action>
+	<!-- Actions do menu de Aprovisionamento .:. FIM -->
+	
+	<!-- Actions do menu de Recarga .:. INICIO -->
+	<action path="/showFiltroRecargaGenerica"
+			type="com.brt.clientes.action.recarga.ShowFiltroRecargaGenericaAction"
+			name="recargaGenericaForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaRecargaGenerica"
+			type="com.brt.clientes.action.recarga.ConsultaRecargaGenericaAction"
+			name="recargaGenericaForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaRecargaGenerica.vm" name="success" />
+	</action>
+	
+	<action path="/showFiltroRecargaBanco"
+			type="com.brt.clientes.action.recarga.ShowFiltroRecargaBancoAction"
+			name="recargaBancoForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaRecargaBanco"
+			type="com.brt.clientes.action.recarga.ConsultaRecargaBancoAction"
+			name="recargaBancoForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaRecargaBanco.vm" name="success" />
+	</action>
+	
+	<action path="/showFiltroRecargaBancoAssinante"
+			type="com.brt.clientes.action.recarga.ShowFiltroRecargaBancoAssinanteAction"
+			name="recargaBancoAssinanteForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaRecargaBancoAssinante"
+			type="com.brt.clientes.action.recarga.ConsultaRecargaBancoAssinanteAction"
+			name="recargaBancoAssinanteForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaRecargaBancoAssinante.vm" name="success" />
+	</action>
+	
+	<action path="/showFiltroAjuste"
+			type="com.brt.clientes.action.recarga.ShowFiltroAjusteAction"
+			name="recargaAjusteForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaAjuste"
+			type="com.brt.clientes.action.recarga.ConsultaAjusteAction"
+			name="recargaAjusteForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaAjuste.vm" name="success" />
+	</action>
+	
+	<action path="/showFiltroRecargaXML"
+			type="com.brt.clientes.action.recarga.ShowFiltroRecargaXMLAction"
+			name="recargaXMLForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaRecargaXML"
+			type="com.brt.clientes.action.recarga.ConsultaRecargaXMLAction"
+			name="recargaXMLForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaRecargaXML.vm" name="success" />
+	</action>
+	
+	<action path="/showFiltroAjusteXML"
+			type="com.brt.clientes.action.recarga.ShowFiltroAjusteXMLAction"
+			name="recargaAjusteXMLForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaAjusteXML"
+			type="com.brt.clientes.action.recarga.ConsultaAjusteXMLAction"
+			name="recargaAjusteXMLForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaAjusteXML.vm" name="success" />
+	</action>
+	<!-- Actions do menu de Recarga .:. FIM -->
+	
+	<!-- Actions do menu de Consulta .:. INICIO -->
+	<action path="/showFiltroConsultaVoucher"
+			type="com.brt.clientes.action.consulta.ShowFiltroVoucherAction"
+			name="consultaVoucherForm"
+			scope="request"
+			validate="false">
+	</action>
+
+	<action path="/consultaVoucher"
+			type="com.brt.clientes.action.consulta.ConsultaVoucherAction"
+			name="consultaVoucherForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaConsultaVoucher.vm" name="success" />
+	</action>
+		
+	<action path="/showFiltroConsultaConsultaAssinante"
+			type="com.brt.clientes.action.consulta.ShowFiltroAssinanteAction"
+			name="consultaAssinanteForm"
+			scope="request"
+			validate="false">
+	</action>
+
+	<action path="/consultaAssinante"
+			type="com.brt.clientes.action.consulta.ConsultaAssinanteAction"
+			name="consultaAssinanteForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaConsultaAssinante.vm" name="success" />
+	</action>
+
+	<action path="/showFiltroConsultaRecargaAssinanteXML"
+			type="com.brt.clientes.action.consulta.ShowFiltroRecargaAssinanteXMLAction"
+			name="consultaRecargaAssinanteXMLForm"
+			scope="request"
+			validate="false">
+	</action>
+
+	<action path="/consultaRecargaAssinanteXML"
+			type="com.brt.clientes.action.consulta.ConsultaRecargaAssinanteXMLAction"
+			name="consultaRecargaAssinanteXMLForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaConsultaRecargaAssinanteXML.vm" name="success" />
+	</action>
+
+	<action path="/showFiltroConsultaRecargaAssinante"
+			type="com.brt.clientes.action.consulta.ShowFiltroRecargaAssinanteAction"
+			name="consultaRecargaAssinanteForm"
+			scope="request"
+			validate="false">
+	</action>
+
+	<action path="/consultaRecargaAssinante"
+			type="com.brt.clientes.action.consulta.ConsultaRecargaAssinanteAction"
+			name="consultaRecargaAssinanteForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaConsultaRecargaAssinante.vm" name="success" />
+	</action>
+
+	<action path="/showFiltroConsultaComprovanteServico"
+			type="com.brt.clientes.action.consulta.ShowFiltroComprovanteServicoAction"
+			name="consultaComprovanteServicoForm"
+			scope="request"
+			validate="false">
+	</action>
+
+	<action path="/consultaComprovanteServico"
+			type="com.brt.clientes.action.consulta.ConsultaComprovanteServicoAction"
+			name="consultaComprovanteServicoForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaConsultaComprovanteServico.vm" name="success" />
+	</action>	
+	<!-- Actions do menu de Consulta .:. FIM -->
+	
+	<!-- Actions do menu de Processos Batch .:. INICIO -->
+	<action path="/showFiltroProcBatchEnvioInfosRecargas"
+			type="com.brt.clientes.action.processosBatch.ShowFiltroProcBatchEnvioInfosRecargasAction"
+			name="procBatchEnvioInfosRecargasForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaProcBatchEnvioInfosRecargas"
+			type="com.brt.clientes.action.processosBatch.ConsultaProcBatchEnvioInfosRecargasAction"
+			name="procBatchEnvioInfosRecargasForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaProcBatchEnvioInfosRecargas.vm" name="success" />
+	</action>
+	
+	<action path="/showFiltroProcBatchEnvioBonusCSP14"
+			type="com.brt.clientes.action.processosBatch.ShowFiltroProcBatchEnvioBonusCSP14Action"
+			name="procBatchEnvioBonusCSP14Form"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaProcBatchEnvioBonusCSP14"
+			type="com.brt.clientes.action.processosBatch.ConsultaProcBatchEnvioBonusCSP14Action"
+			name="procBatchEnvioBonusCSP14Form"
+			scope="request"
+			validate="false">
+			<forward path="/consultaProcBatchEnvioBonusCSP14.vm" name="success" />
+	</action>
+	
+	<action path="/showFiltroProcBatchEnvioRecargasConciliacao"
+			type="com.brt.clientes.action.processosBatch.ShowFiltroProcBatchEnvioRecargasConciliacaoAction"
+			name="procBatchEnvioRecargasConciliacaoForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaProcBatchEnvioRecargasConciliacao"
+			type="com.brt.clientes.action.processosBatch.ConsultaProcBatchEnvioRecargasConciliacaoAction"
+			name="procBatchEnvioRecargasConciliacaoForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaProcBatchEnvioRecargasConciliacao.vm" name="success" />
+	</action>
+	
+	<action path="/showFiltroProcBatchContestacao"
+			type="com.brt.clientes.action.processosBatch.ShowFiltroProcBatchContestacaoAction"
+			name="procBatchContestacaoForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaProcBatchContestacao"
+			type="com.brt.clientes.action.processosBatch.ConsultaProcBatchContestacaoAction"
+			name="procBatchContestacaoForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaProcBatchContestacao.vm" name="success" />
+	</action>
+	
+	<action path="/showFiltroProcBatchEnvioSMS"
+			type="com.brt.clientes.action.processosBatch.ShowFiltroProcBatchEnvioSMSAction"
+			name="procBatchEnvioSMSForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaProcBatchEnvioSMS"
+			type="com.brt.clientes.action.processosBatch.ConsultaProcBatchEnvioSMSAction"
+			name="procBatchEnvioSMSForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaProcBatchEnvioSMS.vm" name="success" />
+	</action>
+	
+	<action path="/showFiltroProcBatchEnvioUsuariosStatusNormal"
+			type="com.brt.clientes.action.processosBatch.ShowFiltroProcBatchEnvioUsuariosStatusNormalAction"
+			name="procBatchEnvioUsuariosStatusNormalForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaProcBatchEnvioUsuariosStatusNormal"
+			type="com.brt.clientes.action.processosBatch.ConsultaProcBatchEnvioUsuariosStatusNormalAction"
+			name="procBatchEnvioUsuariosStatusNormalForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaProcBatchEnvioUsuariosStatusNormal.vm" name="success" />
+	</action>
+
+	<action path="/showFiltroProcBatchEnvioUsuariosShutdown"
+			type="com.brt.clientes.action.processosBatch.ShowFiltroProcBatchEnvioUsuarioShutdownAction"
+			name="procBatchEnvioUsuarioShutdownForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaProcBatchEnvioUsuariosShutdown"
+			type="com.brt.clientes.action.processosBatch.ConsultaProcBatchEnvioUsuarioShutdownAction"
+			name="procBatchEnvioUsuarioShutdownForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaProcBatchEnvioUsuarioShutdown.vm" name="success" />
+	</action>
+	
+	<action path="/showFiltroProcBatchImportacaoAssinantes"
+			type="com.brt.clientes.action.processosBatch.ShowFiltroProcBatchImportacaoAssinantesAction"
+			name="procBatchImportacaoAssinantesForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaProcBatchImportacaoAssinantes"
+			type="com.brt.clientes.action.processosBatch.ConsultaProcBatchImportacaoAssinantesAction"
+			name="procBatchImportacaoAssinantesForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaProcBatchImportacaoAssinantes.vm" name="success" />
+	</action>
+	
+	<action path="/showFiltroProcBatchImportacaoCDR"
+			type="com.brt.clientes.action.processosBatch.ShowFiltroProcBatchImportacaoCDRAction"
+			name="procBatchImportacaoCDRForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaProcBatchImportacaoCDR"
+			type="com.brt.clientes.action.processosBatch.ConsultaProcBatchImportacaoCDRAction"
+			name="procBatchImportacaoCDRForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaProcBatchImportacaoCDR.vm" name="success" />
+	</action>
+	
+	<action path="/showFiltroProcBatchImportacaoUsuariosNDSPortal"
+			type="com.brt.clientes.action.processosBatch.ShowFiltroProcBatchImportacaoUsuariosNDSPortalAction"
+			name="procBatchImportacaoUsuariosNDSPortalForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaProcBatchImportacaoUsuariosNDSPortal"
+			type="com.brt.clientes.action.processosBatch.ConsultaProcBatchImportacaoUsuariosNDSPortalAction"
+			name="procBatchImportacaoUsuariosNDSPortalForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaProcBatchImportacaoUsuariosNDSPortal.vm" name="success" />
+	</action>
+	
+	<action path="/showFiltroProcBatchRecargaRecorrente"
+			type="com.brt.clientes.action.processosBatch.ShowFiltroProcBatchRecargaRecorrenteAction"
+			name="procBatchRecargaRecorrenteForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaProcBatchRecargaRecorrente"
+			type="com.brt.clientes.action.processosBatch.ConsultaProcBatchRecargaRecorrenteAction"
+			name="procBatchRecargaRecorrenteForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaProcBatchRecargaRecorrente.vm" name="success" />
+	</action>
+	
+	<action path="/showFiltroProcBatchSumarizacaoAjustes"
+			type="com.brt.clientes.action.processosBatch.ShowFiltroProcBatchSumarizacaoAjustesAction"
+			name="procBatchSumarizacaoAjustesForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaProcBatchSumarizacaoAjustes"
+			type="com.brt.clientes.action.processosBatch.ConsultaProcBatchSumarizacaoAjustesAction"
+			name="procBatchSumarizacaoAjustesForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaProcBatchSumarizacaoAjustes.vm" name="success" />
+	</action>
+	
+
+
+	<action path="/showFiltroProcBatchSumarizacaoContabil"
+			type="com.brt.clientes.action.processosBatch.ShowFiltroProcBatchSumarizacaoContabilAction"
+			name="procBatchSumarizacaoContabilForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaProcBatchSumarizacaoContabil"
+			type="com.brt.clientes.action.processosBatch.ConsultaProcBatchSumarizacaoContabilAction"
+			name="procBatchSumarizacaoContabilForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaProcBatchSumarizacaoContabil.vm" name="success" />
+	</action>
+
+	<action path="/showFiltroProcBatchIndiceBonificacao"
+			type="com.brt.clientes.action.processosBatch.ShowFiltroProcBatchIndiceBonificacaoAction"
+			name="procBatchIndiceBonificacaoForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaProcBatchIndiceBonificacao"
+			type="com.brt.clientes.action.processosBatch.ConsultaProcBatchIndiceBonificacaoAction"
+			name="procBatchIndiceBonificacaoForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaProcBatchIndiceBonificacao.vm" name="success" />
+	</action>
+
+
+	<action path="/showFiltroProcBatchConsolidacaoContabil"
+			type="com.brt.clientes.action.processosBatch.ShowFiltroProcBatchConsolidacaoContabilAction"
+			name="procBatchConsolidacaoContabilForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaProcBatchConsolidacaoContabil"
+			type="com.brt.clientes.action.processosBatch.ConsultaProcBatchConsolidacaoContabilAction"
+			name="procBatchConsolidacaoContabilForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaProcBatchConsolidacaoContabil.vm" name="success" />
+	</action>
+
+
+	<action path="/showFiltroProcBatchDiasSemRecargas"
+			type="com.brt.clientes.action.processosBatch.ShowFiltroProcBatchDiasSemRecargasAction"
+			name="procBatchDiasSemRecargasForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaProcBatchDiasSemRecargas"
+			type="com.brt.clientes.action.processosBatch.ConsultaProcBatchDiasSemRecargasAction"
+			name="procBatchDiasSemRecargasForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaProcBatchDiasSemRecargas.vm" name="success" />
+	</action>
+	
+	<action path="/showFiltroProcBatchSumarizacaoProdutoPlano"
+			type="com.brt.clientes.action.processosBatch.ShowFiltroProcBatchSumarizacaoProdutoPlanoAction"
+			name="procBatchSumarizacaoProdutoPlanoForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaProcBatchSumarizacaoProdutoPlano"
+			type="com.brt.clientes.action.processosBatch.ConsultaProcBatchSumarizacaoProdutoPlanoAction"
+			name="procBatchSumarizacaoProdutoPlanoForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaProcBatchSumarizacaoProdutoPlano.vm" name="success" />
+	</action>
+	
+	<action path="/showFiltroProcBatchTratarVoucher"
+			type="com.brt.clientes.action.processosBatch.ShowFiltroProcBatchTratarVoucherAction"
+			name="procBatchTratarVoucherForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaProcBatchTratarVoucher"
+			type="com.brt.clientes.action.processosBatch.ConsultaProcBatchTratarVoucherAction"
+			name="procBatchTratarVoucherForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaProcBatchTratarVoucher.vm" name="success" />
+	</action>
+
+	<action path="/showFiltroProcBatchEnvioConsolidacaoSCRGPP"
+			type="com.brt.clientes.action.processosBatch.ShowFiltroProcBatchEnvioConsolidacaoSCRGPPAction"
+			name="procBatchEnvioConsolidacaoSCRGPPForm"
+			scope="request"
+			validate="false">
+	</action>
+	
+	<action path="/consultaProcBatchEnvioConsolidacaoSCRGPP"
+			type="com.brt.clientes.action.processosBatch.ConsultaProcBatchEnvioConsolidacaoSCRGPPAction"
+			name="procBatchEnvioConsolidacaoSCRGPPForm"
+			scope="request"
+			validate="false">
+			<forward path="/consultaProcBatchEnvioConsolidacaoSCRGPP.vm" name="success" />
+	</action>
+
+	<!-- Actions do menu de Processos Batch .:. FIM -->
+	
+ </action-mappings>
+  
+</struts-config>

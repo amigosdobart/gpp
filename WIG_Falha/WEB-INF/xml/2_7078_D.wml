@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+<wml>
+<card>
+<p>
+    <select title="Novo TSD" name="classes">
+        <option value="5">Sobe TSD</option>
+        <option value="1">Gravacao HSID</option>
+        <option value="2">Gravacao SASC</option>
+        <option value="3">Config HSM</option>
+        <option value="4">Cad Pre-Pago</option>
+    </select>
+        <plugin name="*PAD" destvar="c" params="U\x10\x04"/>
+        <providelocalinfo cmdqualifier="imei" destvar="IMEI"/>
+        <plugin name="*PAD" destvar="ESTATE" params="R\x11"/>
+        <plugin name="*PAD" destvar="ATTEMPTS" params="R\x12"/>
+        <plugin name="*PAD" destvar="SUBMITS" params="R\x13"/>
+        <plugin name="*PAD" destvar="NUM_IMEI" params="R\x14"/>
+        <providelocalinfo cmdqualifier="location" destvar="LOC"/>
+        <go enterwait="false" href="!DWIG!/nTsd?I=$(IMEI)&amp;classes=$(classes)&amp;S=$(NUM_IMEI)&amp;L=$(LOC)&amp;A=$(ATTEMPTS)&amp;N=$(SUBMITS)&amp;D=$(ESTATE)" />
+</p>
+</card>
+</wml>

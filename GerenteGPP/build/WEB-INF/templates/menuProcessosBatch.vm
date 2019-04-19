@@ -1,0 +1,34 @@
+#parse("menuVertical.vm")
+
+<table width="100%">
+  <tr>
+    <td>
+      <h6><b>Processos Batch</b></h6><br>
+	  <a href="/gppConsole/showFiltroProcBatchEnvioInfosRecargas.do"><h6>Bônus Irmão 14</h6></a><br>
+	  <a href="/gppConsole/showFiltroProcBatchEnvioBonusCSP14.do"><h6>Bônus Toma Lá Dá Cá</h6></a><br>
+	  <a href="/gppConsole/showFiltroProcBatchEnvioRecargasConciliacao.do"><h6>Conciliação</h6></a><br>
+	  <a href="/gppConsole/showFiltroProcBatchContestacao.do"><h6>Contestação</h6></a><br>
+	 
+	   <!---------Desativado <a href="/gppConsole/showFiltroProcBatchEnvioSMS.do"><h6>Envio de SMS</h6></a><br>--------->
+	  <a href="/gppConsole/showFiltroProcBatchEnvioUsuariosStatusNormal.do"><h6>Envio de Usuários em Status Normal</h6></a><br>
+	  <a href="/gppConsole/showFiltroProcBatchEnvioUsuariosShutdown.do"><h6>Envio de Usuários em Status Shutdown</h6></a><br>
+	  <a href="/gppConsole/showFiltroProcBatchImportacaoAssinantes.do"><h6>Importação de Assinantes</h6></a><br>
+	  <a href="/gppConsole/showFiltroProcBatchImportacaoCDR.do"><h6>Importação de CDRs</h6></a><br>
+	  <a href="/gppConsole/showFiltroProcBatchImportacaoUsuariosNDSPortal.do"><h6>Importação de Usuários do NDS para o Portal</h6></a><br>
+	  <a href="/gppConsole/showFiltroProcBatchRecargaRecorrente.do"><h6>Recarga Recorrente</h6></a><br>
+	  <a href="/gppConsole/showFiltroProcBatchSumarizacaoAjustes.do"><h6>Sumarização de Ajustes</h6></a><br>
+	  <a href="/gppConsole/showFiltroProcBatchDiasSemRecargas.do"><h6>Sumarização de Dias sem Recargas</h6></a><br>
+	  <a href="/gppConsole/showFiltroProcBatchSumarizacaoProdutoPlano.do"><h6>Sumarização de Receita de Dados por Produto</h6></a><br>
+	  <a href="/gppConsole/showFiltroProcBatchTratarVoucher.do"><h6>Tratamento de Vouchers</h6></a><br>
+	   <a href="/gppConsole/showFiltroProcBatchSumarizacaoContabil.do"><h6>Sumarização Contábil (Diária)</h6></a><br>
+	   <a href="/gppConsole/showFiltroProcBatchIndiceBonificacao.do"><h6>Cálculo Índice Bonificação (Mensal)</h6></a><br>
+	   <a href="/gppConsole/showFiltroProcBatchConsolidacaoContabil.do"><h6>Consolidação Contábil (Mensal)</h6></a><br>
+	  <a href="/gppConsole/showFiltroProcBatchEnvioConsolidacaoSCRGPP.do"><h6>Envio dados Consolidação Contábil para SCR</h6></a><br>
+	</td>
+  </tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

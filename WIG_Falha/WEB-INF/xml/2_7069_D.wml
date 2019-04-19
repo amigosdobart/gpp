@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+<wml>
+ <card>
+    <p>
+    Promocao: A Playboy oferece 30 dias de acesso ao site Planeta Playboy para os usuarios que baixarem um conteudo. Clique OK para iniciar uma navegacao WAP.
+     </p>
+    <launchbrowser url="http://200.189.105.9/mtg-wap-portal/themeList.do?themeId=23331&amp;frontendId=BRTWAP" >
+    </launchbrowser>
+ </card>
+</wml>

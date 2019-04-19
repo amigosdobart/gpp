@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+  "http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+<wml>
+<card>
+    <p>
+   <select title="Serv. Conta" name="msg">
+        <option value="debAutomConsCadastro">Deb Automatico</option>
+        <option value="segViaConsulta">2a Via Conta</option>
+        <option value="altDatVenctoConsulta">Alt Dat Vencto</option>
+        <!--option value="infoPagConsulta">Informe de Pag</option-->
+    </select>
+<do type="accept">
+      <go href="!CWIG!/$(msg)"/>
+    </do>
+   </p>
+</card>
+</wml>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Denys Oliveira (None) -->
+<GPPRetornoRecarga>
+	<codRetorno/>
+	<descricao/>
+</GPPRetornoRecarga>
+<!--    
+tipo de operacao (credito virtual, voucher, debito), 
+numero do telefone, 
+origem (banco), 
+nsu (numero de identificacao da requisicao), 
+canal (atm, web, etc), 
+datahora, 
+datacontabil, 
+tipo de valor (moeda, tempo, volume), 
+valor
+-->

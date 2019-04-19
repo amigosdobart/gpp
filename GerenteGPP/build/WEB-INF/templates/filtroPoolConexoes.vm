@@ -1,0 +1,42 @@
+#parse("menuVertical.vm")
+<h6><b>Pool de Conexões</b></h6><br>
+
+<form name="frm" action="consultaPoolConexoes.do" method="post" >
+<table border="1" width="600" bordercolor="#C0E0AF" cellspacing="0" cellpadding="3" style="border-collapse: collapse" bgcolor="#FFFFFF">
+<tr>
+	<th align="center" width="147" bgcolor="#E1EA99" class="fontverde3">Nome do Pool de Conex&otilde;es</th>
+	<th align="center" width="85" bgcolor="#E1EA99" class="fontverde3">N&uacute;mero de Conex&otilde;es</th>
+	<th align="center" width="100" bgcolor="#E1EA99" class="fontverde3">N&uacute;mero de Conex&otilde;es Disponíveis</th>
+	<th align="center" width="78" bgcolor="#E1EA99" class="fontverde3">&nbsp;</th>
+	<th align="center" width="78" bgcolor="#E1EA99" class="fontverde3">&nbsp;</th>
+</tr>
+
+#foreach( $key in $poolTipos.keySet() )
+	<tr>
+		<td>&nbsp;$!key</td>
+		<td align="center">&nbsp;$!poolConexoes.get($key)</td>
+		<td align="center">&nbsp;$!poolDisponiveis.get($key)</td>
+		<td align="center">&nbsp;<a href="javascript:efetuaAcao('$!key', $poolTipos.get($key),0); "><img src="img/bt_criarConexao.gif" width="82" height="17"></a></td>
+		<td align="center">&nbsp;<a href="javascript:efetuaAcao('$!key', $poolTipos.get($key),1); "><img src="img/bt_removerConexao.gif" width="100" height="17"></a></td>
+	</tr>
+#end
+		<input type="hidden" name="nomePool" >
+		<input type="hidden" name="tipoPool" >
+		<input type="hidden" name="acao" >
+</table>
+</form>
+
+</td>
+</tr>
+</table>
+
+
+<script language="javaScript">
+function efetuaAcao(_nomePool, _tipoPool, _acao) 
+{
+  document.frm.nomePool.value = _nomePool;  
+  document.frm.tipoPool.value = _tipoPool;
+  document.frm.acao.value = _acao;
+  document.frm.submit();
+}
+</script>

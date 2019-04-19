@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+<card id="Main">
+    <p>
+        <select title="Cons. Estoque" name="canal">
+        <option value="1" onpick="#cm">PF Empresas</option>
+    </select>
+    </p>
+</card>
+
+<card id="cm">
+<p>
+    <select title="Modelo/Simcard" name="tipo">
+        <option value="M" onpick="#M">Modelo</option>
+        <option value="S" onpick="#S">Simcard</option>
+    </select>
+</p>
+</card>
+
+<card id="M">
+    <p>
+    <input title="Entre com o Modelo:" type="text" emptyok="false" maxlength="15" name="mod"/>
+    <do type="accept">
+        <go href="!DWIG!/ConsultaEstoqueMicrosiga.jsp?canal=$(canal)&amp;tipo=$(tipo)&amp;dado=$(mod)"/>
+    </do>
+    </p>
+</card>
+
+<card id="S">
+    <p>
+    <input title="Entre com o Codigo" type="text" format="*N" emptyok="false" maxlength="5" name="cod"/>
+    <do type="accept">
+        <go href="!DWIG!/ConsultaEstoqueMicrosiga.jsp?canal=$(canal)&amp;tipo=$(tipo)&amp;dado=$(cod)"/>
+    </do>
+    </p>
+</card>
+
+</wml>

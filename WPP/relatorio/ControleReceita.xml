@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<RelatorioProperties>
+	<Relatorios>
+		<Relatorio name="CTRExpurgoEstornoDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DATA_INICIAL"/>
+				<param mapName="DATA_FINAL"/>
+				<param mapName="PROMOCAO"/>
+				<param mapName="PROMOCAO"/>
+				<param mapName="CNS"/>
+				<statement>
+					SELECT r.dat_processamento,
+					       p.nom_promocao,
+					       r.idt_codigo_nacional,
+					       r.num_segundos_total,
+                           round((r.num_segundos_total*b.vlr_bonus_minuto)/60,2) as vlr_total,
+					       r.num_segundos_ff,
+                           round((r.num_segundos_ff*b.vlr_bonus_minuto_ff)/60,2) as vlr_ff,
+                           r.num_segundos_plano_noturno,
+					       round((r.num_segundos_plano_noturno*b.vlr_bonus_minuto_noturno)/60,2) as vlr_plano_noturno,
+                           r.num_segundos_plano_diurno,
+					       round((r.num_segundos_plano_diurno*b.vlr_bonus_minuto_diurno)/60,2) as vlr_plano_diurno,
+                           r.num_segundos_nao_bonificado,
+					       round((r.num_segundos_nao_bonificado*b.vlr_bonus_minuto)/60,2) as vlr_nao_bonificado,
+					       r.num_segundos_expurgo_fraude,
+                           round((r.num_segundos_expurgo_fraude*b.vlr_bonus_minuto)/60,2) as vlr_expurgo_fraude,
+					       r.num_segundos_estorno_fraude,
+                           round((r.num_segundos_estorno_fraude*b.vlr_bonus_minuto)/60,2) as vlr_estorno_fraude,
+					       r.num_segundos_tup,
+                           round((r.num_segundos_tup*b.vlr_bonus_minuto)/60,2) as vlr_tup,
+					       r.num_segundos_aigualb,
+                           round((r.num_segundos_aigualb*b.vlr_bonus_minuto)/60,2) as vlr_aigualb,
+                           r.num_segundos_ath,
+                           round((r.num_segundos_ath*b.vlr_bonus_minuto)/60,2) AS vlr_ath,
+                           r.num_segundos_movel_nao_brt,
+                           round((r.num_segundos_movel_nao_brt*b.vlr_bonus_minuto)/60,2) AS vlr_movel_nao_brt,
+                           r.num_segundos_falegratis,
+                           round((r.num_segundos_falegratis*b.vlr_bonus_minuto)/60,2) AS vlr_falegratis,
+                           r.num_segundos_bonus as num_segundos_bngb,
+                           round((r.num_segundos_bonus*b.vlr_bonus_minuto)/60,2) AS vlr_bngb,
+                           r.num_segundos_ct,
+                           round((r.num_segundos_ct*b.vlr_bonus_minuto_ct)/60,2) AS vlr_ct,
+					       r.vlr_bonus_total,
+					       r.vlr_bonus_adiantamento,
+					       r.vlr_bonus_total - r.vlr_bonus_adiantamento as vlr_bonus_a_conceder
+					  FROM tbl_rel_pula_pula r,
+					       tbl_pro_promocao p,
+                           tbl_pro_bonus_pula_pula b
+					 WHERE r.idt_promocao = p.idt_promocao
+                       AND b.idt_codigo_nacional = r.idt_codigo_nacional
+                       AND b.idt_plano_preco = (SELECT MIN(TO_NUMBER(idt_plano_preco)) 
+                                                  FROM tbl_pro_plano_preco pp
+                                                 WHERE pp.idt_promocao = r.idt_promocao)
+                       AND r.dat_processamento &gt;= b.dat_ini_periodo
+                       AND (b.dat_fim_periodo is null or r.dat_processamento &lt;= b.dat_fim_periodo)
+					   AND r.dat_processamento &gt;= to_date(?, 'DD/MM/YYYY')
+					   AND r.dat_processamento &lt;= to_date(?, 'DD/MM/YYYY')
+					   AND (r.idt_promocao = ? or ? = -1)
+					   AND instr(?, r.idt_codigo_nacional) &lt;&gt; 0				
+				  ORDER BY r.dat_processamento,
+				           r.idt_promocao,
+				           r.idt_codigo_nacional
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="dat_processamento"				showName="Data"									type="DATE"		mask="dd/MM/yyyy"	/>
+					<campo name="nom_promocao"					showName="Promoção"								type="STRING"						/>
+					<campo name="idt_codigo_nacional"			showName="Código Nacional"						type="INTEGER"						/>
+					<campo name="num_segundos_total"			showName="Duração Total (s)"					type="LONG"	                		/>
+					<campo name="vlr_total"						showName="Valor Total Bruto (R$)"				type="DOUBLE"	mask="##,##0.00"	/>
+					<campo name="num_segundos_ff"				showName="Duração: Amigos Toda Hora (s)"		type="LONG"							/>
+					<campo name="vlr_ff"						showName="Valor : Amigos Toda Hora (R$)"		type="DOUBLE"	mask="##,##0.00"	/>
+					<campo name="num_segundos_plano_noturno"	showName="Duração: Reduzido Noturno (s)"		type="LONG"							/>
+					<campo name="vlr_plano_noturno"				showName="Valor: Reduzido Noturno (R$)"			type="DOUBLE"	mask="##,##0.00"	/>
+					<campo name="num_segundos_plano_diurno"		showName="Duração: Reduzido Diurno (s)"			type="LONG"							/>
+					<campo name="vlr_plano_diurno"				showName="Valor: Reduzido Diurno (R$)"			type="DOUBLE"	mask="##,##0.00"	/>
+					<campo name="num_segundos_nao_bonificado"	showName="Duração: Não Bonificadas (s)"			type="LONG"      				    />
+					<campo name="vlr_nao_bonificado"			showName="Valor retirado: Não Bonificadas (R$)"	type="DOUBLE"	mask="##,##0.00"	/>
+					<campo name="num_segundos_expurgo_fraude"	showName="Duração: Indevidas Expurgadas (s)"	type="LONG"	                		/>
+					<campo name="vlr_expurgo_fraude"			showName="Valor retirado: Indevidas Expurgadas (R$)"	type="DOUBLE"	mask="##,##0.00"	/>
+					<campo name="num_segundos_estorno_fraude"	showName="Duração: Indevidas Estornadas (s)"	type="LONG"							/>
+					<campo name="vlr_estorno_fraude"			showName="Valor retirado: Indevidas Estornadas (R$)"	type="DOUBLE"	mask="##,##0.00"	/>
+					<campo name="num_segundos_tup"				showName="Duração: TUP 15 (s)"					type="LONG"							/>				
+					<campo name="vlr_tup"						showName="Valor retirado: TUP 15 (R$)"			type="DOUBLE"	mask="##,##0.00"	/>
+					<campo name="num_segundos_aigualb"			showName="Duração: Origem = Destino (s)"		type="LONG"							/>		
+					<campo name="vlr_aigualb"					showName="Valor retirado: Origem = Destino (R$)" type="DOUBLE"	mask="##,##0.00"	/>
+					<campo name="num_segundos_ath"				showName="Duração: Novo Amigos Toda Hora (s)"	type="LONG"							/>		
+					<campo name="vlr_ath"						showName="Valor: Novo Amigos Toda Hora (R$)"	type="DOUBLE"	mask="##,##0.00"	/>
+					<campo name="num_segundos_movel_nao_brt"	showName="Duração: Móvel Não BrT (s)"			type="LONG"							/>		
+					<campo name="vlr_movel_nao_brt"				showName="Valor: Móvel Não BrT (R$)"			type="DOUBLE"	mask="##,##0.00"	/>
+					<campo name="num_segundos_falegratis"		showName="Duração: Fale Grátis (s)"				type="LONG"							/>		
+					<campo name="vlr_falegratis"				showName="Valor retirado: Fale Grátis (R$)"		type="DOUBLE"	mask="##,##0.00"	/>
+					<campo name="num_segundos_bngb"				showName="Duração: BNGB (s)"					type="LONG"							/>	
+					<campo name="vlr_bngb"						showName="Valor retirado: BNGB (R$)"			type="DOUBLE"	mask="##,##0.00"	/>
+					<campo name="num_segundos_ct"				showName="Duração: CT (s)"						type="LONG"							/>	
+					<campo name="vlr_ct"						showName="Valor: CT (R$)"						type="DOUBLE"	mask="##,##0.00"	/>
+					<campo name="vlr_bonus_total"				showName="Total de Bônus Líquido (R$)"			type="DOUBLE"	mask="##,##0.00"	/>	
+					<campo name="vlr_bonus_adiantamento"		showName="Total de Adiantamento (R$)"			type="DOUBLE"	mask="##,##0.00"	/>		
+					<campo name="vlr_bonus_a_conceder"			showName="Total de Bônus a Conceder (R$)"		type="DOUBLE"	mask="##,##0.00"	/>		
+				</registro>
+			</dados>
+		</Relatorio>
+	</Relatorios>
+</RelatorioProperties>

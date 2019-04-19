@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+<card id="m1095">
+<p>
+    Participe da promocao Selecao do Faustao e concorra a 2006 premios! <br/>
+    'Quantas vezes a Selecao do Brasil foi campea da Copa do Mundo?'
+    <input title="Resposta:" type="text" value="cinco" name="nu" format="*M" emptyok="false" maxlength="5" />
+    <select title="88490" name="msg">
+        <option onpick="#b">Enviar</option>
+        <option onpick="#c">Info / Tarifa</option>
+    </select>
+    </p>
+</card>
+
+<card id="b">
+    <p>
+    <sendsm>
+        <destaddress value="88490"/>
+        <userdata smtextenc="SMS-DEFAULT">$(nu)</userdata>
+     </sendsm>
+    </p>
+</card>
+
+<card id="c">
+    <p>
+        Confira o regulamento no site http://globo.com/selecaodofaustao.<br/>
+        Custo: R$ 4,00 + impostos por mensagem enviada.
+    <do type="accept">
+        <go href="#m1095"/>
+    </do>
+    </p>
+</card>
+
+</wml>

@@ -1,0 +1,15 @@
+#parse("menuVertical.vm")
+<h6><b>Sumarização de Receita de Dados por Produto</b></h6>
+<table width="100%">
+    <tr>
+		<td> Data de Execução</td>
+		<td>$procBatchSumarizacaoProdutoPlanoForm.dataExecucao</td>
+	</tr>
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$procBatchSumarizacaoProdutoPlanoForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+<wml>
+
+<card>
+    <p>
+    Clientes Brasil Telecom GSM ganham a pipoca na compra de 1 ingresso de cinema no Cinesystem. Clique OK.
+    </p>
+    <p>
+        <select title="Cinema" name="msg">
+
+        </select>
+    </p>
+</card>
+
+<card id="pip">
+    <p>
+        Voce recebera em instantes 1 mensagem de texto com a Promocao. Clique OK.
+        <go enterwait="false" href="!CWIG!/msgPromocional?pr=$(msg)&amp;bts=2&amp;btc=7004"/>
+    </p>
+</card>
+
+  <card id="pgc">
+    <p>
+        Disk Cinesystem $(msg) (ligacao local). Clique OK.
+        <setupcall cmdqualifier="if-not-busy">    
+        <destaddress value="$(msg)" wibenc="SMS-DEFAULT"/>    
+    </setupcall>
+   </p>
+  </card>
+</wml>

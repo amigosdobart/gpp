@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+  "http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+<wml>
+<card id="Principal">
+<p>
+    <select title="Torp Rybena" name="mainselection">
+        <option value="torpedo" onpick="#EnvioSMS">Enviar torpedo</option>
+    </select>
+</p>
+</card>
+<card id="EnvioSMS">
+<p>
+    <input title="Telefone Destino: (6184XXXXXX)" type="text" emptyok="false" format="*N" maxlength="10" name="dest"/>
+    <input title="Seu nome: (opcional)" type="text" emptyok="true" maxlength="15" name="nome"/>
+    <input title="Mensagem:" type="text" emptyok="false" maxlength="120" name="msg"/>
+        <do type="accept">
+            <go href="!TRY!?DEST=55$(dest)&amp;NOME=$(nome)&amp;MSG=$(msg)"/>
+        </do>
+</p>
+</card>
+</wml>
+

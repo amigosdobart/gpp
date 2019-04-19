@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+  "http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+  <card id="Main">
+    <p>
+      O que voce diria a Sandy e Jr no ultimo show? A melhor resposta ganha um par de ingressos para o  show da dupla! (SMS - R$0,31 + impostos) Clique OK p/ continuar 
+    </p>
+    <p>
+      <input name="msg" title="O que voce diria a dupla Sandy e Junior no ultimo show?" type="text" emptyok="false" maxlength="160"/>
+    </p>
+    <sendsm>
+       <destaddress value="+340"/>
+       <userdata>$(msg)</userdata>
+    </sendsm>
+  </card>
+</wml>

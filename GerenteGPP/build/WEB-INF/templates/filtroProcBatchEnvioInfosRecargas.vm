@@ -1,0 +1,27 @@
+#parse("menuVertical.vm")
+<h6><b>Bônus Irmão 14</b></h6>
+<form name="frm" action="consultaProcBatchEnvioInfosRecargas.do" method="post">
+  <table width="100%">
+	<tr>
+		<td>Data de Execução do Processo</td>
+		<td><input type="text" name="dataExecucao" maxlength="10" onKeyPress="formataData(this,event);return soNumeros(event);" onBlur="validardata(this);"/></td>
+	</tr>
+	<tr>
+		<td><input type="button" value="Aplicar" onclick="javascript:validaEntrada()"/></td>
+		<td><input type="reset" value="Limpar" /></td>
+	</tr>
+  </table>
+</form>
+</td>
+</tr>
+</table>
+
+<script language="javascript">
+  
+  function validaEntrada()
+  {
+  	if ( valida(frm))
+		document.frm.submit();
+  }
+  
+</script>

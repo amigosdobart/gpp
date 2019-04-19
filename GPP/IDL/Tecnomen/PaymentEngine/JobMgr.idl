@@ -1,0 +1,235 @@
+/* $Id: JobMgr.idl,v 1.20 2004/08/17 11:33:17 liam Exp $ */
+
+//
+// NAME		: JobMgr.idl
+// CREATED BY	: Declan Lynch
+// DATE 	: May 2003
+// COPYRIGHT	: 
+// DESCRIPTION	: 
+// This interface describes the JobMgr object
+//
+
+#ifndef __JOBMGR_IDL
+#define __JOBMGR_IDL
+
+#include <Exceptions.idl>
+#include <Types.idl>
+#include <TINCdefs.idl>
+
+#ifdef _TINC_MODULE
+module TINC {
+#endif //_TINC_MODULE
+
+///////////////////////////////////////////////////////////////
+//////////////////// JOB MANAGER INTERFACE ////////////////////
+///////////////////////////////////////////////////////////////
+
+    interface JobMgr
+    {
+	long getJobListings(inout tincSeq pSeq, inout recordSeq rSeq)
+	    raises (Pi_exception);
+
+	long setJobTimes(inout tincSeq pSeq)
+	    raises (Pi_exception);
+
+	long getJobStats(inout tincSeq pSeq, inout recordSeq rSeq)
+	    raises (Pi_exception);
+
+	short getOpState(in long jobNo)
+	    raises (Pi_exception);
+
+	short getJobState(in long jobNo)
+	    raises (Pi_exception);
+    };
+
+/////////////////////////////////////////////////////////////
+//////////////////// VOUCHER JOB DETAILS ////////////////////
+/////////////////////////////////////////////////////////////
+
+    struct VoucherJobDetails
+    {
+	short		opState;
+
+	/* Subscriber attributes */
+	string<34>	subId;
+	unsigned short	serviceStatus;
+	unsigned short	accountStatus;
+	long		accountBalance;
+	TDateTime	expiryDate;
+	long		periodicBalance;
+	TDateTime	periodicExpiry;
+	long		bonusBalance;
+	TDateTime	bonusExpiry;
+	long		smBalance;
+	TDateTime	smExpiry;
+	long		dataBalance;
+	TDateTime	dataExpiry;
+	TDateTime	suspendDate;
+	short		rechargeFraudCounter;
+	short		totalRechargeErrorCounter;
+	short		balanceNotificationStatus;
+	short		expiryNotificationStatus;
+	short		smBalanceNotificationStatus;
+	short		smExpiryNotificationStatus;
+	unsigned short	profileId;
+	unsigned long	subOptions;
+	unsigned long	voucherTypesQueue;
+	unsigned short	voucherTypesQueueSize;
+	TDateTime	ivrQueryExpiryDate;
+	unsigned short	ivrQueryCounter;
+	short           discountPercentage;
+
+	/* voucher attributes */
+	short 		voucherType;
+	short 		currencyCode;
+	short		tariffPlanId;
+	string<20>	voucherNo;
+	long		faceValue;
+	long		actualValue;
+	long		bonusFaceValue;
+	long		bonusActualValue;
+	long		smFaceValue;
+	long		smActualValue;
+	long		dataFaceValue;
+	long		dataActualValue;
+
+	/* extra info required */
+	long 	        extBonusAmount;
+	TDateTime	transactionDate;
+    };
+
+    interface VoucherJobMgr : JobMgr
+    {
+	boolean getJobDetails(in long jobNo, inout VoucherJobDetails vjd)
+	    raises (Pi_exception);
+    };
+
+/////////////////////////////////////////////////////////////////////
+//////////////////// PUBLIC JOB ENUMERATED TYPES ////////////////////
+/////////////////////////////////////////////////////////////////////
+
+    interface JobOperation
+    {
+	enum Code
+	{
+            None,                    // 0
+            CreateUser,              // 1
+            DeleteUser,              // 2
+            AddPPService,            // 3
+            RemovePPService,         // 4
+            AddVMailService,         // 5
+            RemoveVMailService,      // 6
+            GetPPArchiveList,        // 7
+            ArchivePPService,        // 8
+            ArchiveUser,             // 9
+            UpdatePPMIN,             // 10
+            TVMCreatePrintOrder,     // 11
+            TVMReceivePrintOrder,    // 12
+            TVMIssueOrderRange,      // 13
+            TVMIssueBoxRange,        // 14
+            TVMIssueBatchRange,      // 15
+            TVMActivateOrderRange,   // 16
+            TVMActivateBoxRange,     // 17
+            TVMActivateBatchRange,   // 18
+            TVMDistributeBoxRange,   // 19
+            TVMCleanupVoucher,       // 20
+            TVMArchiveVoucher,       // 21
+            VoucherRecharge,         // 22
+            TVMRegenOrder,           // 23
+            LastOne                  // 24
+	};
+    };
+
+    interface JobService
+    {
+        enum Code
+	{
+            None,                    // 0
+            Provisioning,            // 1
+            VoucherMgmt,             // 2
+            Payment,                 // 3
+            LastOne                  // 4
+        };
+    };
+
+    interface JobState
+    {
+	enum Code
+	{
+            Completed,               // 0
+            New,                     // 1
+            Waiting,                 // 2
+            Ready,                   // 3
+            BeingUsed,               // 4
+            WIP,                     // 5
+            Rolledback,              // 6
+            Failed,                  // 7
+            InternalError,           // 8
+            Cancelled,               // 9
+            RetriedOut,              // 10
+            None,                    // 11
+            LastOne                  // 12
+        };
+    };
+
+///////////////////////////////////////////////////////////////////////
+//////////////////// PARAMETER SEQUENCE DEFINITIONS ///////////////////
+///////////////////////////////////////////////////////////////////////
+
+    interface GetJobListingsPSeq
+    {
+	enum GetJobListingsPSeqAttributes
+	{
+            ServiceType,             // 0
+            JobOwner,                // 1
+            LastOne                  // 2
+	};
+    };
+    
+    interface GetJobListingsRSeq
+    {
+	enum GetJobListingsRSeqAttributes
+	{
+            JobNo,                   // 0
+            JobState,                // 1
+            OperationType,           // 2
+            OperationState,          // 3
+            DateIssued,              // 4
+            DateCompleted,           // 5
+            DateUpdated,             // 6
+            WorkTotal,               // 7
+            WorkDone,                // 8
+            DateStartAfter,          // 9
+            DateStartBefore,         // 10
+            OperationMsg,            // 11
+            LastOne                  // 12
+	};
+    };
+
+    interface SetJobTimesPSeq
+    {
+	enum SetJobTimesPSeqAttributes
+	{
+            JobNo,                 // 0
+            StartTime,             // 1
+            EndTime,               // 2
+            LastOne                // 3
+	};
+    };
+
+#ifdef _TINC_MODULE
+};
+#endif //_TINC_MODULE
+
+#endif
+
+/*
+  $Log: JobMgr.idl,v $
+  Revision 1.20  2004/08/17 11:33:17  liam
+  new setJobTimes method
+
+  Revision 1.19  2004/07/22 11:45:41  liam
+  getJobListings work
+
+  Revision 1.13  2004/07/19 14:25:44  liam
+*/

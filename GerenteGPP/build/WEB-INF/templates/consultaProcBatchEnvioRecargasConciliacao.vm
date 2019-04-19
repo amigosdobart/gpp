@@ -1,0 +1,15 @@
+#parse("menuVertical.vm")
+<h6><b>Conciliação</b></h6>
+<table width="100%">
+    <tr>
+		<td> Data de Execução</td>
+		<td>$procBatchEnvioRecargasConciliacaoForm.dataExecucao</td>
+	</tr>
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$procBatchEnvioRecargasConciliacaoForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+  <card id="des">
+    <p>
+       Clientes Brasil Telecom GSM tem 25% de desconto nos medicamentos genericos na Drogaria Rosario da Ceilandia. Clique OK
+        <select title="Drog Rosario" name="msg">
+            <option onpick="#C1">Desconto</option>
+        </select>
+    </p>
+</card>
+
+<card id="C1">
+    <p>
+        Voce recebera uma mensagem com a promocao. Clique OK.
+    <do type="accept">
+        <go enterwait="false" href="!CWIG!/msgPromocional?pr=5&amp;bts=2&amp;btc=7006" />
+    </do>
+    </p>
+</card>
+
+</wml>

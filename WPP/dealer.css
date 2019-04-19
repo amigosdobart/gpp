@@ -1,0 +1,214 @@
+body,input,select,textarea {font:11px verdana;margin:0px;padding:0px;color:#666666;background: #D3D8DC;}
+
+td {font:11px verdana;}
+
+#logo { position:absolute; top: 14px; left:15px;}
+
+#topo {
+   width: 775px;
+	height:98px;
+	background: url(img/hdr_tab.gif) no-repeat top left;
+	margin:0px;
+}
+
+#dados{width:245px;height:17px; float: right; margin-top: 36px;
+	margin-right: 10px;
+	text-align: right; }
+
+#headermenu { position:absolute; top: 73px; left:40px;}
+
+#linhaverde { width:775px;height:50%; border: 7px solid #96BF49; }
+
+#linhaverdehome { width:775px;height:50%; border: 7px solid #96BF49; padding: 13px 10px 10px 12px  }
+
+#linhacinzahome { width:100%;height:100%; background-color: #E8ECEF;  padding-top: 5px;
+ padding-left: 5px;  padding-bottom: 5px; padding-right: 0px;  }
+
+#menulateralhome {width:187px;  background-color: #ffffff;
+		  padding-top: 8px;}
+
+h6 {background-image:url(img/dot_verde.gif);
+background-repeat:no-repeat; font-weight:normal;font-size:11px;
+margin:0px 0px 0px 5px; padding: 0px 0px 0px 10px;}
+
+#menulateralhome2 {width:187px;background-image:url(img/btm_olho_concorrencia_home.gif);
+       background-repeat:no-repeat;  background-color: #ffffff;
+		  padding-top: 25px; }
+
+#menulateral1{width:187px; background-color: #ffffff;
+		  padding-top: 8px;  float: right;}
+
+#menulateral2{width:187px;background-image:url(img/btm_olho_concorrencia.gif);
+       background-repeat:no-repeat;  background-color: #ffffff;
+		  padding-top: 25px; float: right;}
+
+#menulateral3{width:187px;background-image:url(img/btm_informacoes_home.gif);
+       background-repeat:no-repeat;  background-color: #ffffff;
+		  padding-top: 25px; float: right;}
+
+#menulateral4{width:187px;background-image:url(img/btm_atendimento.gif);
+       background-repeat:no-repeat;  background-color: #ffffff;
+		  padding-top: 25px; float: right;}
+
+#menulateral5{width:187px;background-image:url(img/btm_informacoes_home.gif);
+       background-repeat:no-repeat; background-color: #ffffff;
+		  padding-top: 25px; float: left;}
+
+#menulateral6{width:187px;background-image:url(img/btm_atendimento_home.gif);
+       background-repeat:no-repeat; background-color: #ffffff;
+		  padding-top: 25px; float: left;}
+
+#menulateral7{width:187px;background-image:url(img/btm_logistica_home.gif);
+       background-repeat:no-repeat;  background-color: #ffffff;
+		  padding-top: 25px; float: left;}
+
+#menulateral8{width:187px;background-image:url(img/btm_logistica.gif);
+       background-repeat:no-repeat;  background-color: #ffffff;
+		  padding-top: 25px; float: right;}
+
+#voltar {position:absolute; top: 117px; left:690px;
+ width:49px;height:17px;}
+
+table { padding: 0px;}
+
+.txt2 {font:9px verdana;}
+
+.txt3 {font:9px verdana; color: #96B08B;}
+
+a {color:#1E5C00; text-decoration:none;}
+a img {border: none;}
+a:hover {text-decoration:underline;}
+
+
+#dwDiv{width:175px;height:50%;background-image:url(img/t_top.gif);
+       background-repeat:no-repeat;  background-color: #ffffff;
+		  padding: 10px;}
+
+#dwDiv2 {width:191px;height:50%;background-image:url(img/t_top2.gif);
+       background-repeat:no-repeat;  background-color: #ffffff;
+		  padding: 10px;}
+
+#ntDiv{width:175px; background-image:url(img/t_top.gif);
+       background-repeat:no-repeat;  background-color: #ffffff;
+		  padding: 6px;}
+
+.bcrumb {color:#41772C; font-size:9px;}
+a.bcrumb {color:#41772C; font-size:9px;}
+
+.sep {color:#FFFFFF; font-size:10px;}
+
+.fontBold {color:#16360C; font-weight:bold; font-size:11px;}
+a.fontBold {color:#16360C; font-weight:bold; font-size:11px;}
+
+.fontBold3 {color:#16360C; font-weight:bold; font-size:9px;}
+
+.fontBold2 {color:#16360C; font-weight:bold; font-size:14px;}
+
+.fontverde {color:#16360C; font-size:11px;}
+
+.fontverdepuro {color:#00AA00; font-size:11px;}
+
+.fontvermelho {color:#FF0000; font-size:11px;}
+
+.fontazul {color:"#3333FF"; font-size:11px;}
+
+.titverde {color:#1E5C00; font-size:11px; font-weight:bold;}
+
+.fontverde1 {color:#83C200; font-size:11px; font-weight:bold;}
+a.fontverde1 {color:#83C200; font-size:11px; font-weight:bold;}
+
+.fontverde2 {color:#183411; font-size:11px; font-weight:bold;}
+a.fontverde2 {color:#183411; font-size:11px; font-weight:bold;}
+
+.fontverde2p {color:#83C200; font-size:10px; font-weight:bold;}
+
+.fontverde3 {color:#497D32; font-size:11px; font-weight:bold;}
+
+.fontverde4 {color:#339900; font-size:11px; font-weight:bold;}
+
+.fontcinza {color:#616264; font-size:10px; font-weight:bold;}
+a.fontcinza {color:#616264; font-size:10px; font-weight:bold;}
+
+.fontcinza2 {color:#616264; font-size:9px;}
+
+.fontcinza3 {color:#616264; font-size:9px; font-weight:bold;}
+
+.fontcinza4 {color:#616264; font-size:11px; font-weight:bold;}
+a.fontcinza4 {color:#616264; font-size:11px; font-weight:bold;}
+
+
+.fontcinzag {color:#616264; font-size:15px; font-weight:bold;}
+
+.fontred {color: #FF0000; font-size:11px;  text-decoration: line-through;  }
+
+.tit {font:14px verdana;color: #16350B;letter-spacing:0px;font-weight:bold;}
+
+input,select,option,textarea{background-color:#F5F7F8;border:1px solid #B7BCBF;}
+
+h3{font-size:11px;margin:5px 0px 5px 0px;color:#183411; font-weight: normal;}
+
+h4{font-size:11px;margin:5px 0px 5px 0px;color:#183411; font-weight: bold;}
+
+h1{font-size:12px;margin:5px 0px 5px 0px;color:#183411;
+ font-weight: bolder;  letter-spacing: 0px; }
+
+h2{font-size:11px;margin:5px 0px 5px 0px;color:#183411;
+ font-weight: bolder;  letter-spacing: 0px; }
+
+td.dotted { border: 1px #B8BCBF dotted; font:10px verdana;color: #16350B;}
+
+
+/*   menus serviços */
+
+#servico_mensagem {width:123px;background-image:url(img/m_serv_mensagem.gif);
+       background-repeat:no-repeat;  background-color: #ffffff;
+		  padding-top: 25px; }
+
+#servico_imagem {width:123px;background-image:url(img/m_serv_imagem.gif);
+       background-repeat:no-repeat;  background-color: #ffffff;
+		  padding-top: 25px; }
+
+#servico_somv {width:123px;background-image:url(img/m_serv_somv.gif);
+       background-repeat:no-repeat;  background-color: #ffffff;
+		  padding-top: 25px; }
+
+#servico_diversao {width:123px;background-image:url(img/m_serv_diversao.gif);
+       background-repeat:no-repeat;  background-color: #ffffff;
+		  padding-top: 25px; }
+
+#servico_inteligente {width:123px;background-image:url(img/m_serv_inteligente.gif);
+       background-repeat:no-repeat;  background-color: #ffffff;
+		  padding-top: 25px; }
+
+#servico_tarifas {width:123px; background-color: #CBEB02;
+		  padding: 5px; }
+
+
+h5 {background-image:url(img/dot_verde.gif);
+background-repeat:no-repeat; font-weight:normal;font-size:11px;
+margin:0px 0px 0px 6px; padding: 0px 0px 3px 10px;}
+
+h5.tarifas {background-image:url(img/dot_verde_serv.gif);
+background-repeat:no-repeat; font-weight:normal;font-size:11px;
+margin:0px 0px 0px 1px; padding: 0px 0px 3px 10px;}
+
+.cap1 { float: left; width: 20px; font-size: 25px; line-height: 90%; }
+
+.cap { float: left; width: 20px; margin-bottom: 20px;
+ }
+.fonteverdenormal {
+	color: #83C200;
+	font-style: normal;
+
+}
+
+	table.padraoverde 			{border: solid 1px solid #96BF49; background-color:#FFFFFF; border-collapse: collapse;}
+	table.padraoverde th 		{border: solid 1px solid #C0E0AF; padding: 5px 2px 5px 2px; text-align:center; color:#497D32; font-size:11px; font-weight:bold; background-color:#E1EA99; }
+	table.padraoverde td 		{border: solid 1px solid #C0E0AF; padding: 2px; text-align:left; color:#16360C; font-size:11px;}
+	table.padraoverde tr.linhaAtiva	{background-color:#F6FFE8;}
+
+	table.padraoverde2 		{border: solid 1px solid #96BF49; background-color:#FFFFFF; border-collapse: collapse;}
+	table.padraoverde2 th 	{border: solid 1px solid #C0E0AF; padding: 3px 2px 3px 2px; text-align:left; color:#497D32; font-size:11px; font-weight:bold; background-color:#E1EA99; }
+	table.padraoverde2 td 	{border: solid 1px solid #C0E0AF; padding: 2px;; text-align:left; color:#616264; font-size:11px;}
+	table.padraoverde2 .bloqueado {background-color:#FFFFFF; border: solid 1px #FFFFFF}
+

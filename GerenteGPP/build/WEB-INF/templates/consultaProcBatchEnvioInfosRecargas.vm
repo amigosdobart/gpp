@@ -1,0 +1,15 @@
+#parse("menuVertical.vm")
+<h6><b>Bônus Irmão 14</b></h6>
+<table width="100%">
+    <tr>
+		<td> Data de Execução</td>
+		<td>$procBatchEnvioInfosRecargasForm.dataExecucao</td>
+	</tr>
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$procBatchEnvioInfosRecargasForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

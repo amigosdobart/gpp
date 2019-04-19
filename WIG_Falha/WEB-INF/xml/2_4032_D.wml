@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+<wml>
+<card id="jogos">
+<p>
+<providelocalinfo cmdqualifier="imei" destvar="I"/>
+    <select title="Jogos" name="msg">
+        <option onpick="!S1!GAME&amp;i=$(I)">JogoDownload</option>
+        <option onpick="!FP!">Fulano Premiado</option>
+        <option onpick="!EGO3!">EGO</option>
+        <option onpick="!JQ1!">Quiz</option>
+        <option onpick="!JF!?c=INI">FutCel</option>
+        <option onpick="!JS3!">Sr. da Guerra</option>
+        <option onpick="!BA!">Bolao</option>
+        <option onpick="!BC!promo">Joga Brasil</option>
+        <option onpick="#wigc" value="4043">GROW</option>
+        <option onpick="!AGITO3!">NoAgito</option>
+       
+    </select>
+</p>
+</card>
+<card id="wigc">
+  <do type="accept">
+    <go href="!WIGC!?bts=2&amp;btc=$(msg)" />
+  </do>
+</card>
+</wml>

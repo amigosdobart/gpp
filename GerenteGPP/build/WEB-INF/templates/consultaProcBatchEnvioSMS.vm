@@ -1,0 +1,16 @@
+#parse("menuVertical.vm")
+<h6><b>Envio de SMS</b></h6>
+<table width="100%">
+	<tr>
+		<td><b>&nbsp;Resultado:</b> </td>
+		<td>#if ($procBatchEnvioSMSForm.resultado)
+				SMS enviado com <b>sucesso</b>
+			#else
+				SMS <b>não</b> enviado
+			#end
+		 </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

@@ -1,0 +1,63 @@
+File MMS_outfile
+{
+    Record ER_header *
+    {
+        Fixed RECORD_CODE             *  1   ascii           '0' 
+        Field SWITCH_ID               *  6   ascii     L/' ' ' '
+        Field START_DATE              *  8   ascii     R/' ' ' '
+        Field START_TIME              *  6   ascii     R/' ' ' ' 
+        Fixed FILLER                  *  200 ascii           '0'
+        Fixed END_OF_RECORD           *  1   ascii           '>'
+        Fixed LINE_FEED               *  *   bin             0x0a    
+    }
+    Record ER_record *
+    {
+        Fixed RECORD_CODE             *  1   ascii           '<'
+        Field A_LONG_DISTANCE_CODE    *  4   ascii     R/'0' '0' 
+        Field A_PREFIX                *  4   ascii     R/' ' ' '
+        Field A_MCDU                  *  4   ascii     R/' ' ' '
+        Fixed EMPTY                   *  5   ascii           ' '
+        Field A_TERMINAL_TYPE         *  1   ascii     L/' ' ' '
+        Fixed EMPTY                   *  3   ascii           ' '
+        Field A_EOT                   *  8   ascii     R/' ' ' '
+        Fixed EMPTY                   *  2   ascii           ' '
+        Field MESSAGE_TYPE            *  1   ascii     R/' ' ' '
+        Fixed COUNTRY_CODE            *  3   ascii           ' '
+        Field TRANSFERED_VOLUME       *  17  ascii     R/'0' '0'
+        Fixed EMPTY                   *  31  ascii           ' '
+        Field TRANS_START_TIME        *  6   ascii     L/' ' ' '
+        Field TRANS_DURATION          *  6   ascii     R/'0' '0'
+        Field TRANS_START_DATE        *  8   ascii     L/' ' ' '
+        Field FILE_SEQ_NUM            *  5   ascii     R/'0' '0'
+        Field FILE_GENERAT_TIME       *  6   ascii     L/' ' ' '
+        Field FILE_GENERAT_DATE       *  6   ascii     L/' ' ' '
+        Fixed EMPTY                   *  5   ascii           ' '
+        Field EVENT_CODE              *  2   ascii     L/' ' ' '
+        Fixed EMPTY                   *  1   ascii           ' '
+        Field TARIFF_CLASS            *  3   ascii     L/' ' ' '
+        Fixed EMPTY                   *  17  ascii           ' '        
+        Field B_LONG_DISTANCE_CODE    *  4   ascii     R/'0' '0'
+        Field B_PREFIX                *  4   ascii     R/' ' ' '
+        Field B_MCDU                  *  4   ascii     R/' ' ' '
+        Fixed EMPTY                   *  5   ascii           ' '
+        Field B_TERMINAL_TYPE         *  1   ascii     L/' ' ' '
+        Fixed EMPTY                   *  3   ascii           ' '
+        Field B_EOT                   *  8   ascii     R/' ' ' '
+        Field CALL_VALUE              *  12  ascii     R/' ' ' '
+        Field RECORD_NUMBER           *  10  ascii     R/'0' '0'
+        Field IMSI                    *  15  ascii     R/'0' '0'
+        Field CELL_ID                 *  6   ascii     R/'0' '0'
+        Fixed END_OF_RECORD           *  1   ascii           '>'
+        Fixed LINE_FEED               *  *   bin             0x0a
+    }
+    Record ER_trailer *
+    {
+        Fixed RECORD_CODE             *  1   ascii           '9'
+        Field START_DATE              *  8   ascii     R/' ' ' '
+        Field START_TIME              *  6   ascii     R/' ' ' ' 
+        Field AMOUNT_OF_RECORDS       *  9   ascii     R/' ' ' '
+        Fixed FILLER                  *  197 ascii           '0'
+        Fixed END_OF_RECORD           *  1   ascii           '>'
+        Fixed LINE_FEED               *  *   bin             0x0a
+    }
+}

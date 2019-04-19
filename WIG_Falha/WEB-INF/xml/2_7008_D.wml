@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+<card id="RbK">
+    <p>
+       Promocao para clientes BrT, toda a linha de equipamentos de ginastica Reebok em ate 10 x sem juros. Clique OK
+    </p>
+    <p>
+    <select title="Reebok" name="msg">
+        <option onpick="#a">Cardiovascular</option>
+        <option value="Estacoes de musculacao e aparelhos individuais.">Musculacao</option>
+        <option value="Bancos, bolas, pesos, colchonetes e abdominais.">Acessorios</option>
+      </select>
+    </p>
+    <p>
+        $(msg) Clique Ok e confira!
+    <do type="accept">
+        <go href="#d"/>
+    </do>
+    </p>
+</card>
+
+  <card id="a">
+    <p>
+    Esteiras, bicicletas e elitpticos com design e tecnologia de ponta Reebok.Clique Ok e confira!
+    <do type="accept">
+        <go href="#d"/>
+    </do>
+    </p>
+</card>
+
+<card id="d">
+    <p>
+    <setupcall cmdqualifier="if-not-busy">
+        <destaddress value="33289091"/>
+    </setupcall>
+    <do>
+        <go enterwait="false" href="!WIGC!?bts=2&amp;btc=7009" />
+    </do>
+   </p>
+</card>
+</wml>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+<card>
+    <p>
+    <select name="s" title="Messenger">
+        <option onpick="#b">Login</option>
+        <option onpick="#f">Enviar Msg</option>
+        <option value="add">Incluir</option>
+        <option onpick="#i">Sair</option>
+    </select>
+    </p>
+    <do type="accept">
+        <go href="!CM3!$(s)"/>
+    </do>
+</card>
+
+<card id="b">
+    <p>
+    <select name="o" title="Login">
+        <option value="2">Yahoo</option>
+        <option value="3">MSN</option>
+        <option value="4">ICQ</option>
+    </select>
+    </p>
+    <do type="accept">
+        <go href="!CM1!?cm=31&amp;dm=$(o)&amp;op=5"/>
+    </do>
+</card>
+
+<card id="f">
+    <p>
+    <select name="pm" title="Chat com">
+        <option onpick="#d">Contatos ativos</option>
+        <option value="0">Ultimos Ativos</option>
+    </select>
+    <do type="accept">
+        <go href="!CM1!?cm=58&amp;op=5"/>
+    </do>
+    </p>
+</card>
+
+<card id="d">
+    <p>
+    <select name="o" title="Meu contatos">
+        <option value="2">Yahoo</option>
+        <option value="3">MSN</option>
+        <option value="4">ICQ</option>
+        <option value="0">Usrs Anonimos</option>
+        <option value="1">Usrs Conhecidos</option>
+    </select>
+    </p>
+    <do type="accept">
+        <go href="!CM1!?cm=3&amp;dm=$(o)&amp;op=5"/>
+    </do>
+</card>
+
+<card id="i">
+    <p>
+    <select name="o" title="Sair">
+        <option value="2">Yahoo</option>
+        <option value="3">MSN</option>
+        <option value="4">ICQ</option>
+        <option value="0">Todos</option>
+    </select>
+    </p>
+    <do type="accept">
+        <go href="!CM1!?cm=9&amp;dm=$(o)&amp;op=5"/>
+    </do>
+</card>
+</wml>

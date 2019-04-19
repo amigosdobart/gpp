@@ -1,0 +1,627 @@
+
+/* $Workfile:   PP_OpenInterface.idl  $ $Revision: 1.14 $ */
+
+//
+// NAME		: PP_OpenInterface.idl
+//
+// CREATED BY	: Attila Madarasz
+// DATE 	: 20/07/00
+//
+// COPYRIGHT	: 
+//
+// DESCRIPTION	: 
+// Describes the PP_OpenInterface IDL
+//
+#ifndef __PP_OpenInterface_IDL
+#define __PP_OpenInterface_IDL
+
+#include <PPExceptions.idl>
+#include <Types.idl>
+
+/////////////////////////////////////////////////////////
+//
+// Enumerated Types
+//
+/////////////////////////////////////////////////////////
+
+// to differentiate between basic and complex datatypes
+enum eFieldType	{basic,		// basic CORBA type
+		 dtime		// TDateTime structure type
+		};
+
+// to differentiate between basic and complex datatypes
+enum eUsageType	{key,		// mandatory key data
+		 mandatory,	// mandatory data
+		 optional,	// optional data
+		 data		// output data
+		};
+
+// to differentiate between various user types
+enum eUserType	{eOperator,	         // an Operator
+                 eAgent,	         // an Agent
+                 eVoucherAdministrator,  // an Voucher Administrator
+		 eAdministrator	         // an Administrator
+		};
+
+/////////////////////////////////////////////////////////
+//
+// Parameter Input/Output Structures
+//
+/////////////////////////////////////////////////////////
+
+// record to describe the data
+struct legendRecord {
+    // field identifier (starting at zero for each operation)
+    long	id;
+
+    // field name
+    string<30>	name;
+
+    // whether the field is required or not
+    eUsageType	usage;
+
+    // type of record
+    eFieldType	type;
+
+    // field maximum length (used for string types)
+    short	maxLength;
+
+    // description of field usage
+    string	description;
+
+    // default value
+    any		defaultValue;
+};
+
+// Legend Sequence
+typedef sequence<legendRecord> legendSeq;
+
+// record used for both in and out parameters
+struct paramRecord {
+    long	id;
+    any		value;		// interpretted in conjunction with
+				// the fields 'type'.
+};
+
+// Parameter Sequence
+typedef sequence<paramRecord> paramSeq;
+
+// record Sequence (sequence of paramSeq)
+typedef sequence<paramSeq> recordSeq;
+
+// record used for configuration information
+struct configRecord {
+    string<30>	name;
+    short	id;
+    string<30>	value;		// interpretted in conjunction with
+				// the fields 'name'.
+};
+
+// Config Parameter Sequence
+typedef sequence<configRecord> configSeq;
+
+/////////////////////////////////////////////////////////
+//
+// PP_ProfileFeatureManager IDL Interface
+//
+/////////////////////////////////////////////////////////
+
+interface PP_ProfileFeature_Manager {
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL Attributes
+    //
+    /////////////////////////////////////////////////////////
+
+    readonly attribute string<20> version;
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL OPERATIONS
+    //
+    /////////////////////////////////////////////////////////
+
+    // select list of available Features
+    short getFeatures(
+		out paramSeq dSeq)
+	    raises (PP_exception);
+
+    // select list of available Discounts
+    short getDiscounts(
+		out paramSeq dSeq)
+	    raises (PP_exception);
+
+    // select list of available Profiles
+    short getProfiles(
+		out paramSeq dSeq)
+	    raises (PP_exception);
+
+    // select feature_id, value from ProfileFeature for given profileId
+    short getProfileFeatures(
+		in short profileId,
+		out paramSeq dSeq)
+	    raises (PP_exception);
+
+    // select Discount_scheme_id, Discount_rate 
+    // from DiscountScheme for given profileId
+    short getProfileDiscounts(
+		in short profileId,
+		out paramSeq dSeq)
+	    raises (PP_exception);
+
+    // to insert a new Profile, return value is the new ProfileId assigned
+    short insertProfile(
+		in paramSeq pSeq,	// ProfileName given
+		out paramSeq dSeq)	// new ProfileId returned
+	    raises (PP_exception);
+
+    // to get a list of available parameters for this operation
+    void insertProfile_legend(out legendSeq lSeq)
+	    raises (PP_exception);
+
+    // to update a sequence of ProfileFeature (featureId, value) records
+    short updateProfileFeatures(
+		in short profileId,
+		in paramSeq dSeq)	// sequence of featureId, value records
+	    raises (PP_exception);
+
+    // to update a sequence of ProfileDiscount records
+    short updateProfileDiscounts(
+		in short profileId,
+		in paramSeq dSeq)	// sequence of Discount_scheme_id, 
+	    raises (PP_exception);	// Discount_rate records
+    
+};
+
+/////////////////////////////////////////////////////////
+//
+// PP_OpenInterface_Manager IDL Interface
+//
+/////////////////////////////////////////////////////////
+
+interface PP_OpenInterface_Manager {
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL Attributes
+    //
+    /////////////////////////////////////////////////////////
+
+    // version of this interface
+    readonly attribute string<20>	version;
+
+    // number of permitted Transactions Per Second
+    attribute long			maxTPS;
+
+    // number of permitted Transactions Per Day
+    attribute long			maxTPD;
+
+    // number of transactions performed today
+    readonly attribute long		currTPD;
+
+    // version of this interface
+    readonly attribute string		licenceString;
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL OPERATIONS
+    //
+    /////////////////////////////////////////////////////////
+
+    // operation used to install a new licence key
+    void installLicenceKey (in string licenceKey)
+	    raises (PP_exception);
+};
+
+/////////////////////////////////////////////////////////
+//
+// PP_Admin_Manager IDL Interface
+//
+/////////////////////////////////////////////////////////
+
+interface PP_Admin_Manager {
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL Attributes
+    //
+    /////////////////////////////////////////////////////////
+
+    readonly attribute string<20> version;
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL OPERATIONS
+    //
+    /////////////////////////////////////////////////////////
+
+
+    // Change a subscribers MIN Number
+    short updateMIN(
+                in paramSeq pSeq)       // Sub_id,oldMIN,newMIN given
+            raises (PP_exception);
+
+    // to get a list of available parameters for this operation
+    void updateMIN_legend(out legendSeq lSeq)
+            raises (PP_exception);
+
+    // CreateUser
+    short insertUser(
+                in paramSeq pSeq,       // login,type,language
+                out paramSeq dSeq)      // users dbId
+            raises (PP_exception);
+
+    // to get a list of available parameters for this operation
+    void insertUser_legend(out legendSeq lSeq)
+            raises (PP_exception);
+
+    // DeleteUser
+    short deleteUser(
+                in paramSeq pSeq)       // login
+            raises (PP_exception);
+
+    // to get a list of available parameters for this operation
+    void deleteUser_legend(out legendSeq lSeq)
+            raises (PP_exception);
+
+    // passwd
+    short updatePasswd(
+                in paramSeq pSeq)       // login,oldpasswd,newpasswd1,newpasswd2
+            raises (PP_exception);
+
+    // to get a list of available parameters for this operation
+    void updatePasswd_legend(out legendSeq lSeq)
+            raises (PP_exception);
+};
+
+/////////////////////////////////////////////////////////
+//
+// PP_Agent_Manager IDL Interface
+//
+/////////////////////////////////////////////////////////
+
+interface PP_Agent_Manager {
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL Attributes
+    //
+    /////////////////////////////////////////////////////////
+
+    readonly attribute string<20> version;
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL OPERATIONS
+    //
+    /////////////////////////////////////////////////////////
+    short activateBatch(in paramSeq pSeq)
+            raises (PP_exception);
+
+    void  activateBatch_legend(out  legendSeq lSeq)
+            raises (PP_exception);
+
+};
+
+/////////////////////////////////////////////////////////
+//
+// PP_VAdmin_Manager IDL Interface
+//
+/////////////////////////////////////////////////////////
+
+interface PP_VoucherAdmin_Manager {
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL Attributes
+    //
+    /////////////////////////////////////////////////////////
+
+    readonly attribute string<20> version;
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL OPERATIONS
+    //
+    /////////////////////////////////////////////////////////
+    short invalidateVoucher(in paramSeq pSeq)
+            raises (PP_exception);
+
+    void  invalidateVoucher_legend(out  legendSeq lSeq)
+            raises (PP_exception);
+
+};
+
+/////////////////////////////////////////////////////////
+//
+// PP_Config_Manager IDL Interface
+//
+/////////////////////////////////////////////////////////
+
+interface PP_Config_Manager {
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL Attributes
+    //
+    /////////////////////////////////////////////////////////
+
+    readonly attribute string<20> version;
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL OPERATIONS
+    //
+    /////////////////////////////////////////////////////////
+    short insertRechargeBonus(in paramSeq pSeq)
+            raises (PP_exception);
+
+    void  insertRechargeBonus_legend(out  legendSeq lSeq)
+            raises (PP_exception);
+
+    short deleteRechargeBonus(in paramSeq pSeq)
+            raises (PP_exception);
+
+    void  deleteRechargeBonus_legend(out  legendSeq lSeq)
+            raises (PP_exception);
+
+    short updateRechargeBonus(in paramSeq pSeq)
+            raises (PP_exception);
+
+    void  updateRechargeBonus_legend(out  legendSeq lSeq)
+            raises (PP_exception);
+
+    short getRechargeBonusMap(out paramSeq pSeq)
+            raises (PP_exception);
+
+    void  getRechargeBonusMap_legend(out  legendSeq lSeq)
+            raises (PP_exception);
+
+};
+
+
+/////////////////////////////////////////////////////////
+//
+// PP_OpenInterface IDL Interface
+//
+/////////////////////////////////////////////////////////
+
+interface PP_OpenInterface {
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL Attributes
+    //
+    /////////////////////////////////////////////////////////
+
+    readonly attribute string<20> version;
+    readonly attribute eUserType userType;
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL OPERATIONS - Administrative
+    //
+    /////////////////////////////////////////////////////////
+    // to get a connection to the PP_Config_Manager
+    PP_Config_Manager getConfigManager()
+	    raises (PP_exception);
+
+    // to get a connection to the PP_OpenInterface_Manager
+    PP_OpenInterface_Manager getInterfaceManager()
+	    raises (PP_exception);
+
+    // close this connection
+    void logout();
+
+    // this call will return a sequence of name/value pairs that describes
+    // all necessary configurable data type information.
+    short getSystemConfigurables(out configSeq cSeq)
+	    raises (PP_exception);
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL OPERATIONS - ProfileFeature Management
+    //
+    /////////////////////////////////////////////////////////
+
+    // to get a connection to the PP_AdminInterface_Manager
+    PP_ProfileFeature_Manager getProfileFeatureManager()
+	    raises (PP_exception);
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL OPERATIONS - Administrator Management
+    //
+    /////////////////////////////////////////////////////////
+
+    // to get a connection to the PP_Admin_Manager
+    PP_Admin_Manager getAdminManager()
+            raises (PP_exception);
+
+    
+    /////////////////////////////////////////////////////////
+    //
+    // IDL OPERATIONS - Agent Management
+    //
+    /////////////////////////////////////////////////////////
+
+    
+    // to get a connection to the PP_Agent_Manager
+    PP_Agent_Manager getAgentManager()
+            raises (PP_exception);
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL OPERATIONS - VAdmin Management
+    //
+    /////////////////////////////////////////////////////////
+
+    // to get a connection to the PP_VAdmin_Manager
+    
+    PP_VoucherAdmin_Manager getVoucherAdminManager()
+            raises (PP_exception);
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL OPERATIONS - Subscriber
+    //
+    /////////////////////////////////////////////////////////
+
+    // to insert a new Prepaid Subscriber
+    short insertSubscriber(in paramSeq pSeq)
+	    raises (PP_exception);
+
+    // to get a list of available parameters for this operation
+    void insertSubscriber_legend(out legendSeq lSeq)
+	    raises (PP_exception);
+
+    // to get Subscriber data
+    short getSubscriberDetails(
+		in paramSeq pSeq,
+		out paramSeq dSeq)
+	    raises (PP_exception);
+
+    // to get a list of available parameters for this operation
+    void getSubscriberDetails_legend(out legendSeq lSeq)
+	    raises (PP_exception);
+
+    // to update an existing Subscriber
+    short updateSubscriber(in paramSeq pSeq)
+	    raises (PP_exception);
+
+    // to get a list of available parameters for this operation
+    void updateSubscriber_legend(out legendSeq lSeq)
+	    raises (PP_exception);
+
+    // to delete a Subscriber
+    short deleteSubscriber(in paramSeq pSeq)
+	    raises (PP_exception);
+
+    // to get a list of available parameters for this operation
+    void deleteSubscriber_legend(out legendSeq lSeq)
+	    raises (PP_exception);
+
+    // to Recharge an account using a direct method
+    short directFundTransfer(in paramSeq pSeq)
+	    raises (PP_exception);
+
+    // to get a list of available parameters for this operation
+    void directFundTransfer_legend(out legendSeq lSeq)
+	    raises (PP_exception);
+
+    // to Recharge an account using a direct method
+    short periodFundTransfer(in paramSeq pSeq)
+	    raises (PP_exception);
+
+    // to get a list of available parameters for this operation
+    void periodFundTransfer_legend(out legendSeq lSeq)
+	    raises (PP_exception);
+
+    short accountUpdate(in paramSeq pSeq)
+	    raises (PP_exception);
+
+    // to get a list of available parameters for this operation
+    void accountUpdate_legend(out legendSeq lSeq)
+	    raises (PP_exception);
+
+    // to Recharge an account using a direct method
+    short directDebitTransfer(in paramSeq pSeq, out paramSeq dSeq)
+            raises (PP_exception);
+
+    // to get a list of available parameters for this operation
+    void directDebitTransfer_legend(out legendSeq lSeq)
+            raises (PP_exception);
+    
+    // to Recharge an account using a generic method
+    short genericRecharge(in paramSeq pSeq)
+            raises (PP_exception);
+
+    // to get a list of available parameters for this operation
+    void genericRecharge_legend(out legendSeq lSeq)
+            raises (PP_exception);
+
+    // to Recharge an account using a Voucher
+    short voucherRecharge(in paramSeq pSeq)
+            raises (PP_exception);
+
+    // to get a list of available parameters for this operation
+    void voucherRecharge_legend(out legendSeq lSeq)
+            raises (PP_exception);
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL OPERATIONS - Voucher
+    //
+    /////////////////////////////////////////////////////////
+
+    // to get Voucher Details
+    short getVoucherDetails(
+		in paramSeq pSeq,
+		out recordSeq dSeq)
+	    raises (PP_exception);
+
+    // to get a list of available parameters for this operation
+    void getVoucherDetails_legend(out legendSeq lSeq)
+	    raises (PP_exception);
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL OPERATIONS - Call Detail Record
+    //
+    /////////////////////////////////////////////////////////
+
+    
+    // to get Call Detail Records for given Subscriber
+    short getCallDetailRecords(
+		in paramSeq pSeq,
+		out recordSeq dSeq)
+	    raises (PP_exception);
+
+    // to get a list of available parameters for this operation
+    void getCallDetailRecords_legend(out legendSeq lSeq)
+	    raises (PP_exception); 
+
+    short getJobState(
+                in paramSeq pSeq)
+            raises (PP_exception);
+
+
+};
+
+
+/////////////////////////////////////////////////////////
+//
+// PP_OpenInterface_Factory IDL Interface
+//
+/////////////////////////////////////////////////////////
+
+interface PP_OpenInterface_Factory {
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL Attributes
+    //
+    /////////////////////////////////////////////////////////
+
+    // version of this interface
+    readonly attribute string<20>	version;
+
+    // number of connections available for use (between 1 and 100)
+    readonly attribute short		concurrentConnections;
+
+    /////////////////////////////////////////////////////////
+    //
+    // IDL OPERATIONS
+    //
+    /////////////////////////////////////////////////////////
+
+    // to get a connection to the PP_OpenInterface
+    PP_OpenInterface login (
+		in string<34> id,
+		in string<20> password,
+		in long token) 
+	    raises (PP_exception);
+};
+
+#endif

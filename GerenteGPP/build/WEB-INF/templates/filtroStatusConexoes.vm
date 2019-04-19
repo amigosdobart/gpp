@@ -1,0 +1,109 @@
+#parse("menuVertical.vm")
+
+<h6><b>Conexoes</b></h6><br>
+<form>
+<table border="1" width="675" bordercolor="#C0E0AF" cellspacing="0" cellpadding="3" style="border-collapse: collapse" bgcolor="#FFFFFF">
+<tr>
+<td width=300 ></td>
+#foreach($orb in $dadosStatus)  <td bgcolor="#E1EA99">
+
+<font size=1>
+	<input type=text name=maquina$!velocityCount DISABLED value="$!orb.nome">
+</font></td>
+
+#end
+</tr>
+
+<tr>
+	<td align="left" width="240" bgcolor="#E1EA99" class="fontverde3">
+	<input type=text size=40 name=statusGPP DISABLED value="Status do GPP (Ping)"> 
+	</td>
+#foreach($orb in $dadosStatus) 
+	<td align="center">
+	<input type=text name=conexaoGPP$!velocityCount DISABLED value="$!orb.conexaoGPP">
+	</td>
+#end
+</tr>
+
+<tr>
+	<td align="left" width="240" bgcolor="#E1EA99" class="fontverde3">
+		<input type=text  size=40 name=statusIDLGateway DISABLED value="Status do IDL Gateway"> 
+	</td>
+#foreach($orb in $dadosStatus) 
+	<td align="center">
+	<input type=text name=conexaoIDLGateway$!velocityCount DISABLED value="$!orb.conexaoIDLGateway">
+	</td>
+#end
+</tr>
+
+<tr>
+	<td align="left" width="240" bgcolor="#E1EA99" class="fontverde3">
+			<input type=text  size=40 name=statusConexaoVoucher DISABLED value="Status de Conexao Voucher"> 
+	</td>
+#foreach($orb in $dadosStatus) 
+	<td align="center">
+	<input type=text name=conexaoVoucher$!velocityCount DISABLED value="$!orb.conexaoVoucher">
+	</td>
+#end
+</tr>
+
+<tr>
+	<th align="left" width="220" bgcolor="#E1EA99" class="fontverde3">
+				<input type=text  size=40 name=statusPaymentEngine DISABLED value="Status do Payment Engine"> 
+	</th>
+#foreach($orb in $dadosStatus) 
+	<td align="center">
+	<input type=text name=conexaoPaymentEngine$!velocityCount DISABLED value="$!orb.conexaoPaymentEngine">
+	</td>
+#end
+</tr>
+
+<tr>	
+	<th align="left" width="220" bgcolor="#E1EA99" class="fontverde3">
+		<input type=text  size=40 name=statusBancoDados DISABLED value="Status do Banco de Dados"> 
+	</th>
+#foreach($orb in $dadosStatus) 
+	<td align="center">
+	<input type=text name=conexaoBancoDados$!velocityCount DISABLED value="$!orb.conexaoBancoDados">
+	</td>
+#end
+</tr>
+
+<tr>	
+	<th align="left" width="220" bgcolor="#E1EA99" class="fontverde3">
+			<input type=text  size=40 name=statusMiddlewareSMS DISABLED value="Status do Middleware de SMS"> 
+	</th>
+#foreach($orb in $dadosStatus) 
+	<td align="center">
+	<input type=text name=conexaoMiddlewareSMS$!velocityCount DISABLED value="$!orb.conexaoMiddlewareSMS">
+	</td>
+#end
+</tr>
+
+<tr>	
+	<th align="left" width="240" bgcolor="#E1EA99" class="fontverde3">
+				<input type=text  size=40 name=statusServidorSocketGPP DISABLED value="Status do Servidor Socket GPP"> 
+	</th>
+#foreach($orb in $dadosStatus) 
+	<td align="center">
+	<input type=text name=conexaoServidorSocketGPP$!velocityCount DISABLED value="$!orb.conexaoServidorSocketGPP">
+	</td>
+#end
+</tr>
+
+<tr>	
+	<th align="left" width="240" bgcolor="#E1EA99" class="fontverde3">
+			<input type=text  size=40 name=statusServidorOracleReports DISABLED value="Status do Servidor Oracle Reports"> 
+	</th>
+#foreach($orb in $dadosStatus) 
+	<td align="center">
+	<input type=text name=conexaoServidorOracleReports$!velocityCount DISABLED value="$!orb.conexaoServidorOracleReports">
+	</td>
+#end
+</tr>
+</table>
+</form>
+</td>
+</tr>
+</table>
+

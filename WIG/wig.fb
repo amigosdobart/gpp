@@ -1,0 +1,12 @@
+[Jar files]
+C:\Projetos\WIG\WEB-INF\classes
+[Source dirs]
+C:\Projetos\WIG\src
+[Aux classpath entries]
+C:\Projetos\WIG\WEB-INF\lib\ldap.jar
+C:\Projetos\WIG\WEB-INF\lib\ldapwpp.jar
+C:\Projetos\WIG\WEB-INF\lib\log4j-1.2.8.jar
+C:\Projetos\WIG\WEB-INF\lib\servlet-api.jar
+C:\Projetos\WIG\WEB-INF\lib\SfmexApiAutoJni.jar
+C:\Projetos\WIG\WEB-INF\lib\xerces.jar
+C:\Projetos\WIG\WEB-INF\lib\xmlrt.jar

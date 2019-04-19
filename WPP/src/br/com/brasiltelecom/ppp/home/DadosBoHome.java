@@ -1,0 +1,58 @@
+/*
+ * Created on 28/04/2004
+ *
+ */
+package br.com.brasiltelecom.ppp.home;
+
+import org.exolab.castor.jdo.Database;
+import org.exolab.castor.jdo.OQLQuery;
+import org.exolab.castor.jdo.PersistenceException;
+import org.exolab.castor.jdo.QueryResults;
+
+import br.com.brasiltelecom.ppp.portal.entity.DadosBoCrm;
+
+/**
+ * Classe responsável pelas consultas/atualizações no banco de dados relativas às configurações
+ * 
+ * @author André Gonçalves
+ * @since 24/05/2004
+ */
+public class DadosBoHome {
+	
+	/**
+	 * Obtém a configuração de acordo com o parâmetro passado
+	 * @param db Conexão com o Banco de Dados
+	 * @return um objeto Configuracao
+	 * @throws PersistenceException
+	 */
+	public static DadosBoCrm findByAtividade(Database db, long idAtividade) throws PersistenceException {
+
+		OQLQuery query = null;
+		DadosBoCrm result = null;
+		QueryResults rs = null;
+		try{
+
+			query = db.getOQLQuery("select a from "+
+				"br.com.brasiltelecom.ppp.portal.entity.DadosBoCrm a where idAtividade = "+idAtividade);
+
+			rs = query.execute();
+
+			if(rs.hasMore()){
+
+				result = (DadosBoCrm) rs.next();
+			}
+		}
+		finally{
+			if(rs != null){
+				rs.close();
+			}
+
+			if(query!=null){
+
+				query.close();
+			}
+		}
+
+		return result;
+	}
+}

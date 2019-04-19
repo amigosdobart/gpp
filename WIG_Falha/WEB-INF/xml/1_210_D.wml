@@ -1,0 +1,12 @@
+<wml>
+<card>
+<p>
+<select name="c" title="Servicos">
+ <option value="209">SASC - Simcard</option>
+</select>
+<do type="accept">
+<go href="!WIGC!?bts=1&amp;btc=$(c)"/>
+</do>
+</p>
+</card>
+</wml>

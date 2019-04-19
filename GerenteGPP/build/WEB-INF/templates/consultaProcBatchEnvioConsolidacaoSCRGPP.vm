@@ -1,0 +1,15 @@
+#parse("menuVertical.vm")
+<h6><b>Envio de Consolidacao a SCR</b></h6>
+<table width="100%">
+    <tr>
+		<td> Data de Execução</td>
+		<td>$procBatchEnvioConsolidacaoSCRGPPForm.dataExecucao</td>
+	</tr>
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$procBatchEnvioConsolidacaoSCRGPPForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

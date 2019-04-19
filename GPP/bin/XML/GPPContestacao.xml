@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<GPPContestacao>
+	<cabecalho>
+		<id_evento>000001</id_evento>
+		<evento>RqCriaItemContestacao</evento>
+		<dataHora>12/12/12 12:12:12</dataHora>
+	</cabecalho>
+	<sistemas>
+		<sistema>WPPP</sistema>
+	</sistemas>
+	<usuario>
+		<numeroBS></numeroBS>        
+		<numeroContrato></numeroContrato>  
+		<statusBS></statusBS>        
+		<datahoraAbertura></datahoraAbertura>
+		<motivoReclamacao></motivoReclamacao>
+		<descricao></descricao>       
+		<operador></operador>        
+		<canal></canal>           
+		<plano></plano> 
+	</usuario>
+	<itens>
+		<item>
+			<msisdnOrigem></msisdnOrigem>
+			<msisdnDestino></msisdnDestino>
+			<datahoraServico></datahoraServico>
+			<tipoTarifacao></tipoTarifacao>
+			<codigoServico></codigoServico>
+			<duracao></duracao>
+			<valor></valor>
+		</item>
+	</itens>
+</GPPContestacao>

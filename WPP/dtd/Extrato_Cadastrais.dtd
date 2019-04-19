@@ -1,0 +1,18 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+<!-- DTD PARA EXTRATO --> 
+<!ELEMENT extrato ( dadosCadastrais ) >
+<!ELEMENT detalhe ( nome, endereco, complemento, bairro, cidade, uf, cep, msisdn, dataAtivacao, plano, periodoInicial, periodoFinal, dataHoraImpressao ) >
+<!ELEMENT nome ( #PCDATA ) >
+<!ELEMENT endereco ( #PCDATA ) >
+<!ELEMENT complemento ( #PCDATA ) >
+<!ELEMENT bairro ( #PCDATA ) >
+<!ELEMENT cidade ( #PCDATA ) >
+<!ELEMENT uf ( #PCDATA ) >
+<!ELEMENT cep ( #PCDATA ) >
+<!ELEMENT msisdn ( #PCDATA ) >
+<!ELEMENT dataAtivacao ( #PCDATA ) >
+<!ELEMENT plano ( #PCDATA ) >
+<!ELEMENT periodoInicial ( #PCDATA ) >
+<!ELEMENT periodoFinal ( #PCDATA ) >
+<!ELEMENT dataHoraImpressao ( #PCDATA ) >
+

@@ -1,0 +1,15 @@
+#parse("menuVertical.vm")
+<h6><b>Consolidação Contábil (Mensal)</b></h6>
+<table width="100%">
+    <tr>
+		<td> Data de Execução</td>
+		<td>$procBatchConsolidacaoContabilForm.dataExecucao</td>
+	</tr>
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$procBatchConsolidacaoContabilForm.resultado 	(;&gt 0 Sucesso | ;&lt 0 Erro)		</td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+  "http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+    <card id="PROCURA">
+        <p>
+            <select title="Procura" name="msg">
+                <option onpick="#LISTA">Listar Pessoas</option> 
+                <option onpick="#BAVANCADA">Busca Avancada</option> 
+            </select>
+        </p>
+    </card>
+    
+    <card id="LISTA">
+        <sendsm>
+            <destaddress value="+889"/>
+            <userdata>L</userdata>
+        </sendsm>  
+    </card>
+
+    <card id="BAVANCADA">
+        <p>
+            <input title="Idade" type="text" name="IDADE" emptyok="false" format="*N" maxlength="2"/>
+            <input title="Sexo (H ou M)" type="text" name="SEXO" emptyok="false" maxlength="1"/>
+            <input title="Estado (UF)" type="text" name="ESTADO" emptyok="false" maxlength="2"/>
+            <sendsm>
+                <destaddress value="+889"/>
+                <userdata>BPERFIL $(IDADE) $(SEXO) $(ESTADO)</userdata>
+            </sendsm>  
+        </p>
+    </card>
+</wml>

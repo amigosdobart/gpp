@@ -1,0 +1,212 @@
+/* $Id: TPEDefs.idl,v 1.11 2004/07/26 17:11:51 declan Exp $ */
+
+//
+// NAME :		TPEDefs.idl
+//
+// Engineer:		Attila Madarasz
+// DATE:		June 2004
+//
+// COPYRIGHT :		Tecnomen Ltd.
+//
+// DESCRIPTION:
+// This interface describes the various enumerated types for
+// the various PaymentEngine 'fundTransfer' sequence-of-ANY
+// compatable operations
+//
+
+#ifndef _TPEDEFS_IDL__
+#define _TPEDEFS_IDL__
+
+#include <Exceptions.idl>
+#include <Types.idl>
+
+#ifdef _TINC_MODULE
+module TINC {
+#endif //_TINC_MODULE
+
+interface FundTransferOp
+{
+    // define the list of operations
+    enum eFundTransferOp
+    { op_Undefined
+	, op_DirectFundTransfer
+	, op_DirectDebitTransfer // not yet implemented
+	, op_OnlineFundTransfer	// not yet implemented
+	, op_PeriodFundTransfer	// not yet implemented
+    };
+
+    // define the output sequence attributes
+    enum eResultSequence
+    { MajorCode 
+	, MinorCode 
+	, ServiceStatus
+	, AccountStatus
+	, ProfileId
+	, SubOptions
+	, IvrQueryExpiryDate
+	, IvrQueryCounter
+	, AmountBalance
+	, AccountBalance
+	, ExpiryDate
+	, PeriodicBalance
+	, PeriodicExpiry
+	, BonusBalance
+	, BonusExpiry
+	, SmBalance
+	, SmExpiry
+	, DataBalance
+	, DataExpiry
+	, LastOne
+    };
+};
+
+interface DirectFundTransferOp : FundTransferOp
+{
+    // Define the attribute sequence
+    enum eDirectFundTransferAtt
+    { OperationType
+	, SubId
+	, OperatorId
+	, TransactionType
+	, RechargeDiscount
+	, Amount
+	, ExpiryDate
+	, PeriodicAmount
+	, PeriodicExpiry
+	, BonusAmount
+	, BonusExpiry
+	, SmAmount
+	, SmExpiry
+	, DataAmount
+	, DataExpiry
+        , LastOne
+    };
+};
+
+interface DirectDebitTransferOp : FundTransferOp
+{
+    // Define the attribute sequence
+    enum eDirectDebitTransferAtt
+    { OperationType
+	, SubId
+	, OperatorId
+	, TransactionType
+	, Amount
+        , LastOne
+    };
+};
+
+interface OnlineFundTransferOp : FundTransferOp
+{
+    // Define the attribute sequence
+    enum eOnlineFundTransferAtt
+    { OperationType
+	, SubId
+	, OperatorId
+	, TransactionType
+	, Amount
+	, ExpiryDays
+        , LastOne
+    };
+};
+
+interface PeriodFundTransferOp : FundTransferOp
+{
+    // Define the attribute sequence
+    enum ePeriodFundTransferAtt
+    { OperationType
+	, SubId
+	, OperatorId
+	, TransactionType
+	, Amount
+	, ExpiryDate
+	, UsedAmount
+        , LastOne
+    };
+};
+
+interface RGwRechargeOp
+{
+    // Define the attribute sequence
+    enum eRGwRechargeInputAtt
+    {     SubId
+	, VoucherNumber
+	, OriginId
+	, CallingPartyNumber
+	, OperatorId
+	, RecoveryMode
+        , LastOneInput
+    };
+
+    // define the output sequence attributes
+    enum eRGwRechargeOutputAtt
+    {     MajorCode // 0
+	, MinorCode // 1
+	, SerialNumber// 2
+	, DiscountPercentage// 3
+	, SubscriberExpiry// 4
+	, ExtBonusAmount// 5
+	, UsedBy// 6
+	, UsedDateTime// 7
+	, TariffPlanId// 8
+	, CurrencyCode// 9
+	, ConversionBonus// 10
+	, MainAmount// 11
+	, MainExpiryDays// 12
+	, BonusAmount// 13
+	, BonusExpiryDays// 14
+	, SmAmount// 15
+	, SmExpiryDays// 16
+	, DataAmount// 17
+	, DataExpiryDays// 18
+	, LastOneOutput// 19
+    };
+};
+
+interface RGwCommitOp
+{
+    // Define the attribute sequence
+    enum eRGwCommitInputAtt
+    {     SubId
+	, VoucherNumber
+	, OriginId
+	, CallingPartyNumber
+	, OperatorId
+	, RecoveryMode
+        , LastOneInput
+    };
+
+    // define the output sequence attributes
+    enum eRGwCommitOutputAtt
+    {     MajorCode 
+	, MinorCode 
+	, LastOneOutput
+    };
+};
+
+interface RGwRollbackOp
+{
+    // Define the attribute sequence
+    enum eRGwRollbackInputAtt
+    {     SubId
+	, VoucherNumber
+	, OriginId
+	, CallingPartyNumber
+	, OperatorId
+	, RecoveryMode
+        , LastOneInput
+    };
+
+    // define the output sequence attributes
+    enum eRGwRollbackOutputAtt
+    {     MajorCode 
+	, MinorCode 
+	, LastOneOutput
+    };
+};
+
+#ifdef _TINC_MODULE
+};	// module TINC
+#endif //_TINC_MODULE
+
+#endif	

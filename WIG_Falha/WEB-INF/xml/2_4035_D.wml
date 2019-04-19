@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+<card id="BB">
+    <p>
+    <select title="Banco do Brasil">
+        <option onpick="!B103!">Continuar</option>
+        <option onpick="#T">Ver Tarifas</option>
+    </select>
+</p>
+</card>
+
+<card id="T">
+    <p>
+    Cada transacao concluida com sucesso sera tarifada em R$ 0,50 na conta do seu celular. Recarga pre-pago continuara gratuita. Clique OK.
+    <do type="accept">
+        <go href="!B103!"/>
+    </do>
+    </p>
+</card>
+
+</wml>

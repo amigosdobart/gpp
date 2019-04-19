@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+<wml>
+ <card>
+  <p>
+ 	Envie Torpedos por apenas R$ 0,10! Clique em ok, 
+	 fale com um dos nossos atendentes e solicite o pacote de 100 Torpedos.
+ </p>
+	<setupcall cmdqualifier="if-not-busy">
+        <destaddress value="1053"/>
+    </setupcall>
+ </card>
+</wml>

@@ -1,0 +1,15 @@
+#parse("menuVertical.vm")
+<h6><b>Consulta Voucher</b></h6>
+<table width="100%">
+<tr>
+		<td> Código do Voucher</td>
+		<td>$consultaVoucherForm.numeroVoucher</td>
+	</tr>
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$consultaVoucherForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

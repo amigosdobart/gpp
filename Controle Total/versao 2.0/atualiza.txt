@@ -1,0 +1,29 @@
+
+O procedimento para a atualização do Servcel é o seguinte:
+
+1) Fazer uma copia de seguranca dos diretorios atuais de
+'\ServCel\Aplic' e '\ServCel\Config';
+
+2) Descompactar os arquivos DISK1.ZIP a DISK7.ZIP, em um diretorio vazio;
+
+3) Finalizar o servico do ServCel, através do Cluster Administrator;
+
+4) Executar o comando Instala ;
+
+5) Selecionar o diretorio onde o ServCel sera' instalado e, aguardar o
+termino da instalacao. (Obs: A instalação deverá ser feita nas duas
+maquinas do ServCel, sendo que, nas duas máquinas deve ser selecionada o
+mesmo drive do Cluster);
+
+6) Na janela de 'Serviços' do Windows, colocar o serviço do ServCel das
+duas máquinas como Manual;
+
+7) Copiar o arquivo ServBRT.ini enviado em \servcel\config;
+
+8) Reiniciar o servico do ServCel, através do Cluster Administrator;
+
+9) Verificar no Log do aplicativo do Event Viewer, se todos os modulos
+foram iniciados corretemente;
+
+10) Verificar nos Monitoradores das instituicoes se as conexoes com eles
+foram reestabelecidas;

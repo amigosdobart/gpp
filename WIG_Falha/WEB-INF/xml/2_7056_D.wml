@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+  "http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+<wml>
+  <card id="Sons">
+    <p>
+       <select title="Sons" name="msg">
+          <option value="S1A" onpick="#go">Top 10</option>
+           <option value="S1B" onpick="#go">Lancamentos</option>
+           <option value="S1C" onpick="#go">Futebol</option>
+           <option value="S1D" onpick="#go">Pop Rock</option>
+           <option value="S1E" onpick="#go">TV e Filme</option>
+           <option value="S1F" onpick="#go">Buscar</option>
+        </select>
+    </p>
+  </card>
+  <card id="go">
+    <p>
+       <do type="accept">
+           <go href="!M4!$(msg)" />
+        </do>
+    </p>
+   </card>
+</wml>

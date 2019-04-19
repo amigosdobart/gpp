@@ -1,0 +1,780 @@
+
+SERVICE_NAME: ALG
+DISPLAY_NAME: Serviço 'Gateway de camada de aplicativo'
+        TYPE               : 10  WIN32_OWN_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 2232
+        FLAGS              : 
+
+SERVICE_NAME: AppMgmt
+DISPLAY_NAME: Gerenciamento de aplicativo
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: aswUpdSv
+DISPLAY_NAME: avast! iAVS4 Control Service
+        TYPE               : 110  WIN32_OWN_PROCESS (interactive)
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1592
+        FLAGS              : 
+
+SERVICE_NAME: AudioSrv
+DISPLAY_NAME: Áudio do Windows
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: avast! Antivirus
+DISPLAY_NAME: avast! Antivirus
+        TYPE               : 110  WIN32_OWN_PROCESS (interactive)
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1648
+        FLAGS              : 
+
+SERVICE_NAME: avast! Mail Scanner
+DISPLAY_NAME: avast! Mail Scanner
+        TYPE               : 110  WIN32_OWN_PROCESS (interactive)
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 192
+        FLAGS              : 
+
+SERVICE_NAME: avast! Web Scanner
+DISPLAY_NAME: avast! Web Scanner
+        TYPE               : 110  WIN32_OWN_PROCESS (interactive)
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 292
+        FLAGS              : 
+
+SERVICE_NAME: BITS
+DISPLAY_NAME: Serviço de transferência inteligente de plano de fundo
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: Bonjour Service
+DISPLAY_NAME: Bonjour Service
+        TYPE               : 10  WIN32_OWN_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 272
+        FLAGS              : 
+
+SERVICE_NAME: Browser
+DISPLAY_NAME: Localizador de computadores
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: BthServ
+DISPLAY_NAME: Bluetooth Support Service
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 312
+        FLAGS              : 
+
+SERVICE_NAME: btwdins
+DISPLAY_NAME: Bluetooth Service
+        TYPE               : 10  WIN32_OWN_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 340
+        FLAGS              : 
+
+SERVICE_NAME: CryptSvc
+DISPLAY_NAME: Serviços de criptografia
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: DcomLaunch
+DISPLAY_NAME: Inicializador de Processo de Servidor DCOM
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (NOT_STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1076
+        FLAGS              : 
+
+SERVICE_NAME: Dhcp
+DISPLAY_NAME: Cliente DHCP
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: dmserver
+DISPLAY_NAME: Gerenciador de discos lógicos
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: Dnscache
+DISPLAY_NAME: Cliente DNS
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1308
+        FLAGS              : 
+
+SERVICE_NAME: ERSvc
+DISPLAY_NAME: Erro ao informar o serviço
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: Eventlog
+DISPLAY_NAME: Log de eventos
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (NOT_STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 828
+        FLAGS              : RUNS_IN_SYSTEM_PROCESS
+
+SERVICE_NAME: EventSystem
+DISPLAY_NAME: Sistema de eventos COM+
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: GbpSv
+DISPLAY_NAME: Gbp Service
+        TYPE               : 10  WIN32_OWN_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1876
+        FLAGS              : 
+
+SERVICE_NAME: helpsvc
+DISPLAY_NAME: Ajuda e suporte
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: lanmanserver
+DISPLAY_NAME: Servidor
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: lanmanworkstation
+DISPLAY_NAME: Estação de trabalho
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: LmHosts
+DISPLAY_NAME: Auxiliar NetBIOS TCP/IP
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1452
+        FLAGS              : 
+
+SERVICE_NAME: Lotus Notes Single Logon
+DISPLAY_NAME: Lotus Notes Single Logon
+        TYPE               : 10  WIN32_OWN_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 476
+        FLAGS              : 
+
+SERVICE_NAME: MDM
+DISPLAY_NAME: Machine Debug Manager
+        TYPE               : 110  WIN32_OWN_PROCESS (interactive)
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 704
+        FLAGS              : 
+
+SERVICE_NAME: Multi-user Cleanup Service
+DISPLAY_NAME: Multi-user Cleanup Service
+        TYPE               : 110  WIN32_OWN_PROCESS (interactive)
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 716
+        FLAGS              : 
+
+SERVICE_NAME: NALNTSERVICE
+DISPLAY_NAME: NAL - Novell Application Launcher
+        TYPE               : 10  WIN32_OWN_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 748
+        FLAGS              : 
+
+SERVICE_NAME: Netlogon
+DISPLAY_NAME: Logon de rede
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 840
+        FLAGS              : RUNS_IN_SYSTEM_PROCESS
+
+SERVICE_NAME: Netman
+DISPLAY_NAME: Conexões de rede
+        TYPE               : 120  WIN32_SHARE_PROCESS (interactive)
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: Nla
+DISPLAY_NAME: Reconhecimento de local da rede (NLA)
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: OfcPfwSvc
+DISPLAY_NAME: OfficeScanNT Personal Firewall
+        TYPE               : 110  WIN32_OWN_PROCESS (interactive)
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 4476
+        FLAGS              : 
+
+SERVICE_NAME: PlugPlay
+DISPLAY_NAME: Plug and Play
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (NOT_STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 828
+        FLAGS              : RUNS_IN_SYSTEM_PROCESS
+
+SERVICE_NAME: PolicyAgent
+DISPLAY_NAME: Serviços IPSEC
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 840
+        FLAGS              : RUNS_IN_SYSTEM_PROCESS
+
+SERVICE_NAME: ProtectedStorage
+DISPLAY_NAME: Armazenamento protegido
+        TYPE               : 120  WIN32_SHARE_PROCESS (interactive)
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 840
+        FLAGS              : RUNS_IN_SYSTEM_PROCESS
+
+SERVICE_NAME: RasMan
+DISPLAY_NAME: Gerenciador de conexão de acesso remoto
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: Remote Management Agent
+DISPLAY_NAME: Agente de Gerenciamento Remoto do Novell ZENworks
+        TYPE               : 110  WIN32_OWN_PROCESS (interactive)
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 852
+        FLAGS              : 
+
+SERVICE_NAME: RemoteRegistry
+DISPLAY_NAME: Registro remoto
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1452
+        FLAGS              : 
+
+SERVICE_NAME: RpcSs
+DISPLAY_NAME: Chama de procedimento remoto (RPC)
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (NOT_STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1124
+        FLAGS              : 
+
+SERVICE_NAME: SamSs
+DISPLAY_NAME: Gerenciador de contas de segurança
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (NOT_STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 840
+        FLAGS              : RUNS_IN_SYSTEM_PROCESS
+
+SERVICE_NAME: Schedule
+DISPLAY_NAME: Agendador de tarefas
+        TYPE               : 120  WIN32_SHARE_PROCESS (interactive)
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: seclogon
+DISPLAY_NAME: Logon secundário
+        TYPE               : 120  WIN32_SHARE_PROCESS (interactive)
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: SENS
+DISPLAY_NAME: Notificação de eventos de sistema
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: ServiceLayer
+DISPLAY_NAME: ServiceLayer
+        TYPE               : 110  WIN32_OWN_PROCESS (interactive)
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 3752
+        FLAGS              : 
+
+SERVICE_NAME: SharedAccess
+DISPLAY_NAME: Firewall do Windows/Compartilhamento de Conexão com a Internet (ICS)
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: ShellHWDetection
+DISPLAY_NAME: Detecção do hardware do shell
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: SoundMAX Agent Service (default)
+DISPLAY_NAME: SoundMAX Agent Service
+        TYPE               : 10  WIN32_OWN_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1364
+        FLAGS              : 
+
+SERVICE_NAME: Spooler
+DISPLAY_NAME: Spooler de impressão
+        TYPE               : 110  WIN32_OWN_PROCESS (interactive)
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1948
+        FLAGS              : 
+
+SERVICE_NAME: srservice
+DISPLAY_NAME: Serviço de restauração do sistema
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: SSDPSRV
+DISPLAY_NAME: Serviço de descoberta SSDP
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1452
+        FLAGS              : 
+
+SERVICE_NAME: TapiSrv
+DISPLAY_NAME: Telefonia
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: TermService
+DISPLAY_NAME: Serviços de terminal
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (NOT_STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1076
+        FLAGS              : 
+
+SERVICE_NAME: Themes
+DISPLAY_NAME: Temas
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: tmlisten
+DISPLAY_NAME: OfficeScanNT Listener
+        TYPE               : 110  WIN32_OWN_PROCESS (interactive)
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 2644
+        FLAGS              : 
+
+SERVICE_NAME: TrkWks
+DISPLAY_NAME: Cliente de rastreamento de link distribuído
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: TSCensus Collection Client
+DISPLAY_NAME: ZENworks Asset Management - Collection Client
+        TYPE               : 110  WIN32_OWN_PROCESS (interactive)
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1440
+        FLAGS              : 
+
+SERVICE_NAME: UMWdf
+DISPLAY_NAME: Windows User Mode Driver Framework
+        TYPE               : 10  WIN32_OWN_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1468
+        FLAGS              : 
+
+SERVICE_NAME: W32Time
+DISPLAY_NAME: Horário do Windows
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: WebClient
+DISPLAY_NAME: Cliente da Web
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1452
+        FLAGS              : 
+
+SERVICE_NAME: winmgmt
+DISPLAY_NAME: Testador de instrumentação de gerenciam. do Windows
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: wuauserv
+DISPLAY_NAME: Atualizações Automáticas
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: WZCSVC
+DISPLAY_NAME: Configuração zero sem fio
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1264
+        FLAGS              : 
+
+SERVICE_NAME: XTAgent
+DISPLAY_NAME: Novell XTier Agent Services
+        TYPE               : 10  WIN32_OWN_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,NOT_PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1060
+        FLAGS              : 
+
+SERVICE_NAME: ZFDWM
+DISPLAY_NAME: Gerenciador de Estações de Trabalho
+        TYPE               : 10  WIN32_OWN_PROCESS 
+        STATE              : 4  RUNNING 
+                                (STOPPABLE,PAUSABLE,ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0	(0x0)
+        SERVICE_EXIT_CODE  : 0	(0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+        PID                : 1548
+        FLAGS              : 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+<wml>
+<card id="B">
+    <p>
+    O que você faria para ganhar a final do Racing Fever GT? Envie sua resposta e seus dados para contato para
+	concursocultural@brasiltelecom.com.br e concorra a prêmios! Veja o regulamento acessando o site da Brasil Telecom.
+ <launchbrowser url="http://waph.brasiltelecom.com.br/jogos/index.wml" >
+    </launchbrowser>
+ </p>
+</card>
+</wml>

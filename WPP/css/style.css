@@ -1,0 +1,52 @@
+.txtpreto {font-family: verdana,arial,helvetica; font-size: 10px; color: #000000; text-decoration: none;}
+.txtpreto:hover {font-family: verdana,arial,helvetica; font-size: 10px; color: #000000; text-decoration: underline;}
+.txtpreto:visited {font-family: verdana,arial,helvetica; font-size: 10px; color: #000000;}
+.txtpreto:active {font-family: verdana,arial,helvetica; font-size: 10px; color: #000000;}
+
+.txtvermelho {font-family: verdana,arial,helvetica; font-size: 10px; color: #FF0000; text-decoration: none;}
+.txtvermelho:hover {font-family: verdana,arial,helvetica; font-size: 10px; color: #FF0000; text-decoration: underline;}
+.txtvermelho:visited {font-family: verdana,arial,helvetica; font-size: 10px; color: #FF0000;}
+.txtvermelho:active {font-family: verdana,arial,helvetica; font-size: 10px; color: #FF0000;}
+
+
+.lnkpreto {font-family: verdana,arial,helvetica; font-size: 10px; color: #000000; text-decoration: underline;}
+.lnkpreto:hover {font-family: verdana,arial,helvetica; font-size: 10px; color: #007AF6; text-decoration: underline;}
+.lnkpreto:visited {font-family: verdana,arial,helvetica; font-size: 10px;}
+.lnkpreto:active {font-family: verdana,arial,helvetica; font-size: 10px; color: #000000;}
+
+.txtpretog {font-family: verdana,arial,helvetica; font-size: 12px; color: #000000; text-decoration: none;}
+
+.txtpretoimpr {font-family: verdana,arial,helvetica; font-size: 11px; color: #000000; text-decoration: none;}
+
+.txtcinza {font-family: verdana,arial,helvetica; font-size: 10px; color: #666666; text-decoration: none;}
+
+.lnkcinza {font-family: verdana,arial,helvetica; font-size: 10px; color: #666666; text-decoration: none;}
+.lnkcinza:hover {font-family: verdana,arial,helvetica; font-size: 10px; color: #007AF6; text-decoration: underline;}
+.lnkcinza:visited {font-family: verdana,arial,helvetica; font-size: 10px;}
+.lnkcinza:active {font-family: verdana,arial,helvetica; font-size: 10px; color: #666666;}
+
+.txtbranco {font-family: verdana,arial,helvetica; font-size: 10px; color: #FFFFFF;}
+
+.txtazul {font-family: verdana,arial,helvetica; font-size: 10px; color: #005572; text-decoration: none;}
+
+.lnkazul {font-family: verdana,arial,helvetica; font-size: 10px; color: #005572; text-decoration: underline;}
+.lnkazul:hover {font-family: verdana,arial,helvetica; font-size: 10px; color: #007AF6; text-decoration: underline;}
+.lnkazul:visited {font-family: verdana,arial,helvetica; font-size: 10px;}
+.lnkazul:active {font-family: verdana,arial,helvetica; font-size: 10px; color: #005572;}
+
+.txtazulg {font-family: verdana,arial,helvetica; font-size: 12px; color: #005572; text-decoration: none;}
+
+.txtazulesc {font-family: verdana,arial,helvetica; font-size: 10px; color: #004975;}
+
+.txtazulescBold {
+	font-family: verdana, arial, helvetica;
+	font-size: 10px;
+	color: #004975;
+	font-weight: bold;
+}
+
+.txtazulcla {font-family: verdana,arial,helvetica; font-size: 10px; color: #2F80AE;}
+
+.txtverde {font-family: verdana,arial,helvetica; font-size: 10px; color: #027620;}
+
+.tituloprincazul {font-family: verdana, arial, helvetica;font-size: 18px;color: #004975;font-weight: bold;}

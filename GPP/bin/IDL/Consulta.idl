@@ -1,0 +1,184 @@
+/*
+ * File.......: Consulta.idl
+ * Description: Definição de interfaces CORBA para o GPP (Gateway de Pré-Pago)
+ *              para o componente de Consulta
+ *
+ * Author.....: Camile 
+ * Date.......: 15/03/2004
+ *                       
+ * Modified by: 
+ * Date.......: 
+ * Reason.....: 
+ */
+
+#include "GPPExceptions.idl"
+
+module com 
+{ 
+	module brt 
+	{ 
+		module gpp
+		{
+			module componentes
+			{
+				module consulta
+				{
+					module orb 
+					{ 
+						interface consulta 
+						{	
+							// Classe para retornar dados genéricos
+							struct retornoGenerico
+							{
+								string	msisdn;
+								short	codigoRetorno;
+								string	descricao;
+							};
+
+							struct InfoJobTecnomen
+							{
+								long		numeroJob;
+								long long	workTotal;
+								long long	workDone;
+								long long	codStatus;
+								string		descStatus;
+							};
+							
+							struct SaldoBoomerang
+							{
+								string 	msisdn;
+								double	valorRecebido;
+								boolean fezRecarga;
+							};
+							
+							struct StatusPulaPula
+							{
+								boolean isNull;
+								string  msisdn;
+								short   idPromocao;
+								string  nomePromocao;
+								string  dataExecucao;
+								string  dataCreditoBonus;
+								string  dataEntradaPromocao;
+								string  dataInicioAnalise;
+								string  dataFimAnalise;
+								boolean suspenso;
+								double  minutos;
+								double  minutosFF;
+								double  valorBonus;
+								double  limitePromocao;
+								boolean isentoLimite;
+								string  observacao;
+							};
+							
+							// Metodo para retornar dados de voucher na plataforma Tecnomen
+							string consultaVoucher (in string voucherId) 
+										raises ( comum::gppExceptions::GPPInternalErrorException);
+							
+							// Metodo para retornar dados basicos do assinate
+							string consultaAssinante (in string msisdn) 
+										 raises ( comum::gppExceptions::GPPInternalErrorException);	
+
+							// Metodo para retornar dados basicos do assinate
+							string consultaAssinanteSimples (in string msisdn) 
+										 raises ( comum::gppExceptions::GPPInternalErrorException);	
+							
+							// Metodo para retornar se uma recarga pode ser efetuada por um assinate
+							string consultaAssinanteRecarga (in string msisdn, in double valorTotalRecarga, 
+															in string cpf, in short categoria, 
+															in string hashCartaoCredito, in string sistemaOrigem)
+											raises ( comum::gppExceptions::GPPInternalErrorException);
+							
+							// Metodo que recebe um xml e retorna outro xml dizendo se uma recarga pode ser efetuada por um assinate
+							string consultaAssinanteRecargaXML (in string GPPConsultaPreRecarga)
+											raises ( comum::gppExceptions::GPPInternalErrorException,
+													 comum::gppExceptions::GPPCorbaException,
+													 comum::gppExceptions::GPPBadXMLFormatException);
+	
+								// Metodo que recebe um xml e retorna outro xml dizendo se uma recarga pode ser efetuada por um assinate
+							string consultaAssinanteRecargaMultiplaXML (in string GPPConsultaPreRecarga)
+											raises ( comum::gppExceptions::GPPInternalErrorException,
+													 comum::gppExceptions::GPPCorbaException,
+													 comum::gppExceptions::GPPBadXMLFormatException);
+		
+							// Metodo que recebe msisdn e um período e devolve um xml com informações de extrato
+							string consultaExtrato (in string msisdn, in string inicioPeriodo, in string finalPeriodo)
+											raises ( comum::gppExceptions::GPPInternalErrorException,
+													 comum::gppExceptions::GPPTecnomenException);											
+
+							// Metodo que recebe msisdn e um período e devolve um xml com informações de extrato
+							string consultaExtratoPulaPula (in string msisdn, in string inicioPeriodo, in string finalPeriodo)
+											raises ( comum::gppExceptions::GPPInternalErrorException,
+													 comum::gppExceptions::GPPTecnomenException);			
+							
+							// Metodo que recebe msisdn e um período e devolve um xml com informações de extrato
+							string consultaExtratoPulaPulaCheio (in string msisdn, in string inicioPeriodo, in string finalPeriodo)
+											raises ( comum::gppExceptions::GPPInternalErrorException,
+													 comum::gppExceptions::GPPTecnomenException);			
+													 
+							// Metodo que recebe msisdn e devolve o saldo pula-pula acumulado até o momento
+							string consultaSaldoPulaPula (in string msisdn)
+											raises ( comum::gppExceptions::GPPInternalErrorException );			
+
+							// Metodo que recebe msisdn e devolve as informacoes da Promocao Pula-Pula do assinante
+							string consultaPulaPula (in string msisdn)
+											raises ( comum::gppExceptions::GPPInternalErrorException );			
+
+							// Metodo que recebe msisdn e devolve as informacoes da Promocao Pula-Pula do assinante
+							string consultaPulaPulaNoMes (in string msisdn, in string mes)
+											raises ( comum::gppExceptions::GPPInternalErrorException );			
+
+							// Metodo que recebe msisdn e devolve o saldo pula-pula acumulado no mes desejado
+							string consultaSaldoPulaPulaNoMes (in string msisdn, in long mes)
+											raises ( comum::gppExceptions::GPPInternalErrorException );			
+
+							// Metodo consulta os registros de estorno de bonus Pula-Pula por fraude em determinado periodo
+							string consultaEstornoPulaPula(in string msisdn, in string inicio, in string fim);			
+
+							// Metodo para retornar dados aparelho do assinate
+							string consultaAparelhoAssinante (in string msisdn) 
+										 raises ( comum::gppExceptions::GPPInternalErrorException);	
+										 
+							// Metodo para retornar informacoes de job da tecnomen
+							InfoJobTecnomen consultaJobTecnomen (in long numeroJob)
+										 raises ( comum::gppExceptions::GPPInternalErrorException);
+										 
+							// Metodo para retornar informacoes de job da tecnomen
+							string consultaExtratoBoomerang (in string msisdn, in string inicioPeriodo, in string finalPeriodo)
+											raises ( comum::gppExceptions::GPPInternalErrorException,
+													 comum::gppExceptions::GPPTecnomenException);			
+													 
+							// Metodo para retornar o saldo concedido para o assinante do boomerang 14
+							SaldoBoomerang consultaSaldoBoomerang(in string msisdn, in long mes)
+										 raises ( comum::gppExceptions::GPPInternalErrorException);
+							
+							// Metodo para retornar as recargas realizadas pelo cliente
+							string consultaRecargaAntifraude(in string aXML)
+										 raises ( 	comum::gppExceptions::GPPBadXMLFormatException,
+										 			comum::gppExceptions::GPPInternalErrorException);
+							
+							// Metodo para retornar as caracteristicas do aparelho do assinante
+							string consultaAparelho(in string msisdn)
+										 raises (comum::gppExceptions::GPPInternalErrorException);
+										 
+							// Metodo para retornar as informacoes do terminal fixo pre-pago
+							string consultaAssinanteTFPP(in string msisdn)
+										raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							//Metodo para retornar o credito Pula Pula
+							double  consultarCreditoPulaPula(in string msisdn, in string mes)
+										raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							// Metodo para publicar o Boletim de Sindicancia sobre o Protocolo Unico
+							string publicarBS(in string numeroBS, in string numeroIP, in string numeroAssinante, in string matriculaOperador);
+							
+							// Metodo para consultar o status do Boletim de Sindicancia sobre o Protocolo Unico
+							string consultarStatusBS(in string xmlConsulta);
+							
+						};
+					};	
+				};
+			};
+		};
+	};
+};

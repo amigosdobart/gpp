@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN" "http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+<wml>
+<card id="Super">
+<p>
+Segundona 2006 com 50% de desconto nos jogos do GALO. Clique para saber mais.
+</p>
+<p>
+  <select title="Promocao GALO" name="msg">
+    <option onpick="#call">Ligue agora</option>
+    <option value="7001">Receba cupom</option>
+  </select>
+  <do type="accept">
+    <go href="!WIGC!?bts=2&amp;btc=$(msg)"/>
+  </do>
+</p>
+</card>
+<card id="call">
+     <setupcall cmdqualifier="if-not-busy">    
+       <destaddress value="06134158664"/>
+     </setupcall>
+</card>
+</wml>
+

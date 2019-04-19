@@ -1,0 +1,29 @@
+/* $Id: Types.idl,v 1.2 2004/04/01 15:41:42 attila Exp $ */
+//
+// NAME :	Types.idl
+//
+// CREATED BY :	Attila Madarasz
+// DATE :	June 1998
+//
+// COPYRIGHT :	Tecnomen Ltd.
+//
+// DESCRIPTION: 
+// This interface describes the various generic Types 
+//
+#ifndef __PPTYPES_IDL
+#define __PPTYPES_IDL
+
+const short MARKERLEN = 256;
+const short TYPELENGTH = 30;
+const short TIMELENGTH = 20;
+
+struct DateTime {
+    short	day;
+    short	month;
+    short	year;
+    short	second;
+    short 	minute;
+    short	hour;
+};
+
+#endif

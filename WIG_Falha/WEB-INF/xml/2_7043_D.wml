@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+  "http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+    <card id="CURRICULO">
+        <p>
+            <select title="Curriculo" name="msg">
+                <option onpick="#CEDITAR">Criar / Editar</option> 
+                <option onpick="#VER">Ver</option> 
+                <option onpick="#BUSCAR">Buscar Palavra</option> 
+            </select>
+        </p>
+    </card>
+    
+    <card id="CEDITAR">
+        <p>
+            <input title="Digite seu curriculo:" type="text" name="CV" emptyok="false"/>
+            <sendsm>
+                <destaddress value="+889"/>
+                <userdata>MEUCV $(CV)</userdata>
+            </sendsm>  
+        </p>
+    </card>
+
+    <card id="VER">
+        <p>
+            <input title="Apelido:" type="text" name="APELIDO" emptyok="false"/>
+            <sendsm>
+                <destaddress value="+889"/>
+                <userdata>CV $(APELIDO)</userdata>
+            </sendsm>  
+        </p>
+    </card>
+
+    <card id="BUSCAR">
+        <p>
+            <input title="Palavra:" type="text" name="PALAVRA" emptyok="false"/>
+            <sendsm>
+                <destaddress value="+889"/>
+                <userdata>BCV $(PALAVRA)</userdata>
+            </sendsm>  
+        </p>
+    </card>
+</wml>

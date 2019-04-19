@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+<card>
+<p>
+    <providelocalinfo cmdqualifier="location" destvar="LC"/>
+    <providelocalinfo cmdqualifier="imei" destvar="IM"/>
+Responda SIM ou NAO para cada categoria listada. Clique OK para continuar.
+  <select title="CD/DVD/Livros" name="ct1">
+    <option value="sim" onpick="#b">SIM</option>
+    <option value="nao" onpick="#b">NAO</option>
+  </select>
+</p>
+</card>
+<card id="b">
+<p>
+  <select title="Moda masculina" name="ct2">
+    <option value="sim" onpick="#c">SIM</option>
+    <option value="nao" onpick="#c">NAO</option>
+  </select>
+</p>
+</card>
+<card id="c">
+<p>
+  <select title="Moda Feminina" name="ct3">
+    <option value="sim" onpick="#d">SIM</option>
+    <option value="nao" onpick="#d">NAO</option>
+  </select>
+</p>
+</card>
+<card id="d">
+<p>
+  <select title="Eletronicos" name="ct4">
+    <option value="sim" onpick="#e">SIM</option>
+    <option value="nao" onpick="#e">NAO</option>
+  </select>
+</p>
+</card>
+<card id="e">
+<p>
+  <select title="Show/Eventos" name="ct5">
+    <option value="sim" onpick="#f">SIM</option>
+    <option value="nao" onpick="#f">NAO</option>
+  </select>
+</p>
+</card>
+<card id="f">
+<p>
+  <select title="Bares&amp;Rest." name="ct6">
+    <option value="sim" onpick="#g">SIM</option>
+    <option value="nao" onpick="#g">NAO</option>
+  </select>
+</p>
+</card>
+<card id="g">
+<p>
+Confirma as categorias abaixo?<br/>
+CD/DVD/Livros: $(ct1) <br/>
+Moda masculina: $(ct2) <br/>
+Moda Feminina: $(ct3) <br/>
+Eletronicos: $(ct4) <br/>
+Shows/Eventos: $(ct5) <br/>
+Bares &amp; Rest.: $(ct6)
+</p>
+<!--p>
+    Parabens, suas preferencias foram gravadas com sucesso.
+</p-->
+    <do type="accept">
+        <go href="!CWIG!/prefOptIn?btc=7060&amp;i=$(IM)&amp;loc=$(LC)&amp;c1=$(ct1)&amp;c2=$(ct2)&amp;c3=$(ct3)&amp;c4=$(ct4)&amp;c5=$(ct5)&amp;c6=$(ct6)"/>
+    </do>
+</card>
+</wml>

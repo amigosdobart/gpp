@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<GPPSolicitacaoVoucher>
+	<interface></interface>
+	<remessa></remessa>
+	<ano_operacao></ano_operacao>
+	<cod_atividade></atividade>
+	<cod_ativacao></cod_ativacao>
+	<cod_motivo></cod_motivo>
+	<numero_caixa></numero_caixa>
+	<num_inicial_lote></num_inicial_lote>
+	<num_final_lote></num_final_lote>
+</GPPSolicitacaoVoucher>

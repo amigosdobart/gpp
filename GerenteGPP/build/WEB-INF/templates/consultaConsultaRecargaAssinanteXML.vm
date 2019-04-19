@@ -1,0 +1,35 @@
+#parse("menuVertical.vm")
+<h6><b>Consulta Recarga Assinante (XML)</b></h6>
+<table width="100%">
+<tr>
+		<td> Código do Assinante</td>
+		<td>$consultaRecargaAssinanteXMLForm.msisdn</td>
+	</tr>
+	<tr>
+		<td> Valor total de recarga a ser comprada</td>
+		<td>$consultaRecargaAssinanteXMLForm.valor</td>
+	</tr>
+	<tr>
+		<td> CPF </td>
+		<td>$consultaRecargaAssinanteXMLForm.cpf</td>
+	</tr>
+	<tr>
+		<td> Categoria do cliente(0-Pos-pago, 1-Hibrido, 2-Pre-pago, 9-Null):</td>
+		<td>$consultaRecargaAssinanteXMLForm.categoria</td>
+	</tr>
+	<tr>
+		<td> Hash Code do Cartao de Credito a ser utilizado:</td>
+		<td>$consultaRecargaAssinanteXMLForm.hashCartao</td>
+	</tr>
+	<tr>
+		<td> Sistema de origem</td>
+		<td>$consultaRecargaAssinanteXMLForm.sistemaOrigem</td>
+	</tr>
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$consultaRecargaAssinanteXMLForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

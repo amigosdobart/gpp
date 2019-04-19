@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry path="" kind="src"/>
+	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
+	<classpathentry path="ThirdParty/activation.jar" kind="lib"/>
+	<classpathentry path="ThirdParty/IDLGateway.jar" kind="lib"/>
+	<classpathentry path="ThirdParty/jakarta-oro-2.0.8.jar" kind="lib"/>
+	<classpathentry path="ThirdParty/log4j-1.2.8.jar" kind="lib"/>
+	<classpathentry path="ThirdParty/mail.jar" kind="lib"/>
+	<classpathentry path="ThirdParty/ojdbc14.jar" kind="lib"/>
+	<classpathentry path="ThirdParty/PaymentEngine.jar" kind="lib"/>
+	<classpathentry path="ThirdParty/smpp.jar" kind="lib"/>
+	<classpathentry path="C:/DevTools/BES/lib/vbsec.jar" kind="lib"/>
+	<classpathentry path="C:/DevTools/BES/lib/jcert.jar" kind="lib"/>
+	<classpathentry path="C:/DevTools/BES/lib/lm.jar" kind="lib"/>
+	<classpathentry path="C:/DevTools/BES/lib/vbcdev.jar" kind="lib"/>
+	<classpathentry path="C:/DevTools/BES/lib/vbdev.jar" kind="lib"/>
+	<classpathentry path="C:/DevTools/BES/lib/vbjdev.jar" kind="lib"/>
+	<classpathentry path="C:/DevTools/BES/lib/vbjorb.jar" kind="lib"/>
+	<classpathentry path="bin" kind="output"/>
+</classpath>

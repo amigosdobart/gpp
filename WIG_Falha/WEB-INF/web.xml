@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+	<display-name>Tomcat Examples</display-name>
+	<description>Tomcat Example servlets and JSP pages.</description>
+   <filter>
+      <filter-name>FiltertimeOut</filter-name>
+      <filter-class>br.com.brasiltelecom.wig.FiltroTimeOut</filter-class>
+   </filter>
+   <filter-mapping>
+      <filter-name>FiltertimeOut</filter-name>
+      <url-pattern>/*</url-pattern>
+   </filter-mapping>  
+
+	<servlet>
+		<servlet-name>startup</servlet-name>
+		<servlet-class>
+			br.com.brasiltelecom.StartupServlet
+		</servlet-class>
+
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>nwigcontrol</servlet-name>
+		<servlet-class>
+			br.com.brasiltelcom.wigf.servlet.WigControl
+		</servlet-class>
+		<init-param>
+			<param-name>de</param-name>
+			<param-value>10.61.176.142:7778</param-value>
+		</init-param>
+		<init-param>
+			<param-name>para</param-name>
+			<param-value>10.44.250.20:7778</param-value>
+		</init-param>
+	</servlet>
+	<servlet>
+		<servlet-name>modelo</servlet-name>
+		<servlet-class>
+			br.com.brasiltelcom.wigf.servlet.Modelo
+		</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>foraServico</servlet-name>
+		<servlet-class>
+			br.com.brasiltelcom.wigf.servlet.ForaServico
+		</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>emBranco</servlet-name>
+		<servlet-class>
+			br.com.brasiltelcom.wigf.servlet.EmBranco
+		</servlet-class>
+	</servlet>
+
+
+
+	<servlet-mapping>
+		<servlet-name>nwigcontrol</servlet-name>
+		<url-pattern>/nwigcontrol</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>modelo</servlet-name>
+		<url-pattern>/modelo</url-pattern>
+	</servlet-mapping>
+	<!--
+		
+	-->
+	<servlet-mapping>
+		<servlet-name>emBranco</servlet-name>
+		<url-pattern>/cadpre</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>emBranco</servlet-name>
+		<url-pattern>/tsd</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>emBranco</servlet-name>
+		<url-pattern>/hsm</url-pattern>
+	</servlet-mapping>
+
+
+	<!--
+		
+	-->
+	<servlet-mapping>
+		<servlet-name>foraServico</servlet-name>
+		<url-pattern>/verifica</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>foraServico</servlet-name>
+		<url-pattern>/msgPromocional</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>foraServico</servlet-name>
+		<url-pattern>/rybena</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>foraServico</servlet-name>
+		<url-pattern>/wigcontrol</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>foraServico</servlet-name>
+		<url-pattern>/brtvantagens</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>foraServico</servlet-name>
+		<url-pattern>/limpaCache</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>foraServico</servlet-name>
+		<url-pattern>/autenticador</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>foraServico</servlet-name>
+		<url-pattern>/cadastro_pre.jsp</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>foraServico</servlet-name>
+		<url-pattern>/ConsultaEstoqueMicrosiga.jsp</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>foraServico</servlet-name>
+		<url-pattern>/ConsultaModelo.jsp</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>foraServico</servlet-name>
+		<url-pattern>/ConsultaSaldoBoomerangAction.jsp</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>foraServico</servlet-name>
+		<url-pattern>/ConsultaSaldoPulaPulaAction.jsp</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>foraServico</servlet-name>
+		<url-pattern>/ConsultaTac.jsp</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>foraServico</servlet-name>
+		<url-pattern>/RelatorioModelo.jsp</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>foraServico</servlet-name>
+		<url-pattern>/RelatorioWml.jsp</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>foraServico</servlet-name>
+		<url-pattern>/SascApp.jsp</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>foraServico</servlet-name>
+		<url-pattern>/ShowMenuConsultaBoomerang.jsp</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>foraServico</servlet-name>
+		<url-pattern>/ShowMenuConsultaPulaPula.jsp</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>foraServico</servlet-name>
+		<url-pattern>/TransfereSaldoBonus.jsp</url-pattern>
+	</servlet-mapping>
+</web-app>

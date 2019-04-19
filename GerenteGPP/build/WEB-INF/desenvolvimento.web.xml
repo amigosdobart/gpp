@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+<!-- JSPC servlet mappings start -->
+<!-- Console GPP config. Desenvolvimento -->
+
+  <context-param>
+      <param-name>diretorioLogs</param-name>
+      <param-value>/export/home/gpp/LOG</param-value>
+  </context-param>
+  
+  <context-param>      
+		<!-- Formato: IP1:PORTA1#IP2:PORTA2...#IPn:PORTAn -->
+      <param-name>servidoresGPP</param-name>
+      <param-value>10.61.176.109:12000#10.61.176.117:15001</param-value>
+  </context-param>
+  
+  <!--- Configuracao do Middleware de SMS -->
+  <context-param>      
+      <param-name>IPMiddlewareSMS</param-name>
+      <param-value>10.44.250.13#10.44.250.13</param-value>
+  </context-param>    
+
+  <context-param>      
+      <param-name>PortaMiddlewareSMS</param-name>
+      <param-value>8080#8080</param-value>
+  </context-param>    
+<!--- Fim da Configuracao do Middleware de SMS -->
+
+<!--- Configuracao do Servidor de Socket do GPP -->
+  <context-param>      
+      <param-name>IPSocketServerGPP</param-name>
+      <param-value>10.61.176.109#10.61.176.143</param-value>
+  </context-param>    
+
+  <context-param>      
+      <param-name>PortaSocketServerGPP</param-name>
+      <param-value>12101#15101</param-value>
+  </context-param>    
+<!--- Fim da Configuracao do Middleware de SMS -->
+
+<!--- Configuracao do Servidor Oracle Reports -->
+  <context-param>      
+      <param-name>URLServidorOracleReports</param-name>
+      <param-value>http://10.61.176.109:7778/reports/rwservlet/getserverinfo/server=repdes#http://10.61.176.118:7778/reports/rwservlet/getserverinfo/server=rep_btdf0173</param-value>
+  </context-param>    
+<!--- Fim da Configuracao do Servidor Oracle Reports  -->
+      
+  <context-param>
+		<!-- Periodo do Ping nos GPP's de 3 minutos = 180000 milisegs -->
+      <param-name>periodoPingGPP</param-name>
+      <param-value>180000</param-value>
+  </context-param>
+
+  <servlet>
+	<servlet-name>startup</servlet-name>
+	<servlet-class>com.brt.clientes.servlet.Startup</servlet-class>
+	<load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet>
+    <servlet-name>escolheArquivo</servlet-name>
+    <jsp-file>/gppConsole/escolheArquivo.jsp</jsp-file>
+  </servlet>
+
+  <servlet>
+    <servlet-name>pesquisaLog</servlet-name>
+    <jsp-file>/gppConsole/pesquisaLog.jsp</jsp-file>
+  </servlet>
+    
+  <servlet>
+    <servlet-name>GPPLogServlet</servlet-name>
+    <servlet-class>com.brt.gppLog.GPPLogServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>GPPLogParseArquivoServlet</servlet-name>
+    <servlet-class>com.brt.gppLog.GPPLogParseArquivoServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>ConsultaConexoesServlet</servlet-name>
+    <servlet-class>com.brt.gppGerente.ConsultaConexoesServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>CriaConexoesServlet</servlet-name>
+    <servlet-class>com.brt.gppGerente.CriaConexoesServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>RemoveConexoesServlet</servlet-name>
+    <servlet-class>com.brt.gppGerente.RemoveConexoesServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>ConsultaMapeamentosServlet</servlet-name>
+    <servlet-class>com.brt.gppGerente.ConsultaMapeamentosServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>AtualizaMapeamentosServlet</servlet-name>
+    <servlet-class>com.brt.gppGerente.AtualizaMapeamentosServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>AtualizaORBServlet</servlet-name>
+    <servlet-class>com.brt.gppGerente.AtualizaORBServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>ConsultaServicosServlet</servlet-name>
+    <servlet-class>com.brt.gppGerente.ConsultaServicosServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>AtivaServicosServlet</servlet-name>
+    <servlet-class>com.brt.gppGerente.AtivaServicosServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>DesativaServicosServlet</servlet-name>
+    <servlet-class>com.brt.gppGerente.DesativaServicosServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>ConsultaProcessosBatchServlet</servlet-name>
+    <servlet-class>com.brt.gppGerente.ConsultaProcessosBatchServlet</servlet-class>
+  </servlet>  
+  
+  <servlet>
+    <servlet-name>ConsultaHistProcBatchServlet</servlet-name>
+    <servlet-class>com.brt.gppGerente.ConsultaHistProcBatchServlet</servlet-class>
+  </servlet>  
+
+   <servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
+		<init-param>
+			<param-name>application</param-name>
+			<param-value>org.apache.struts.webapp.example.ApplicationResources</param-value>
+		</init-param>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>/WEB-INF/struts-config.xml</param-value>
+		</init-param>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>2</param-value>
+		</init-param>
+		<init-param>
+			<param-name>detail</param-name>
+			<param-value>2</param-value>
+		</init-param>
+		<init-param>
+			<param-name>validate</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>velocity</servlet-name>
+		<servlet-class>org.apache.velocity.tools.view.servlet.VelocityViewServlet</servlet-class>
+	
+		<init-param>
+			<param-name>toolbox</param-name>
+			<param-value>/WEB-INF/toolbox.xml</param-value>
+		</init-param>
+	
+		<init-param>
+			<param-name>properties</param-name>
+			<param-value>/WEB-INF/velocity.properties
+				</param-value>
+		</init-param>
+	
+		<load-on-startup>3</load-on-startup>
+	</servlet>
+<!-- Mappings -->
+
+    <servlet-mapping>
+        <servlet-name>escolheArquivo</servlet-name>
+        <url-pattern>/gppConsole/escolheArquivo.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>pesquisaLog</servlet-name>
+        <url-pattern>/gppConsole/pesquisaLog.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>GPPLogServlet</servlet-name>
+        <url-pattern>/GPPLogServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>GPPLogParseArquivoServlet</servlet-name>
+        <url-pattern>/GPPLogParseArquivoServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ConsultaConexoesServlet</servlet-name>
+        <url-pattern>/ConsultaConexoesServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CriaConexoesServlet</servlet-name>
+        <url-pattern>/CriaConexoesServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>RemoveConexoesServlet</servlet-name>
+        <url-pattern>/RemoveConexoesServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>ConsultaMapeamentosServlet</servlet-name>
+        <url-pattern>/ConsultaMapeamentosServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AtualizaMapeamentosServlet</servlet-name>
+        <url-pattern>/AtualizaMapeamentosServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AtualizaORBServlet</servlet-name>
+        <url-pattern>/AtualizaORBServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ConsultaServicosServlet</servlet-name>
+        <url-pattern>/ConsultaServicosServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AtivaServicosServlet</servlet-name>
+        <url-pattern>/AtivaServicosServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DesativaServicosServlet</servlet-name>
+        <url-pattern>/DesativaServicosServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ConsultaProcessosBatchServlet</servlet-name>
+        <url-pattern>/ConsultaProcessosBatchServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ConsultaHistProcBatchServlet</servlet-name>
+        <url-pattern>/ConsultaHistProcBatchServlet</url-pattern>
+    </servlet-mapping>
+
+	<!-- JSPC servlet mappings end -->
+	
+	<!-- Velocity Servlet Mapping -->
+	<servlet-mapping>
+		<servlet-name>velocity</servlet-name>
+		<url-pattern>*.vm</url-pattern>
+	</servlet-mapping>
+	<!-- Action Servlet Mapping -->
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	<!-- The Welcome File List -->
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	<!-- Application Tag Library Descriptor -->
+	<taglib>
+		<taglib-uri>/WEB-INF/app.tld</taglib-uri>
+		<taglib-location>/WEB-INF/app.tld</taglib-location>
+	</taglib>
+	<!-- Struts Tag Library Descriptors -->
+	<taglib>
+		<taglib-uri>/WEB-INF/struts-bean.tld</taglib-uri>
+		<taglib-location>/WEB-INF/struts-bean.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>/WEB-INF/struts-html.tld</taglib-uri>
+		<taglib-location>/WEB-INF/struts-html.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>/WEB-INF/struts-logic.tld</taglib-uri>
+		<taglib-location>/WEB-INF/struts-logic.tld</taglib-location>
+	</taglib>
+
+</web-app>

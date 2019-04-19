@@ -1,0 +1,26 @@
+<style>
+a:link{
+	text-decoration: none;
+	color: #000000;
+	text-decoration: underline;
+}
+
+a:visited{
+	text-decoration: none;
+	color: #000000;
+	text-decoration: underline;
+}
+
+a:hover{
+	text-decoration: underline;
+}
+TH {font-family:Verdana,Arial,Helvetica; font-size:11px;text-decoration: bold;background-color:#BFE7FF;}
+TD {font-family:Verdana,Arial,Helvetica; font-size:11px;}
+.campo {font-family:Verdana,Arial,Helvetica; font-size:11px; border-style:solid; border-color:#BCC0C3; border-top-width:1px; border-bottom-width:1px; border-left-width:1px; border-right-width:1px;}
+.botao {font-family:Verdana,Arial,Helvetica; font-size:11px; color:#0360B9; border-style:solid; border-color:#65A2C8; background-color:#CCCCCC; border-top-width:1px; border-bottom-width:1px; border-left-width:1px; border-right-width:1px;}
+
+<!--
+   .direita_esquerda {text-align: right}
+-->
+
+</style>

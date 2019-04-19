@@ -1,0 +1,28 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+<!-- DTD PARA EXTRATO --> 
+<!ELEMENT extrato ( detalhe+) >
+<!ELEMENT detalhe ( numeroLinha, numeroOrigem, data, hora, tipo, operacao, regiaoOrigem, regiaoDestino, numeroDestino, duracao, valorPrincipal, saldoPrincipal, valorBonus, saldoBonus, valorSMS, saldoSMS, valorGPRS, saldoGPRS,valorPeriodico, saldoPeriodico, valorTotal, saldoTotal  ) >
+<!ELEMENT numeroLinha ( #PCDATA ) >
+<!ELEMENT numeroOrigem ( #PCDATA ) >
+<!ELEMENT data ( #PCDATA ) >
+<!ELEMENT hora ( #PCDATA ) >
+<!ELEMENT tipo ( #PCDATA ) >
+<!ELEMENT operacao ( #PCDATA ) >
+<!ELEMENT regiaoOrigem ( #PCDATA ) >
+<!ELEMENT regiaoDestino ( #PCDATA ) >
+<!ELEMENT numeroDestino ( #PCDATA ) >
+<!ELEMENT duracao ( #PCDATA ) >
+<!ELEMENT valorPrincipal ( #PCDATA ) >
+<!ELEMENT saldoPrincipal ( #PCDATA ) >
+<!ELEMENT valorBonus ( #PCDATA ) >
+<!ELEMENT saldoBonus ( #PCDATA ) >
+<!ELEMENT valorSMS ( #PCDATA ) >
+<!ELEMENT saldoSMS ( #PCDATA ) >
+<!ELEMENT valorGPRS ( #PCDATA ) >
+<!ELEMENT saldoGPRS ( #PCDATA ) >
+<!ELEMENT valorPeriodico ( #PCDATA ) >
+<!ELEMENT saldoPeriodico ( #PCDATA ) >
+<!ELEMENT valorTotal ( #PCDATA ) >
+<!ELEMENT saldoTotal ( #PCDATA ) >
+
+

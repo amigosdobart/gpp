@@ -1,0 +1,44 @@
+#parse("menuVertical.vm")
+<h6><b>Ativação</b></h6>
+<form name="frm" action="consultaAtivacao.do" method="post">
+  <table width="100%">
+	<tr>
+		<td> Código do Assinante</td>
+		<td><input type="text" name="msisdn" maxlength="13" onKeyPress="formataMsisdn(this,event);return soNumeros(event);" onBlur="this.value=formataMsisdn2(this.value);" /></td>
+	</tr>
+	<tr>
+		<td> Simcard / IMSI</td>
+		<td><input type="text" name="simcard" /></td>
+	</tr>
+	<tr>
+		<td> Plano de Preço</td>
+		<td><input type="text" name="planoPreco" /></td>
+	</tr>
+	<tr>
+		<td> Crédito Inicial</td>
+		<td><input type="text" name="creditoInicial" onKeyPress="this.value=formataMoeda(this.value, event); return soNumeros(event);" onBlur="this.value=formataMoeda2(this.value);"/></td>
+	</tr>
+	<tr>
+		<td> Idioma</td>
+		<td><input type="text" name="idioma" onKeyPress="return soNumeros(event);" /></td>
+	</tr>
+	<tr>
+		<td><input type="button" value="Enviar" onclick="javascript:validaEntrada()"/></td>
+		<td><input type="reset" value="Limpar" /></td>
+	</tr>
+  </table>
+</form>
+</td>
+</tr>
+</table>
+
+<script language="javascript">
+  
+  function validaEntrada()
+  {
+  	if ( valida(frm))
+  		if ( validaMsisdn(frm.msisdn.value)	)
+  			document.frm.submit();
+  }
+  
+</script>

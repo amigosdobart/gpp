@@ -1,0 +1,11 @@
+#parse("menuVertical.vm")
+<h6><b>Importação de Usuários do NDS para o Portal</b></h6>
+<table width="100%">
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$procBatchImportacaoUsuariosNDSPortalForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

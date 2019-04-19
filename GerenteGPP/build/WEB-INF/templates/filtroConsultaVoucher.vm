@@ -1,0 +1,27 @@
+#parse("menuVertical.vm")
+<h6><b>Consulta Voucher</b></h6>
+<form name="frm" action="consultaVoucher.do" method="post">
+  <table width="100%">
+	<tr>
+		<td> Código do Voucher</td>
+		<td><input type="text" name="numeroVoucher" maxlength="8"/></td>
+	</tr>
+	<tr>
+		<td><input type="button" value="Pesquisar" onclick="javascript:validaEntrada()"/></td>
+		<td><input type="reset" value="Limpar" /></td>
+	</tr>
+  </table>
+</form>
+</td>
+</tr>
+</table>
+
+<script language="javascript">
+  
+  function validaEntrada()
+  {
+  	if ( valida(frm))
+  		document.frm.submit();
+  }
+  
+</script>

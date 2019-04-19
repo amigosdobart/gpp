@@ -1,0 +1,15 @@
+#parse("menuVertical.vm")
+<h6><b>Envio de Usuários em Status Shutdown</b></h6>
+<table width="100%">
+    <tr>
+		<td> Data de Execução</td>
+		<td>$procBatchEnvioUsuarioShutdownForm.dataExecucao</td>
+	</tr>
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$procBatchEnvioUsuarioShutdownForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

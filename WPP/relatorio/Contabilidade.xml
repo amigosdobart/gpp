@@ -1,0 +1,993 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<RelatorioProperties>
+	<Relatorios>
+		<Relatorio name="ContabilConsumoDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="PERIODO"/>
+				<param mapName="CNS"/>
+				<param mapName="CNS"/>
+				<param mapName="UFS"/>
+				<param mapName="UFS"/>
+				<param mapName="CNSO"/>
+				<statement>
+					SELECT 
+					    REL.IDT_PERIODO_CONTABIL                                AS PERIODO, 
+						CN.IDT_UF                                               AS UF,
+					    DECODE(REL.IDT_TIPO_SALDO,
+					           'SP', 'Principal' ,
+					           'SB', 'Bonus'     ,
+					           'SS', 'Torpedos'  ,
+					           'SD', 'Dados'     ,
+					           'SF', 'Periodico' ,
+					           REL.IDT_TIPO_SALDO)                              AS TIPO_SALDO,
+					    REL.IDT_CODIGO_SERVICO_SFA                              AS CODIGO_SERVICO, 
+					    SFA.DES_CODIGO_SERVICO                                  AS DESCRICAO,
+					    REL.ID_CHAVE1                                           AS CSP_CANAL,
+					    REL.ID_CHAVE2                                           AS MODULACAO_ORIGEM,
+					    REL.ID_CHAVE3                                           AS TIPOCHAMADA_SISTEMAORIGEM,
+					    DECODE(SUBSTR(SFA.IDT_TIPO_SERVICO, 3, 1),
+					           'G', 'Servico GSM'              ,
+					           'B', 'Servico BTSA'             ,
+					           'O', 'Servico Outras Operadoras', 
+					           SFA.IDT_TIPO_SERVICO)                            AS TIPO_SERVICO,
+					    DECODE(SUBSTR(SFA.IDT_TIPO_SERVICO, 1, 2),
+					           'CR', 'Consumo de Recargas'       ,
+					           'CB', 'Consumo de Bonus'          ,
+					           SFA.IDT_TIPO_SERVICO)                            AS TIPO_CONSUMO,
+					    SFA.IDT_CATEGORIA                                       AS CATEGORIA,
+					    SFA.TIP_REGISTRO                                        AS DOCUMENTO,
+					    SUM(REL.QTD_REGISTRO)                                   AS QTD, 
+					    SUM(REL.VLR_DURACAO)                                    AS DURACAO,
+					    REL.VLR_INDICE_BONIFICACAO                              AS IB,
+					    SUM(REL.VLR_TOTAL)                                      AS VALOR, 
+					    SUM(REL.VLR_TOTAL) - SUM(REL.VLR_TOTAL_SI)              AS VALOR_ICMS,
+					    ALIQUOTA.VLR_ALIQUOTA*100                               AS ALIQUOTA_ICMS,
+					    DECODE(PLANO.IDT_CATEGORIA,
+					           0, 'P', 'H')                                     AS PRE_HIBRIDO
+					FROM 
+					    TBL_CON_CONTABIL           REL, 
+					    TBL_CON_CODIGO_SERVICO_SFA SFA, 
+					    TBL_GER_PLANO_PRECO        PLANO,
+					    TBL_GER_ALIQUOTA           ALIQUOTA,
+					    TBL_GER_CODIGO_NACIONAL    CN
+					WHERE 
+						REL.IDT_CODIGO_NACIONAL = CN.IDT_CODIGO_NACIONAL AND
+					    ALIQUOTA.IDT_CODIGO_NACIONAL = REL.IDT_CODIGO_NACIONAL AND 
+    					ALIQUOTA.DAT_INICIAL_VALIDADE &lt;= TO_DATE('01/' || REL.IDT_PERIODO_CONTABIL, 'DD/MM/YYYY') AND
+    					(ALIQUOTA.DAT_FINAL_VALIDADE &gt;= TO_DATE('01/' || REL.IDT_PERIODO_CONTABIL, 'DD/MM/YYYY') OR 
+      					 ALIQUOTA.DAT_FINAL_VALIDADE IS NULL) AND
+					    ALIQUOTA.IDT_IMPOSTO = 'ICMS' AND   
+						REL.IDT_CODIGO_SERVICO_SFA = SFA.IDT_CODIGO_SERVICO_SFA AND
+					    REL.IDT_TIPO_SERVICO = SFA.IDT_TIPO_SERVICO AND
+					    REL.IDT_PLANO_PRECO = PLANO.IDT_PLANO_PRECO AND
+					    REL.IDT_TIPO_SERVICO IN ('CRG', 'CRB', 'CRO', 'CBG', 'CBB') AND
+					    PLANO.IDT_CATEGORIA IN (0, 1) AND
+					    REL.IDT_PERIODO_CONTABIL = ? AND
+					    (INSTR(?, REL.IDT_CODIGO_NACIONAL) &lt;&gt; 0 OR ? = 'XX') AND
+					    (INSTR(?, CN.IDT_UF) &lt;&gt; 0 OR ? = 'XX') AND
+					    INSTR(?, REL.IDT_ROAMING_ORIGIN) &lt;&gt; 0
+					GROUP BY    
+					    REL.IDT_PERIODO_CONTABIL, 
+					    CN.IDT_UF,
+					    REL.IDT_CODIGO_SERVICO_SFA, 
+					    SFA.DES_CODIGO_SERVICO,
+					    REL.ID_CHAVE1,
+					    REL.ID_CHAVE2,
+					    REL.ID_CHAVE3,
+					    DECODE(SUBSTR(SFA.IDT_TIPO_SERVICO, 3, 1),
+					           'G', 'Servico GSM'              ,
+					           'B', 'Servico BTSA'             ,
+					           'O', 'Servico Outras Operadoras', 
+					           SFA.IDT_TIPO_SERVICO),
+					    DECODE(SUBSTR(SFA.IDT_TIPO_SERVICO, 1, 2),
+					           'CR', 'Consumo de Recargas'       ,
+					           'CB', 'Consumo de Bonus'          ,
+					           SFA.IDT_TIPO_SERVICO),
+					    SFA.IDT_CATEGORIA,
+					    SFA.TIP_REGISTRO,
+					    DECODE(REL.IDT_TIPO_SALDO,
+					           'SP', 'Principal' ,
+					           'SB', 'Bonus'     ,
+					           'SS', 'Torpedos'  ,
+					           'SD', 'Dados'     ,
+					           'SF', 'Periodico' ,
+					           REL.IDT_TIPO_SALDO),       
+					    DECODE(PLANO.IDT_CATEGORIA, 0, 'P', 'H'),
+					    REL.VLR_INDICE_BONIFICACAO,
+					    ALIQUOTA.VLR_ALIQUOTA*100
+					ORDER BY
+					    REL.IDT_PERIODO_CONTABIL, 
+					    REL.IDT_CODIGO_SERVICO_SFA
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="PERIODO"					showName="Periodo"							type="STRING"						/>
+					<campo name="UF"						showName="UF"								type="STRING"						/>
+					<campo name="TIPO_SALDO"				showName="Tipo de Saldo"					type="STRING"						/>
+					<campo name="CODIGO_SERVICO"			showName="Codigo de Servico SFA"			type="STRING"						/>
+					<campo name="DESCRICAO"					showName="Descricao"						type="STRING"						/>
+					<campo name="CSP_CANAL"					showName="CSP / Canal"						type="STRING"						/>
+					<campo name="MODULACAO_ORIGEM"			showName="Modulacao / Origem"				type="STRING"						/>
+					<campo name="TIPOCHAMADA_SISTEMAORIGEM"	showName="Tipo de Chamada / Sistema Origem"	type="STRING"						/>
+					<campo name="TIPO_SERVICO"				showName="Tipo de Servico"					type="STRING"						/>
+					<campo name="TIPO_CONSUMO"				showName="Tipo de Consumo"					type="STRING"						/>
+					<campo name="CATEGORIA"					showName="Categoria"						type="STRING"						/>
+					<campo name="DOCUMENTO"					showName="Documento"						type="STRING"						/>
+					<campo name="QTD"						showName="Numero de Registros"				type="DOUBLE"	mask="##0.00"	/>
+					<campo name="DURACAO"					showName="Duracao (segundos)"				type="DOUBLE"	mask="##0.00"	/>
+					<campo name="IB"						showName="Indice de Bonificacao"			type="DOUBLE"	mask="##0.00"	/>
+					<campo name="VALOR"						showName="Valor (R$)"						type="DOUBLE"	mask="##0.00"	/>
+					<campo name="VALOR_ICMS"				showName="Valor ICMS (R$)"					type="DOUBLE"	mask="##0.00"	/>
+					<campo name="ALIQUOTA_ICMS"				showName="ICMS (%)"							type="DOUBLE"	mask="##0.00"	/>
+					<campo name="PRE_HIBRIDO"				showName="Pre-Pago / Hibrido"				type="STRING"						/>
+				</registro>
+			</dados>
+		</Relatorio>		
+		<Relatorio	name="ContabilRecargasDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="PERIODO"/>
+				<param mapName="CNS"/>
+				<param mapName="CNS"/>
+				<param mapName="UFS"/>
+				<param mapName="UFS"/>
+				<statement>
+					SELECT
+					  REL.*, 
+					  ALIQUOTA.VLR_ALIQUOTA*100 AS ALIQUOTA_ICMS
+					FROM
+					( 
+					  SELECT 
+					    REL.IDT_PERIODO_CONTABIL                   AS PERIODO, 
+					    CN.IDT_UF                                  AS UF,
+					    REL.IDT_CODIGO_NACIONAL                    AS CN, 
+					    DECODE(REL.IDT_TIPO_SALDO,
+					           'SP', 'Principal' ,
+					           'SB', 'Bonus'     ,
+					           'SS', 'Torpedos'  ,
+					           'SD', 'Dados'     ,
+					           'SF', 'Periodico' ,
+					           REL.IDT_TIPO_SALDO)                 AS TIPO_SALDO,       
+					    REL.IDT_CODIGO_SERVICO_SFA                 AS CODIGO_SERVICO, 
+					    SFA.DES_CODIGO_SERVICO                     AS DESCRICAO,
+					    REL.ID_CHAVE1                              AS CANAL,
+					    REL.ID_CHAVE2                              AS ORIGEM,
+					    REL.ID_CHAVE3                              AS SISTEMA_ORIGEM,
+					    SFA.IDT_TIPO_SERVICO                       AS TIPO_SERVICO,
+					    SFA.IDT_CATEGORIA                          AS CATEGORIA,
+					    SFA.TIP_REGISTRO                           AS DOCUMENTO,
+					    SUM(REL.QTD_REGISTRO)                      AS QTD, 
+					    SUM(REL.VLR_TOTAL)                         AS VALOR, 
+					    SUM(REL.VLR_TOTAL_SI)                      AS LIQUIDO, 
+					    SUM(REL.VLR_TOTAL) - SUM(REL.VLR_TOTAL_SI) AS VALOR_ICMS,
+					    DECODE(PLANO.IDT_CATEGORIA,
+					           0, 'P', 'H')                        AS PRE_HIBRIDO
+					  FROM 
+						TBL_CON_CONTABIL           REL, 
+						TBL_CON_CODIGO_SERVICO_SFA SFA, 
+					    TBL_GER_PLANO_PRECO        PLANO,
+					    TBL_GER_CODIGO_NACIONAL    CN
+					  WHERE 
+					  	REL.IDT_CODIGO_NACIONAL = CN.IDT_CODIGO_NACIONAL AND
+						REL.IDT_CODIGO_SERVICO_SFA = SFA.IDT_CODIGO_SERVICO_SFA AND
+					    REL.IDT_TIPO_SERVICO = SFA.IDT_TIPO_SERVICO AND
+					    REL.IDT_PLANO_PRECO = PLANO.IDT_PLANO_PRECO AND
+					    REL.IDT_TIPO_SERVICO IN ('RE', 'BO') AND
+					    PLANO.IDT_CATEGORIA IN (0, 1) AND
+					    REL.IDT_PERIODO_CONTABIL = ? AND
+					    (INSTR(?,REL.IDT_CODIGO_NACIONAL) &lt;&gt; 0 OR ? = 'XX') AND
+					    (INSTR(?,CN.IDT_UF) &lt;&gt; 0 OR ? = 'XX')
+					GROUP BY    
+					    REL.IDT_PERIODO_CONTABIL, 
+					    REL.IDT_CODIGO_NACIONAL, 
+					    CN.IDT_UF,
+					    REL.IDT_CODIGO_SERVICO_SFA, 
+					    SFA.DES_CODIGO_SERVICO,
+					    REL.ID_CHAVE1,
+					    REL.ID_CHAVE2,
+					    REL.ID_CHAVE3,
+					    SFA.IDT_TIPO_SERVICO,
+					    SFA.IDT_CATEGORIA,
+					    SFA.TIP_REGISTRO,
+					    DECODE(REL.IDT_TIPO_SALDO,
+					           'SP', 'Principal' ,
+					           'SB', 'Bonus'     ,
+					           'SS', 'Torpedos'  ,
+					           'SD', 'Dados'     ,
+					           'SF', 'Periodico' ,
+					           REL.IDT_TIPO_SALDO),       
+					    DECODE(PLANO.IDT_CATEGORIA, 0, 'P', 'H')
+					)                     REL,  
+					  TBL_GER_ALIQUOTA    ALIQUOTA
+					WHERE 
+					  ALIQUOTA.IDT_CODIGO_NACIONAL = CN AND 					   
+    				  ALIQUOTA.DAT_INICIAL_VALIDADE &lt;= TO_DATE('01/' || PERIODO, 'DD/MM/YYYY') AND
+    				  (ALIQUOTA.DAT_FINAL_VALIDADE &gt;= TO_DATE('01/' || PERIODO, 'DD/MM/YYYY') OR 
+      				   ALIQUOTA.DAT_FINAL_VALIDADE IS NULL) AND
+					  ALIQUOTA.IDT_IMPOSTO = 'ICMS' AND   
+					  ALIQUOTA.IDT_IMPOSTO = 'ICMS'    
+					ORDER BY
+					  PERIODO, CN, CODIGO_SERVICO
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo	name="PERIODO"			showName="Periodo"				type="STRING"						/>
+					<campo	name="UF"				showName="UF"					type="STRING"						/>
+					<campo	name="CN"				showName="CN"		type="STRING"						/>
+					<campo	name="TIPO_SALDO"		showName="Tipo de Saldo"		type="STRING"						/>
+					<campo	name="CODIGO_SERVICO"	showName="Codigo de Servico"	type="STRING"						/>
+					<campo	name="DESCRICAO"		showName="Descricao"			type="STRING"						/>
+					<campo	name="CANAL"			showName="Canal"				type="STRING"						/>
+					<campo	name="ORIGEM"			showName="Origem"				type="STRING"						/>
+					<campo	name="SISTEMA_ORIGEM"	showName="Sistema de Origem"	type="STRING"						/>
+					<campo	name="TIPO_SERVICO"		showName="Tipo de Servico"		type="STRING"						/>
+					<campo	name="CATEGORIA"		showName="Categoria"			type="STRING"						/>
+					<campo	name="DOCUMENTO"		showName="Documento"			type="STRING"						/>
+					<campo	name="QTD"				showName="Numero de Registros"	type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="VALOR"			showName="Valor (R$)"			type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="LIQUIDO"			showName="Valor Liquido (R$)"	type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="VALOR_ICMS"		showName="Valor ICMS (R$)"		type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="ALIQUOTA_ICMS"	showName="ICMS (%)"				type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="PRE_HIBRIDO"		showName="Pre-Pago / Hibrido"	type="STRING"						/>
+				</registro>
+			</dados>
+		</Relatorio>
+		<Relatorio	name="ContabilIBDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="PERIODO"/>
+				<param mapName="CNS"/>
+				<statement>
+					SELECT
+					  IDT_CODIGO_NACIONAL AS CODIGO_NACIONAL,
+					  CASE IDT_TIPO_SALDO 
+					    WHEN 'SP' THEN 'Saldo Principal'     
+					    WHEN 'SB' THEN 'Saldo de Bonus'
+					    WHEN 'SD' THEN 'Saldo de Dados'
+					    WHEN 'SS' THEN 'Saldo de Torpedos'
+					    WHEN 'SF' THEN 'Saldo Periodico'
+					    ELSE IDT_TIPO_SALDO
+					  END AS TIPO_SALDO,
+					  CASE IDT_PRE_HIBRIDO
+					    WHEN 'P' THEN 'Pre-Pago'
+					    WHEN 'H' THEN 'Hibrido'
+					    ELSE IDT_PRE_HIBRIDO
+					  END AS PRE_HIBRIDO,
+					  VLR_SALDO_RECARGAS_INICIAL AS SALDO_RECARGAS_INICIAL,
+					  VLR_SALDO_BONUS_INICIAL AS SALDO_BONUS_INICIAL,
+					  VLR_RECARGAS_PERIODO AS RECARGAS_PERIODO,
+					  VLR_BONUS_PERIODO AS BONUS_PERIODO,
+					  VLR_RECARGAS_TOTAL AS RECARGAS_TOTAL,
+					  VLR_BONUS_TOTAL AS BONUS_TOTAL,
+					  VLR_RECARGAS_TOTAL + VLR_BONUS_TOTAL AS TOTAL_CREDITOS,
+					  VLR_SERVICOS_PROPRIOS_GSM AS SERVICOS_PROPRIOS_GSM,
+					  VLR_SERVICOS_PROPRIOS_BTSA AS SERVICOS_PROPRIOS_BTSA,
+					  VLR_SERVICOS_OUTRAS AS SERVICOS_OUTRAS,
+					  VLR_SERVICOS_PROPRIOS_GSM + VLR_SERVICOS_PROPRIOS_BTSA + VLR_SERVICOS_OUTRAS AS CONSUMO_TOTAL,
+					  VLR_INDICE_BONIFICACAO AS INDICE_BONIFICACAO,
+					  VLR_CONSUMO_BONUS AS CONSUMO_BONUS,
+					  VLR_CONSUMO_RECARGAS AS CONSUMO_RECARGAS,
+					  VLR_INDICE_GERAL_GSM AS INDICE_GERAL_GSM,
+					  VLR_INDICE_GERAL_BTSA AS INDICE_GERAL_BTSA,
+					  VLR_SALDO_RECARGAS_FINAL AS SALDO_RECARGAS_FINAL,
+					  VLR_SALDO_BONUS_FINAL AS SALDO_BONUS_FINAL,
+					  VLR_CONSUMO_BONUS_GSM AS CONSUMO_BONUS_GSM,
+					  VLR_CONSUMO_BONUS_BTSA AS CONSUMO_BONUS_BTSA,
+					  VLR_CONSUMO_RECARGAS_GSM AS CONSUMO_RECARGAS_GSM,
+					  VLR_CONSUMO_RECARGAS_BTSA AS CONSUMO_RECARGAS_BTSA,
+					  VLR_CONSUMO_RECARGAS_OUTRAS AS CONSUMO_RECARGAS_OUTRAS,
+					  VLR_CONSUMO_BONUS_GSM +
+					    VLR_CONSUMO_BONUS_BTSA +
+					    VLR_CONSUMO_RECARGAS_GSM +
+					    VLR_CONSUMO_RECARGAS_BTSA +
+					    VLR_CONSUMO_RECARGAS_OUTRAS AS CONSUMO_TOTAL,
+					  VLR_INDICE_BONIFICACAO_GSM AS INDICE_BONIFICACAO_GSM,
+					  VLR_INDICE_BONIFICACAO_BTSA AS INDICE_BONIFICACAO_BTSA
+					FROM 
+					  TBL_CON_INDICE_BONIFICACAO
+					WHERE
+					  IDT_PERIODO_CONTABIL = ? AND
+					  INSTR(?, IDT_CODIGO_NACIONAL) &lt;&gt; 0 
+					ORDER BY 
+					  IDT_CODIGO_NACIONAL, 
+					  TIPO_SALDO,
+					  PRE_HIBRIDO
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo	name="CODIGO_NACIONAL"			showName="CN"										type="STRING"						/>
+					<campo	name="TIPO_SALDO"				showName="Tipo de Saldo"										type="STRING"						/>
+					<campo	name="PRE_HIBRIDO"				showName="Pre-Pago / Hibrido"									type="STRING"						/>
+					<campo	name="SALDO_RECARGAS_INICIAL"	showName="a) Saldo Anterior de Recargas"						type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="SALDO_BONUS_INICIAL"		showName="b) Saldo Anterior de Bonus"							type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="RECARGAS_PERIODO"			showName="c) Recargas no Periodo"								type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="BONUS_PERIODO"			showName="d) Bonus no Periodo"									type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="RECARGAS_TOTAL"			showName="e) Total de Recargas [a + c]"							type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="BONUS_TOTAL"				showName="f) Total de Bonus [b + d]"							type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="TOTAL_CREDITOS"			showName="g) Total de Creditos [e + f]"							type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="SERVICOS_PROPRIOS_GSM"	showName="h) Servicos GSM + Perda de CDR"						type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="SERVICOS_PROPRIOS_BTSA"	showName="i) Servicos BTSA"										type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="SERVICOS_OUTRAS"			showName="j) Servicos Outras Operadoras"						type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="CONSUMO_TOTAL"			showName="k) Consumo Total [h + i + j]"							type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="INDICE_BONIFICACAO"		showName="l) Indice de Rateio de Bonificacao [f/g]"					type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="CONSUMO_BONUS"			showName="m) Consumo de Bonus [k*l]"							type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="CONSUMO_RECARGAS"			showName="n) Consumo de Recargas [k - m]"						type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="INDICE_GERAL_GSM"			showName="o) Indice de Rateio de Bonificacao GSM [h/(h + i)]"	type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="INDICE_GERAL_BTSA"		showName="p) Indice de Rateio de Bonificacao BTSA [i/(h + i)]"	type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="CONSUMO_BONUS_GSM"		showName="q) Consumo de Bonus GSM [m*o]"						type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="CONSUMO_BONUS_BTSA"		showName="r) Consumo de Bonus BTSA [m*p]"						type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="CONSUMO_RECARGAS_GSM"		showName="s) Consumo de Recargas GSM [h - q]"					type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="CONSUMO_RECARGAS_BTSA"	showName="t) Consumo de Recargas BTSA [i - r]"					type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="CONSUMO_RECARGAS_OUTRAS"	showName="u) Consumo de Recargas Outras Operadoras [= j]"		type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="CONSUMO_TOTAL"			showName="v) Consumo Total [soma(q:u)]"							type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="INDICE_BONIFICACAO_GSM"	showName="w) Indice de Bonificacao GSM [q/h]"					type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="INDICE_BONIFICACAO_BTSA"	showName="x) Indice de Bonificacao BTSA [r/i]"					type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="SALDO_RECARGAS_FINAL"		showName="y) Saldo de Recargas [e - n]"							type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="SALDO_BONUS_FINAL"		showName="z) Saldo de Bonus [f - m]"							type="DOUBLE"	mask="##0.00"	/>
+				</registro>
+			</dados>
+		</Relatorio>
+		<Relatorio	name="ContabilExtratoDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="PERIODO"/>
+				<statement>
+					SELECT
+					  DECODE(IDT_TIPO_SALDO,
+					         'SP', '1. Saldo Principal'  ,
+					         'SB', '2. Saldo de Bonus'   ,
+					         'SS', '3. Saldo de Torpedos',
+					         'SD', '4. Saldo de Dados'   ,
+					         'SF', '5. Saldo Periodico'  ,
+					         IDT_TIPO_SALDO               ) AS TIPO_SALDO,
+					  DECODE(IDT_PRE_HIBRIDO,
+					         'P', 'Pre-Pago',
+					         'H', 'Hibrido')            AS PRE_HIBRIDO,
+					  IDT_CODIGO_NACIONAL               AS CODIGO_NACIONAL,
+					  SUM(VLR_SALDO_RECARGAS_INICIAL)   AS SALDO_INICIAL_RECARGAS,
+					  SUM(VLR_SALDO_BONUS_INICIAL)      AS SALDO_INICIAL_BONUS,
+					  SUM(VLR_RECARGAS_PERIODO)         AS RECARGAS,
+					  SUM(VLR_BONUS_PERIODO)            AS BONUS,
+					  SUM(VLR_CONSUMO_RECARGAS)         AS CONSUMO_RECARGAS,
+					  SUM(VLR_CONSUMO_BONUS_GSM)        AS CONSUMO_BONUS_GSM,
+					  SUM(VLR_CONSUMO_BONUS_BTSA)       AS CONSUMO_BONUS_BTSA,
+					  SUM(VLR_SALDO_RECARGAS_FINAL)     AS SALDO_FINAL_RECARGAS,
+					  SUM(VLR_SALDO_BONUS_FINAL)        AS SALDO_FINAL_BONUS,
+					  SUM(VLR_PERDAS_CDR)               AS PERDAS_CDR
+					FROM
+					  TBL_CON_INDICE_BONIFICACAO
+					WHERE
+					  IDT_PERIODO_CONTABIL = ?
+					GROUP BY 
+					  DECODE(IDT_TIPO_SALDO,
+					         'SP', '1. Saldo Principal'  ,
+					         'SB', '2. Saldo de Bonus'   ,
+					         'SS', '3. Saldo de Torpedos',
+					         'SD', '4. Saldo de Dados'   ,
+					         'SF', '5. Saldo Periodico'  ,
+					         IDT_TIPO_SALDO              ),
+					  DECODE(IDT_PRE_HIBRIDO,
+					         'P', 'Pre-Pago',
+					         'H', 'Hibrido'),
+					  IDT_CODIGO_NACIONAL
+					ORDER BY
+					  TIPO_SALDO,
+					  PRE_HIBRIDO DESC,
+					  CODIGO_NACIONAL
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo	name="TIPO_SALDO"				showName="Tipo de Saldo"				type="STRING"						/>
+					<campo	name="PRE_HIBRIDO"				showName="Pre-Pago / Hibrido"			type="STRING"						/>
+					<campo	name="CODIGO_NACIONAL"			showName="CN"				type="STRING"						/>
+					<campo	name="SALDO_INICIAL_RECARGAS"	showName="Saldo Inicial de Recargas"	type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="SALDO_INICIAL_BONUS"		showName="Saldo Inicial de Bonus"		type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="RECARGAS"					showName="Recargas"						type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="BONUS"					showName="Bonus"						type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="CONSUMO_RECARGAS"			showName="Consumo de Recargas"			type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="CONSUMO_BONUS_GSM"		showName="Consumo de Bonus GSM"			type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="CONSUMO_BONUS_BTSA"		showName="Consumo de Bonus BTSA"		type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="SALDO_FINAL_RECARGAS"		showName="Saldo Final de Recargas"		type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="SALDO_FINAL_BONUS"		showName="Saldo Final de Bonus"			type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="PERDAS_CDR"				showName="Perdas de CDR"				type="DOUBLE"	mask="##0.00"	/>
+				</registro>
+			</dados>
+		</Relatorio>
+		<Relatorio	name="ContabilRecargaDiarioDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="CANAL"/>
+				<param mapName="SISTEMA"/>
+				<param mapName="DATAINICIAL"/>
+				<param mapName="DATAFINAL"/>
+				<param mapName="PLANO"/>
+				<statement>
+					SELECT   
+					  TO_CHAR (a.dat_recarga, 'dd/mm/yyyy') AS DATA,
+					  c.idt_uf AS UF,
+					  a.idt_codigo_nacional AS cn,
+					  cat.des_categoria AS pre_hibrido,
+					  b.id_canal||b.id_origem AS tipo, 
+					  b.des_origem AS descricao,
+					  a.id_sistema_origem AS sistema_de_origem,
+					  SUM (NVL (a.vlr_total_principal, 0) +
+					  NVL (a.vlr_total_bonus, 0) +
+					  NVL (a.vlr_total_sms, 0) +
+					  NVL (a.vlr_total_dados, 0)) AS valor_total,
+					  SUM (NVL (a.vlr_total_principal, 0)) AS valor_principal,
+					  SUM (NVL (a.vlr_total_bonus, 0)) AS valor_bonus,
+					  SUM (NVL (a.vlr_total_sms, 0)) AS valor_torpedos,
+					  SUM (NVL (a.vlr_total_dados, 0)) AS valor_dados,
+                      SUM (NVL (a.qtd_registros, 0)) AS qdade,
+                      rs.idt_codigo_servico_sfa AS codigo_sfa,
+                      cs.des_codigo_servico AS des_codigo_sevico,
+                      cs.idt_tipo_servico AS tipo_servico                      
+					FROM 
+					  tbl_rel_recargas a, 
+					  tbl_rec_origem b,
+                      tbl_ger_plano_preco p,
+                      tbl_ger_categoria cat,
+					  tbl_ger_codigo_nacional c,
+                      tbl_con_recarga_servico rs, 
+                      tbl_con_codigo_servico_sfa cs
+					WHERE
+                      a.id_canal = b.id_canal AND
+					  a.id_origem = b.id_origem AND
+					  a.idt_codigo_nacional = c.idt_codigo_nacional AND
+					  rs.idt_plano_preco = a.idt_plano AND
+                      rs.id_canal = a.id_canal AND 
+                      rs.id_origem = a.id_origem AND 
+                      rs.id_sistema_origem = a.id_sistema_origem AND 
+                      rs.idt_codigo_servico_sfa = cs.idt_codigo_servico_sfa AND     
+                      a.idt_plano = p.idt_plano_preco AND 
+                      p.idt_categoria = cat.idt_categoria AND 
+                      SUBSTR (rs.IDT_TIPO_SERVICO,1,2) in ('CR','BO','RE') AND  
+                      INSTR ( ? ,b.id_canal) &lt;&gt; 0 AND
+					  INSTR ( ? ,a.id_sistema_origem) &lt;&gt; 0 AND
+					  TRUNC(dat_recarga) &gt;= TO_DATE( ? ,'dd/mm/yyyy') AND
+					  TRUNC(dat_recarga) &lt;= TO_DATE( ? ,'dd/mm/yyyy') AND
+					  a.idt_codigo_nacional &gt;= 41 AND
+					  INSTR ( ? , cat.idt_categoria) &gt; 0
+					GROUP BY 
+					  TO_CHAR (a.dat_recarga, 'dd/mm/yyyy'),
+					  c.idt_uf,
+					  a.idt_codigo_nacional,
+					  cat.des_categoria,
+					  b.id_canal||b.id_origem,
+					  b.des_origem,
+					  a.id_sistema_origem,
+                      rs.idt_codigo_servico_sfa,
+                      cs.des_codigo_servico,
+                      cs.idt_tipo_servico
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo	name="DATA"				    showName="Data"			            	type="STRING"	    />
+					<campo	name="UF"			     	showName="UF"			                type="STRING"	    />
+					<campo	name="cn"			        showName="Cn"				            type="STRING"	    />
+					<campo	name="pre_hibrido"	        showName="Plano"	                    type="STRING"	    />
+					<campo	name="tipo"		            showName="Tipo"		                    type="STRING"	    />
+					<campo	name="descricao"			showName="Descricao"					type="STRING"	    />
+					<campo	name="sistema_de_origem"	showName="Sistema de origem"			type="STRING"	    />
+					<campo	name="valor_principal"		showName="Valor principal"			    type="STRING"		/>
+					<campo	name="valor_bonus"		    showName="Valor bonus"		            type="STRING"		/>
+					<campo	name="valor_torpedos"		showName="Valor torpedos"		        type="STRING"		/>
+					<campo	name="valor_dados"		    showName="Valor dados"		        	type="STRING"		/>
+					<campo	name="valor_total"			showName="Valor Total"			        type="STRING"		/>
+					<campo	name="qdade"			    showName="Quantidade"			        type="STRING"		/>
+					<campo	name="des_codigo_sevico"	showName="Descricao Codigo Servico"		type="STRING"		/>
+					<campo	name="codigo_sfa"			showName="Codigo SFA"			        type="STRING"		/>
+					<campo	name="tipo_servico"			showName="Tipo Servico"			        type="STRING"		/>
+				</registro>
+			</dados>
+		</Relatorio>
+		
+		<Relatorio	name="ContabilCodServicosDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="PLANO"/>
+				<param mapName="SERVICO"/>
+				<param mapName="PLANO"/>
+				<param mapName="SERVICO"/>
+				<statement>
+					SELECT DISTINCT decode (d.idt_categoria, 0,'PrePago', 1, 'Hibrido') AS Plano
+	 				        , b.tip_chamada AS Cod_servico_GPP
+	 				        , c.des_operacao AS Des_operacao
+					        , a.idt_codigo_servico_sfa AS Cod_servico_SFA
+					        , a.des_codigo_servico AS Nome_Servico
+					        , decode (trim (b.idt_tipo_servico), 'CBB', 'Consumo BO', 'CBG','Consumo BO','CRB', 'Consumo RE', 'CRG', 'Consumo RE', 'CRO','Consumo RE') AS Tipo_Codigo
+					        , decode (trim (b.idt_tipo_servico), 'CBB', 'Servico BTSA', 'CBG','Servico GSM','CRB', 'Servico BTSA', 'CRG', 'Servico GSM', 'CRO','Servico Outras Operadoras') AS Tipo_Servico
+					        , decode (SUBSTR (c.rate_name, 1,2), 'SM', 'Mensagem de Texto', 'MM', 'Mensagem Multimidia', 'GP', 'Internet', 'WA', 'Internet', 'Voz') AS Segmento_Receita
+					        , decode (SUBSTR (c.rate_name, 1,2), 'SM', 'Evento', 'MM', 'Evento', 'GP', 'Kb', 'WA', 'Kb', 'Segundos') AS Unidade
+					FROM tbl_con_codigo_servico_sfa a, tbl_con_cdr_servico b, tbl_ger_rating c, tbl_ger_plano_preco d
+					WHERE a.idt_codigo_servico_sfa = b.idt_codigo_servico_sfa
+					  AND b.tip_chamada = c.rate_name
+					  AND b.idt_plano_preco = d.idt_plano_preco
+					  AND INSTR(?, d.idt_categoria) &gt; 0
+					  AND INSTR(?, trim (b.idt_tipo_servico)) &gt; 0
+					UNION ALL
+					SELECT DISTINCT decode (c.idt_categoria, 0,'PrePago', 1, 'Hibrido') AS Plano
+					        , CONCAT(b.ID_CANAL, b.ID_ORIGEM) AS Cod_servico_GPP
+					        , d.des_origem AS Des_operacao
+					        , a.idt_codigo_servico_sfa AS Cod_servico_SFA
+					        , a.des_codigo_servico AS Nome_Servico
+					        , decode (trim (b.idt_tipo_servico),  'CBG','Consumo BO', 'CRG', 'Consumo RE', 'RE', 'recarga RE', 'BO', 'recarga BO') AS Tipo_Codigo
+					        , decode (trim (b.idt_tipo_servico),  'CBG','Servico GSM','CRG', 'Servico GSM','RE', 'recarga RE', 'BO', 'recarga BO') AS Tipo_Servico
+					        , 'Recarga' AS Segmento_Receita
+					        , 'Evento' AS Unidade
+					 FROM tbl_con_codigo_servico_sfa a, tbl_con_recarga_servico b, tbl_ger_plano_preco c, tbl_rec_origem d
+					 WHERE a.idt_codigo_servico_sfa = b.idt_codigo_servico_sfa
+					  AND c.idt_plano_preco = b.idt_plano_preco
+					  AND b.id_canal = d.id_canal
+                      AND b.id_origem = d.id_origem
+					  AND INSTR(?, c.idt_categoria) &gt; 0
+					  AND INSTR(?, trim (b.idt_tipo_servico)) &gt; 0
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo	name="Plano"				showName="Plano"			            type="STRING"	    />
+					<campo	name="Cod_servico_GPP"		showName="Cod Servico GPP"			    type="STRING"	    />
+					<campo	name="Des_operacao"		    showName="Descricao Servico"		    type="STRING"	    />
+					<campo	name="Cod_servico_SFA"		showName="Cod Servico SFA"				type="STRING"	    />
+					<campo	name="Nome_Servico"	        showName="Nome do Servico"	            type="STRING"	    />
+					<campo	name="Tipo_Codigo"		    showName="Tipo Codigo"		            type="STRING"	    />
+					<campo	name="Tipo_Servico"			showName="Tipo Servico"					type="STRING"	    />
+					<campo	name="Segmento_Receita"		showName="Segmento Receita"			    type="STRING"		/>
+					<campo	name="Unidade"		        showName="Unidade"		                type="STRING"		/>
+				</registro>
+			</dados>
+		</Relatorio>
+		
+		<Relatorio	name="ContabilChamadasAmigosTodaHoraNormalDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="MES_INICIAL"/>
+				<param mapName="MES_FINAL"/>
+				<param mapName="CATEGORIA"/>
+				<param mapName="CN"/>
+				<statement>
+				SELECT
+				    data,
+				    cn,
+				    categoria,
+				    ROUND (SUM (DURACAO_EH_FF) / 60, 2)		AS duracao_ff,
+				    ROUND (SUM (VLR_PRINCIPAL_EH_FF), 2)	AS vlr_principal_ff,
+				    ROUND (SUM (VLR_BONUS_EH_FF), 2)		AS vlr_bonus_ff,
+				    ROUND (SUM (DURACAO_NAO_FF) / 60, 2)	AS duracao,
+				    ROUND (SUM (VLR_BONUS_NAO_FF), 2)		AS vlr_bonus,
+				    ROUND (SUM (VLR_PRINCIPAL_NAO_FF), 2)	AS vlr_principal
+				FROM
+				(
+				    SELECT   TO_CHAR (dia.dat_cdr, 'MM/yyyy') AS DATA,
+				         dia.idt_codigo_nacional AS CN,
+						 CASE WHEN dia.ind_ff =  0  THEN dia.vlr_duracao ELSE 0 END AS DURACAO_NAO_FF,
+						 CASE WHEN dia.ind_ff != 0  THEN dia.vlr_duracao ELSE 0 END AS DURACAO_EH_FF,
+						 CASE WHEN dia.ind_ff =  0  THEN dia.vlr_total_principal ELSE 0 END AS VLR_PRINCIPAL_NAO_FF,
+						 CASE WHEN dia.ind_ff != 0  THEN dia.vlr_total_principal ELSE 0 END AS VLR_PRINCIPAL_EH_FF,
+						 CASE WHEN dia.ind_ff =  0  THEN dia.vlr_total_bonus ELSE 0 END AS VLR_BONUS_NAO_FF,
+						 CASE WHEN dia.ind_ff != 0  THEN dia.vlr_total_bonus ELSE 0 END AS VLR_BONUS_EH_FF,
+				         cat.des_categoria AS CATEGORIA
+				    FROM tbl_rel_cdr_dia dia, tbl_ger_plano_preco pp, tbl_ger_categoria cat
+				   WHERE TRIM (dia.idt_plano) = pp.idt_plano_preco
+				     AND pp.idt_categoria = cat.idt_categoria
+				     AND dia.dat_cdr &gt;= TO_DATE( ? ,'MM/yyyy')
+				     AND dia.dat_cdr &lt;  ADD_MONTHS(TO_DATE( ? ,'MM/yyyy'),1)
+				     AND dia.idt_sentido = 'O'
+				     AND INSTR ( ? , cat.idt_categoria) &gt; 0
+				     AND INSTR ( ? , dia.idt_codigo_nacional) &gt; 0
+				)
+				GROUP BY
+				    DATA,CN,CATEGORIA
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo	name="data"					showName="Data"			    		    type="STRING"	    		 />
+					<campo	name="cn"					showName="CN"			    		    type="STRING"	    		 />
+					<campo	name="categoria"			showName="Categoria"			        type="STRING"	    		 />
+					<campo	name="duracao_ff"			showName="Duração ATH"			        type="STRING"	    		 />
+					<campo	name="vlr_principal_ff"		showName="Valor Principal ATH"			type="DOUBLE"	mask="##0.00"/>
+					<campo	name="vlr_bonus_ff"		    showName="Valor Bonus ATH"			    type="DOUBLE"	mask="##0.00"/>
+					<campo	name="duracao"				showName="Duração Normal"				type="STRING"	   			 />
+					<campo	name="vlr_principal"	    showName="Valor Principal"	            type="DOUBLE"	mask="##0.00"/>
+					<campo	name="vlr_bonus"			showName="Valor Bonus"		            type="DOUBLE"	mask="##0.00"/>
+				</registro>
+			</dados>
+		</Relatorio>
+
+		<Relatorio	name="ContabilChamadasSaintesDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="PERIODO_CONTABIL"/>
+				<param mapName="CATEGORIA"/>
+				<param mapName="PERIODO_CONTABIL"/>
+				<param mapName="CATEGORIA"/>
+				<param mapName="PERIODO_CONTABIL"/>
+				<param mapName="CATEGORIA"/>
+
+				<statement>
+				select f.* from (
+					select e.idt_periodo_contabil as periodoContabil,
+                           a.DAT_CDR as data,
+                           a.IDT_CODIGO_NACIONAL as cn,
+                           sum(a.QTD_REGISTROS) as qtdRegistro,
+                           sum(a.VLR_TOTAL) as vlrTotal,
+                           sum(a.VLR_DURACAO) as vlrDuracao,
+                           a.TIP_CHAMADA as tipChamada,
+                           b.des_operacao as desOperacao,
+                           d.des_categoria as desCategoria,
+                           sum(a.VLR_TOTAL_PRINCIPAL) as vlrTotalPrincipal,
+                           sum(a.VLR_TOTAL_BONUS) as vlrTotalBonus,
+                           sum(a.VLR_TOTAL_SMS) as vlrTotalSms,
+                           sum(a.VLR_TOTAL_DADOS) as vlrTotalDados
+                     from tbl_rel_cdr_dia a,
+                          tbl_ger_rating b,
+                          tbl_ger_plano_preco c,
+                          TBL_GER_CATEGORIA d,
+                          tbl_con_periodo_contabil e
+                     where dat_cdr &gt;= e.dat_inicio_periodo
+                       and dat_cdr &lt;= e.dat_final_periodo
+                       and e.idt_periodo_contabil = ?
+                       and a.tip_chamada = b.rate_name
+                       and trunc(a.idt_plano) = c.idt_plano_preco
+                       and INSTR( ? , c.idt_categoria) &gt; 0
+                       and c.idt_categoria = d.idt_categoria
+                     group by e.idt_periodo_contabil,a.DAT_CDR,a.IDT_CODIGO_NACIONAL,
+                              a.TIP_CHAMADA, b.des_operacao,d.des_categoria
+                    UNION ALL
+                    SELECT f.idt_periodo_contabil as periodoContabil,
+                           a.dat_recarga as data,
+                           a.idt_codigo_nacional as cn,
+                           sum(a.qtd_registros) as qtdRegistro,
+                           abs(sum(VLR_TOTAL)) as vlrTotal,
+                           sum(a.qtd_registros) as vlrDuracao,
+                           a.id_sistema_origem as tipChamada,
+                           c.des_sistema_origem as desOperacao,
+                           e.des_categoria as desCategoria,
+                           abs(sum(VLR_TOTAL_PRINCIPAL)) as vlrTotalPrincipal,
+                           abs(sum(VLR_TOTAL_BONUS)) as vlrTotalBonus,
+                           abs(SUM(VLR_TOTAL_SMS)) as vlrTotalSms,
+                           abs(sum(VLR_TOTAL_DADOS)) as vlrTotalDados
+                     FROM tbl_rel_recargas a,
+                          tbl_con_recarga_servico b,
+                          tbl_rec_sistema_origem c,
+                          tbl_ger_plano_preco d,
+                          TBL_GER_CATEGORIA e,
+                          tbl_con_periodo_contabil f
+                    WHERE a.dat_recarga &gt;= f.dat_inicio_periodo
+                    AND a.dat_recarga &lt;= f.dat_final_periodo
+                    and f.idt_periodo_contabil = ?
+                    AND a.id_origem = b.id_origem
+                    AND a.id_canal = b.id_canal
+                    AND a.id_sistema_origem = b.id_sistema_origem
+                    AND trim(a.idt_plano) = b.idt_plano_preco
+                    AND b.IDT_TIPO_SERVICO = 'CRG'
+                    AND a.id_sistema_origem = c.id_sistema_origem
+                    AND trim(a.idt_plano) = d.idt_plano_preco
+                    AND INSTR( ? , d.idt_categoria) &gt; 0
+                    and d.idt_categoria = e.idt_categoria
+                    GROUP BY f.idt_periodo_contabil,a.dat_recarga,a.idt_codigo_nacional,
+                             a.id_sistema_origem,c.des_sistema_origem,e.des_categoria
+                    UNION ALL
+                    select a.idt_periodo_contabil as periodoContabil,
+                           to_date('28/'||a.idt_periodo_contabil, 'DD/MM/YYYY') as data,
+                           a.idt_codigo_nacional as cn,
+                           count(1) as qtdRegistro,
+                           SUM(VLR_TOTAL) as vlrTotal,
+                           count(1) as vlrDuracao,
+                           a.ID_CHAVE1 as tipChamada,
+                           b.des_codigo_servico as desOperacao,
+                           e.des_categoria as desCategoria,
+                           sum(DECODE(IDT_TIPO_SALDO, 'SP',VLR_TOTAL,0)) as vlrTotalPrincipal,
+                           sum(DECODE(IDT_TIPO_SALDO, 'SB',VLR_TOTAL,0)) as vlrTotalBonus,
+                           sum(DECODE(IDT_TIPO_SALDO, 'SS',VLR_TOTAL,0)) as vlrTotalSms,
+                           sum(DECODE(IDT_TIPO_SALDO, 'SD',VLR_TOTAL,0)) as vlrTotalDados
+                    from tbl_con_contabil a,
+                         tbl_con_codigo_servico_sfa b,
+                         tbl_ger_plano_preco d,
+                         TBL_GER_CATEGORIA e
+                    WHERE a.ID_CHAVE1 = '-'
+                    AND a.ID_CHAVE2 = '-'
+                    AND a.ID_CHAVE3 = '-'
+                    AND a.idt_codigo_servico_sfa = b.idt_codigo_servico_sfa
+                    AND a.idt_codigo_servico_sfa IN ('71687','71688','82275','82276')
+                    AND a.idt_periodo_contabil = ?
+                    AND trim(a.idt_plano_preco) = d.idt_plano_preco
+                    AND INSTR( ? , d.idt_categoria) &gt; 0
+                    and d.idt_categoria = e.idt_categoria
+                    GROUP BY a.idt_periodo_contabil,to_date('28/'||a.idt_periodo_contabil, 'DD/MM/YYYY'),
+                             a.idt_codigo_nacional,a.ID_CHAVE1,b.des_codigo_servico,e.des_categoria
+				) f
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo	name="periodoContabil"		showName="Periodo Contábil"			    type="STRING"	    		 />
+					<campo	name="data"					showName="Data"			    		    type="STRING"	    		 />
+					<campo	name="cn"					showName="CN"			    		    type="STRING"	    		 />
+					<campo	name="qtdRegistro"			showName="Quantidade de Registro"		type="STRING"	    		 />
+					<campo	name="vlrTotal"				showName="Valor Total"		            type="DOUBLE"	mask="##0.00"/>
+					<campo	name="vlrDuracao"			showName="Valor Duração"		        type="DOUBLE"	mask="##0.00"/>
+					<campo	name="tipChamada"			showName="Tipo de Chamda"			    type="STRING"	    		 />
+					<campo	name="desOperacao"			showName="Descrição da Operação"		type="STRING"	    		 />
+					<campo	name="desCategoria"			showName="Descrição da Categoria"		type="STRING"	    		 />
+					<campo	name="vlrTotalPrincipal"	showName="Valor Total Principal"		type="DOUBLE"	mask="##0.00"/>
+					<campo	name="vlrTotalBonus"		showName="Valor Total Bonus"		    type="DOUBLE"	mask="##0.00"/>
+					<campo	name="vlrTotalSms"			showName="Valor Total SMS"		        type="DOUBLE"	mask="##0.00"/>
+					<campo	name="vlrTotalDados"		showName="Valor Total Dados"		    type="DOUBLE"	mask="##0.00"/>
+				</registro>
+			</dados>
+		</Relatorio>
+		
+				<Relatorio	name="ContabilAssinantesRecarregaramDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DATAINICIAL"/>
+				<param mapName="DATAFINAL"/>
+				<param mapName="CN"/>
+				<statement>
+		          select c.idt_uf      as uf
+                       ,r.idt_msisdn  as assinante
+                       ,r.vlr_pago    as valor
+                       ,r.dat_origem as datRecarga
+                  from tbl_rec_recargas r
+                       ,tbl_ger_codigo_nacional c
+                 where r.dat_origem &gt;= to_date( ? ,'dd/mm/yyyy')
+                   and r.dat_origem &lt;  to_date( ? ,'dd/mm/yyyy')
+                   and r.id_tipo_recarga='R'
+                   and r.tip_transacao in ('02000','03000')
+                   and c.idt_codigo_nacional = substr(r.idt_msisdn,3,2)
+                   and instr ( ? , c.idt_codigo_nacional) &gt; 0 
+              order by c.idt_uf, r.idt_msisdn, r.vlr_pago ,r.dat_origem
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo	name="uf"		   showName="UF"			        type="STRING"	    							/>
+					<campo	name="assinante"   showName="Assinante"			    type="STRING"	    						    />
+					<campo	name="valor"	   showName="Valor"			    	type="DOUBLE"	    mask="##0.00"				/>
+					<campo	name="datRecarga"  showName="Data da Recarga"		type="TIMESTAMP" 	mask="dd/MM/yyyy HH:mm:ss" 	/>
+				</registro>
+			</dados>
+		</Relatorio>
+
+	   <Relatorio	name="ContabilTipoDocFilial" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="IDPERIODO"/>
+				<statement>
+		         SELECT   i.dat_servico DATA, cn.idt_uf uf, i.id_categoria categoria,
+					         i.tip_registro documento, SUM (i.vlr_liquido) valor_liquido,
+					         SUM (i.vlr_icms) valor_icms, SUM (i.qtd_fisica) AS quantidade_fisica
+					    FROM tbl_int_contabil i, tbl_ger_codigo_nacional cn
+					   WHERE cn.idt_codigo_nacional = i.idt_uf
+					     AND cn.ind_regiao_brt = 1
+					     AND i.dat_servico =
+					                TO_CHAR (TO_DATE (?, 'mm/yyyy'), 'yyyymm')
+					     AND i.idt_trailer = 1
+					GROUP BY i.dat_servico, cn.idt_uf, i.id_categoria, i.tip_registro
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo	name="data"					showName="Data"			    		    type="STRING"	    		 />
+					<campo	name="uf"					showName="UF"			    		    type="STRING"	    		 />
+					<campo	name="categoria"			showName="Categoria"			        type="STRING"	    		 />
+					<campo	name="documento"			showName="Documento"			        type="STRING"	    		 />
+					<campo	name="valor_liquido"		showName="Valor Líquido"				type="DOUBLE"	mask="##0.00"/>
+					<campo	name="valor_icms"		    showName="Valor ICMS"				    type="DOUBLE"	mask="##0.00"/>
+					<campo	name="quantidade_fisica"	showName="Quantidade Física"			type="STRING"	   			 />
+				</registro>
+			</dados>
+		</Relatorio>
+		
+		   <Relatorio	name="ContabilCobrancaServicoDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DATA_INICIAL"/>
+				<param mapName="FORMATO_DATA"/>
+				<param mapName="DATA_FINAL"/>
+				<param mapName="FORMATO_DATA"/>
+				<param mapName="CN"/>
+				<param mapName="PLANO"/>
+				<statement>
+		         SELECT dia.idt_codigo_nacional AS cn
+				       ,dia.dat_cdr AS data
+				       ,pp.des_plano_preco AS plano
+				       ,SUM (dia.qtd_registros) AS quantidade
+				       ,SUM (dia.vlr_duracao) AS valor_fisico	
+				       ,SUM (dia.vlr_total) AS valor_financeiro
+				FROM tbl_rel_cdr_dia dia, tbl_ger_plano_preco pp, tbl_ger_categoria c
+				WHERE dia.idt_plano = pp.idt_plano_preco
+				  AND pp.idt_categoria = c.idt_categoria
+				  AND dia.dat_cdr &gt;= TO_DATE ( ? , ? )
+				  AND dia.dat_cdr &lt; TO_DATE ( ? , ? )
+				  AND dia.idt_cn_call_id = '102'
+				  AND instr ( ? , dia.idt_codigo_nacional) &gt; 0
+				  AND instr ( ? , pp.idt_plano_preco) &gt; 0
+				GROUP BY dia.idt_codigo_nacional, dia.dat_cdr, pp.des_plano_preco
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo	name="cn"					showName="CN"			    	type="STRING"	    		 />
+					<campo	name="data"					showName="Data"			    	type="TIMESTAMP" mask="dd/MM/yyyy" />
+					<campo	name="plano"				showName="Plano"			    type="STRING"	    		 />
+					<campo	name="quantidade"			showName="Quantidade"			type="STRING"	    		 />
+					<campo	name="valor_fisico"			showName="Valor Físico"			type="DOUBLE"	mask="##0.00"/>
+					<campo	name="valor_financeiro"		showName="Valor Financeiro"		type="DOUBLE"	mask="##0.00"/>
+				</registro>
+			</dados>
+		</Relatorio>
+		
+		<Relatorio	name="ContabilAcompanhamentoSaldosSaldoInicial" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DTINICIO"/>
+				<param mapName="DTFIM"/>
+				<statement>
+					SELECT r.dat_saldo_assinante  as data_importacao,
+					       c.des_categoria 		  as categoria,
+					       r.idt_status_assinante as status,
+					       SUM(r.vlr_total_principal/100000) as saldo_principal,
+					       SUM(r.vlr_total_bonus/100000) as saldo_bonus,
+					       SUM(r.vlr_total_sms/100000) as saldo_sms,
+					       SUM(r.vlr_total_dados/100000) as saldo_dados,
+					       SUM(r.vlr_total_periodico/100000) as saldo_periodico
+					  FROM tbl_rel_saldos r
+					  	  ,tbl_ger_plano_preco b
+					  	  ,tbl_ger_categoria c
+					 WHERE TRIM(r.idt_plano) 		 = TRIM(b.idt_plano_preco)
+					   AND b.idt_categoria 			 = c.idt_categoria
+					   AND r.dat_saldo_assinante &gt;= to_date(?,'dd/mm/yyyy')
+					   AND r.dat_saldo_assinante &lt;= to_date(?,'dd/mm/yyyy')
+					   AND r.idt_status_assinante   IN (2,3,4)
+					   GROUP BY r.dat_saldo_assinante, c.des_categoria, r.idt_status_assinante
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo	name="data_importacao"		showName="Data"			    		type="TIMESTAMP" 	mask="dd/MM/yyyy" 	/>
+					<campo	name="categoria"			showName="Categoria"	    		type="STRING"	    		 			/>
+					<campo	name="status"				showName="Status"		    		type="STRING"	    		 			/>
+					<campo	name="saldo_principal"		showName="Saldo principal"			type="DOUBLE"		mask="##0.00"		/>
+					<campo	name="saldo_bonus"			showName="Saldo de bonus"			type="DOUBLE"		mask="##0.00"		/>
+					<campo	name="saldo_sms"			showName="Saldo SMS"				type="DOUBLE"		mask="##0.00"		/>
+					<campo	name="saldo_dados"			showName="Saldo de dados"			type="DOUBLE"		mask="##0.00"		/>
+					<campo	name="saldo_periodico"		showName="Saldo periodico/off net"	type="DOUBLE"		mask="##0.00"		/>
+				</registro>
+			</dados>
+		</Relatorio>
+		
+	   <Relatorio	name="ContabilAcompanhamentoSaldosConsumo" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DTINICIO"/>
+				<param mapName="DTFIM"/>
+				<statement>
+					SELECT   a.dat_cdr AS data_cdr,
+					         c.des_categoria AS categoria,
+					         a.tip_chamada AS tipo_chamada,
+					         d.des_operacao AS descricao_operacao,
+					         SUM (a.qtd_registros) AS quantidade_registros,
+					         ROUND (SUM (a.vlr_total), 3) AS valor_total,
+					         ROUND (SUM (vlr_total_principal), 3) AS saldo_principal,
+					         ROUND (SUM (vlr_total_bonus), 3) AS saldo_bonus,
+					         ROUND (SUM (vlr_total_sms), 3) AS saldo_sms,
+					         ROUND (SUM (vlr_total_dados), 3) AS saldo_dados
+					    FROM tbl_rel_cdr_dia a,
+					         tbl_ger_plano_preco b,
+					         tbl_ger_categoria c,
+					         tbl_ger_rating d
+					   WHERE a.dat_cdr &gt;= to_date(?,'dd/mm/yyyy')
+					     AND a.dat_cdr &lt;= to_date(?,'dd/mm/yyyy')
+					     AND TRIM (a.idt_plano) = TRIM (b.idt_plano_preco)
+					     AND b.idt_categoria = c.idt_categoria
+					     AND a.tip_chamada = d.rate_name
+					GROUP BY a.dat_cdr, c.des_categoria, a.tip_chamada, d.des_operacao
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo	name="data_cdr"				showName="Data"						    type="STRING"	    		 />
+					<campo	name="categoria"			showName="Categoria"			        type="STRING"	    		 />
+					<campo	name="tipo_chamada"			showName="Tipo de chamada"    		    type="STRING"	    		 />
+					<campo	name="descricao_operacao"	showName="Descrição da operação"  	    type="STRING"	    		 />
+					<campo	name="quantidade_registros"	showName="Quantidade de registros"	    type="STRING"	    		 />
+					<campo	name="valor_total"			showName="Valor total"					type="DOUBLE"	mask="##0.00"/>
+					<campo	name="saldo_principal"		showName="Saldo principal"				type="DOUBLE"	mask="##0.00"/>
+					<campo	name="saldo_bonus"		    showName="Saldo de bônus"			    type="DOUBLE"	mask="##0.00"/>
+					<campo	name="saldo_sms"		    showName="Saldo de SMS" 			    type="DOUBLE"	mask="##0.00"/>
+					<campo	name="saldo_dados"		    showName="Saldo de dados"			    type="DOUBLE"	mask="##0.00"/>
+				</registro>
+			</dados>
+		</Relatorio>
+		
+	   <Relatorio	name="ContabilAcompanhamentoSaldosReceita" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DTINICIO"/>
+				<param mapName="DTFIM"/>
+				<statement>
+					SELECT   a.dat_recarga AS data_recarga,
+					         c.des_categoria AS categoria,
+					         a.id_canal AS id_canal,
+					         d.des_canal AS canal,
+					         a.id_origem AS id_origem,
+					         e.des_origem AS origem,
+					         a.id_tipo_recarga AS tipo_recarga,
+					         a.id_sistema_origem AS sistema_origem,
+					         SUM (a.qtd_registros) AS qtd_registros,
+					         SUM (a.vlr_total) AS vlr_total,
+					         SUM (a.vlr_total_principal) AS vlr_total_principal,
+					         SUM (a.vlr_total_bonus) AS vlr_total_bonus,
+					         SUM (a.vlr_total_sms) AS vlr_total_sms,
+					         SUM (a.vlr_total_dados) AS vlr_total_dados
+					    FROM tbl_rel_recargas a,
+					         tbl_ger_plano_preco b,
+					         tbl_ger_categoria c,
+					         tbl_rec_canal d,
+					         tbl_rec_origem e
+					   WHERE a.dat_recarga &gt;= to_date(?,'dd/mm/yyyy')
+					     AND a.dat_recarga &lt;= to_date(?,'dd/mm/yyyy')
+					     AND TRIM (a.idt_plano) = TRIM (b.idt_plano_preco)
+					     AND b.idt_categoria = c.idt_categoria
+					     AND a.id_canal = d.id_canal
+					     AND a.id_canal = e.id_canal
+					     AND a.id_origem = e.id_origem
+					GROUP BY a.dat_recarga,
+					         c.des_categoria,
+					         a.id_canal,
+					         d.des_canal,
+					         a.id_origem,
+					         e.des_origem,
+					         a.id_tipo_recarga,
+					         a.id_sistema_origem
+					ORDER BY a.dat_recarga, c.des_categoria, a.id_canal, a.id_origem
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo	name="data_recarga"			showName="Data"						    type="STRING"	    		 />
+					<campo	name="categoria"			showName="Categoria"			        type="STRING"	    		 />
+					<campo	name="id_canal"				showName="ID do Canal"			        type="STRING"	    		 />
+					<campo	name="canal"				showName="Descrição do canal"		    type="STRING"	    		 />
+					<campo	name="id_origem"			showName="ID da Origem"				    type="STRING"	    		 />
+					<campo	name="origem"				showName="Descrição da origem"	        type="STRING"	    		 />
+					<campo	name="tipo_recarga"			showName="Tipo de recarga"		        type="STRING"	    		 />
+					<campo	name="sistema_origem"		showName="Sistema de origem"   		    type="STRING"	    		 />
+					<campo	name="qtd_registros"		showName="Quantidade de registros"	    type="STRING"	    		 />
+					<campo	name="vlr_total"			showName="Valor total"					type="DOUBLE"	mask="##0.00"/>
+					<campo	name="vlr_total_principal"	showName="Saldo principal"				type="DOUBLE"	mask="##0.00"/>
+					<campo	name="vlr_total_bonus"	    showName="Saldo de bônus"			    type="DOUBLE"	mask="##0.00"/>
+					<campo	name="vlr_total_sms"	    showName="Saldo de SMS" 			    type="DOUBLE"	mask="##0.00"/>
+					<campo	name="vlr_total_dados"	    showName="Saldo de dados"			    type="DOUBLE"	mask="##0.00"/>
+				</registro>
+			</dados>
+		</Relatorio>
+		
+		<Relatorio	name="ContabilErrosPlanoControle" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DTINICIO"/>
+				<param mapName="DTFIM"/>
+				<param mapName="CATEGORIA"/>
+				<statement>
+					  SELECT dat_processamento as data_processamento, idt_msisdn_pre as msisdn,
+					         num_contrato as contrato, des_retorno as descricao_retorno,
+					         DECODE(tip_envio,'C','Controle Total','L','Controle Total','A','Controle Total','Brasil Controle') as categoria,
+					         cod_recarga, vlr_recarga
+					    FROM tbl_int_recarga_recorrente
+					   WHERE cod_retorno &lt;&gt; 0
+					     AND dat_processamento &gt;= to_date(?,'dd/MM/yyyy')
+					     AND dat_processamento &lt;= to_date(?,'dd/MM/yyyy')
+					     AND INSTR(?,DECODE(tip_envio,'C','CT','L','CT','A','CT','BC')) &gt; 0
+					     AND idt_status_processamento = 'P'
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo	name="data_processamento"	showName="Data de processamento"   	type="TIMESTAMP" 	mask="dd/MM/yyyy" 	/>
+					<campo	name="msisdn"				showName="MSISDN"		    		type="STRING"	    		 			/>
+					<campo	name="contrato"				showName="Numero do contrato"		type="STRING"	    		 			/>
+					<campo	name="descricao_retorno"	showName="Descricao do retorno"		type="STRING"	    		 			/>
+					<campo	name="categoria"			showName="Categoria de controle"	type="STRING"	    		 			/>
+					<campo	name="cod_recarga"			showName="Codigo de recarga"		type="STRING"	    		 			/>
+					<campo	name="vlr_recarga"			showName="Valor da recarga"			type="DOUBLE"		mask="##0.00"		/>
+				</registro>
+			</dados>
+		</Relatorio>
+	</Relatorios>
+</RelatorioProperties>

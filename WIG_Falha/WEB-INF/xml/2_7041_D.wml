@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+  "http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+    <card id="MURAL">
+        <p>
+            <select title="Mural" name="msg">
+                <option onpick="#ENVIAR">Enviar</option> 
+                <option onpick="#LER">Ler</option> 
+            </select>
+        </p>
+    </card>
+    
+    <card id="ENVIAR">
+        <p>
+            <input title="Digite sua msg:" type="text" name="MSG" emptyok="false"/>
+            <sendsm>
+                <destaddress value="+889"/>
+                <userdata>MSG $(MSG)</userdata>
+            </sendsm>  
+        </p>
+    </card>
+
+    <card id="LER">
+        <sendsm>
+            <destaddress value="+889"/>
+            <userdata>LER</userdata>
+        </sendsm>  
+    </card>
+</wml>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+  "http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+  <card id="Main">
+  <p>
+  <providelocalinfo cmdqualifier="location" destvar="L" />
+    <select title="Estou procurando por" name="PG">
+      <option value="f">Feminino</option>
+      <option value="m">Masculino</option>
+    </select>
+    <select title="Idade" name="PA">
+      <option value="1">Minha Idade</option>
+      <option value="2">Mais Novo(a)</option>
+      <option value="3">Mais Velho(a)</option>
+      <option value="-1">Nao Importa</option>
+    </select>
+    <select title="Interesse" name="PI">
+      <option value="1">Aventura</option>
+      <option value="2">Chat</option>
+      <option value="3">Paquera</option>
+      <option value="4">Amizade</option>
+      <option value="5">Casamento</option>
+      <option value="-1">Todas acima</option>
+    </select>
+    <select title="Localizacao" name="LS">
+      <option value="1">Perto</option>
+      <option value="-1">Nao importa</option>
+    </select>
+    <do type="accept">
+      <go href="!CE1!s2.jsp?PG=$(PG)&amp;PA=$(PA)&amp;PI=$(PI)&amp;LS=$(LS)&amp;L=$(L)" />
+    </do>
+  </p>
+</card>
+</wml>

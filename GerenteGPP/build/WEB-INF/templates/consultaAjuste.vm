@@ -1,0 +1,43 @@
+#parse("menuVertical.vm")
+<h6><b>Realização de ajuste</b></h6>
+<table width="100%">
+<tr>
+		<td> Código do Assinante</td>
+		<td>$recargaAjusteForm.msisdn</td>
+	</tr>
+	<tr>
+		<td> Tipo da transação</td>
+		<td>$recargaAjusteForm.tipoTransacao</td>
+	</tr>
+	<tr>
+		<td> Tipo de crédito</td>
+		<td>$recargaAjusteForm.tipoCredito</td>
+	</tr>
+	<tr>
+		<td> Valor</td>
+		<td>$recargaAjusteForm.valor</td>
+	</tr>
+	<tr>
+		<td> Tipo (C/D)</td>
+		<td>$recargaAjusteForm.tipo</td>
+	</tr>
+	<tr>
+		<td> Sistema de origem</td>
+		<td>$recargaAjusteForm.sistemaOrigem</td>
+	</tr>
+	<tr>
+		<td> Data/hora (AAAAMMDDHHMMSS)</td>
+		<td>$recargaAjusteForm.dataHora</td>
+	</tr>
+	<tr>
+		<td> Data expiração (AAAAMMDD)</td>
+		<td>$recargaAjusteForm.dataExpiracao</td>
+	</tr>
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$recargaAjusteForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

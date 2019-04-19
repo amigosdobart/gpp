@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+<card>
+<p>
+Aqui o seu cadastro no M-encontra é totalmente grátis ! Aproveite para montar o seu perfil e sair azarando a vontade! Clique em OK para continuar.
+</p>
+  <do type="accept">
+    <go href="https://wig.sp.fi/blt/mc/wig/frnp.jsp" />
+  </do>
+</card>
+</wml>

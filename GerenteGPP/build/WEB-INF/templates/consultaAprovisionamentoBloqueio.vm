@@ -1,0 +1,23 @@
+#parse("menuVertical.vm")
+<h6><b>Bloqueio</b></h6>
+<table width="100%">
+<tr>
+		<td> Código do Assinante</td>
+		<td>$aprovisionamentoBloqueioForm.msisdn</td>
+	</tr>
+	<tr>
+		<td> Motivo do Bloqueio</td>
+		<td>$aprovisionamentoBloqueioForm.motivo</td>
+	</tr>
+	<tr>
+		<td> Tarifa a ser cobrada</td>
+		<td>$aprovisionamentoBloqueioForm.tarifa</td>
+	</tr>
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$aprovisionamentoBloqueioForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

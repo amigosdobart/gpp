@@ -1,0 +1,55 @@
+#parse("menuVertical.vm")
+<h6><b>Inserção de recarga via XML</b></h6>
+<table width="100%">
+<tr>
+		<td> Código do Assinante</td>
+		<td>$recargaXMLForm.msisdn</td>
+	</tr>
+	<tr>
+		<td> Tipo da transação</td>
+		<td>$recargaXMLForm.tipoTransacao</td>
+	</tr>
+	<tr>
+		<td> Identificador da recarga</td>
+		<td>$recargaXMLForm.identificadorRecarga</td>
+	</tr>
+	<tr>
+		<td> Tipo de crédito</td>
+		<td>$recargaXMLForm.tipoCredito</td>
+	</tr>
+	<tr>
+		<td> Valor</td>
+		<td>$recargaXMLForm.valor</td>
+	</tr>
+	<tr>
+		<td> Data/hora (AAAAMMDDHHMMSS)</td>
+		<td>$recargaXMLForm.dataHora</td>
+	</tr>
+	<tr>
+		<td> Sistema de origem</td>
+		<td>$recargaXMLForm.sistemaOrigem</td>
+	</tr>
+	<tr>
+		<td> Nsu instituição</td>
+		<td>$recargaXMLForm.nsuInstituicao</td>
+	</tr>	
+	<tr>
+		<td> Hash cartão de crédito</td>
+		<td>$recargaXMLForm.hashCartaoCredito</td>
+	</tr>	
+	<tr>
+		<td> CPF</td>
+		<td>$recargaXMLForm.cpf</td>
+	</tr>
+	<tr>
+		<td> XML gerado</td>
+		<td>$recargaXMLForm.xml</td>
+	</tr>
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$recargaXMLForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

@@ -1,0 +1,54 @@
+/*
+ * File.......: Recharging.IDL
+ * Description: Definição de interfaces CORBA para o GPP (Gateway de Pré-Pago)
+ *              para o componente de Recarga (Recharging)
+ * Author.....: Daniel Abib
+ * Date.......: 10/02/2004
+ *                       
+ */
+
+#include "gppExceptions.idl"
+
+module com 
+{ 
+	module brt 
+	{ 
+		module gpp
+		{
+			module componentes
+			{
+				module recarga
+				{
+					module orb 
+					{ 
+						interface recarga
+						{
+							// ajuste sem descrição
+							short executaAjuste  (in string MSISDN,
+										in string tipoTransacao,
+										in string tipoCredito,
+										in double valor,
+										in string tipo,
+										in string dataHora,
+										in string sistemaOrigem,
+										in string operador,
+										in string data_expiracao )
+								raises (comum::gppExceptions::GPPInternalErrorException,
+										comum::gppExceptions::GPPCorbaException, 
+										comum::gppExceptions::GPPTecnomenException );
+							
+							
+							// Consulta Pre Recarga para Bancos para o Controle Total
+							short consultaPreRecarga (in string MSISDN, in double valorCreditos,
+													  in string tipoTransacao, in string origem )
+								raises (comum::gppExceptions::GPPInternalErrorException,
+										comum::gppExceptions::GPPTecnomenException,
+										comum::gppExceptions::GPPCorbaException);
+										
+						};
+					};
+				};
+			};
+		};
+	};
+};

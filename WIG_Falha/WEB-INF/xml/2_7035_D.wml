@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+<wml>
+
+<card>
+    <p>
+        Jogue futebol com seus amigos no Arena com 30% de desconto!!! Clique OK
+        <select title="Arena" name="msg">
+            <option onpick="#jog" value="33219401">Marque um jogo</option>
+        </select>
+    </p>
+</card>
+
+<card id="jog">
+    <p>
+        O Arena se localiza na Frente do Clube AABB (consulte nossos horarios) - Ligacao Local. Clique Ok
+    <setupcall cmdqualifier="if-not-busy">
+        <destaddress value="$(msg)" wibenc="SMS-DEFAULT"/>
+    </setupcall>
+    </p>
+</card>
+
+</wml>

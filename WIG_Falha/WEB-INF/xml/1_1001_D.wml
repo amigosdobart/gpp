@@ -1,0 +1,13 @@
+<wml>
+<card>
+<p>
+<select name="c" title="Relatorios">
+ <option value="1003">TSD - Altas</option>
+ <option value="1005">Modelos</option>
+</select>
+<do type="accept">
+<go href="!WIGC!?bts=1&amp;btc=$(c)"/>
+</do>
+</p>
+</card>
+</wml>

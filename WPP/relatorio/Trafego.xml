@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<RelatorioProperties>
+	<Relatorios>
+		<Relatorio name="TrafegoCSP14Delimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="PERIODO"/>
+				<param mapName="CN"/>
+				<param mapName="CATEGORIA"/>
+				<statement>
+		       SELECT
+					con.idt_periodo_contabil AS DATA_CHAMADA,
+					con.IDT_CODIGO_NACIONAL AS CN_ASSINANTE,
+					con.id_chave1 AS CSP_CARRIER,
+					trim(replace(con.id_chave3,'-',''))    AS COD_TIPO_CHAMADA,
+					RATING.DES_OPERACAO AS DES_TIPO_CHAMADA,
+					sfa.idt_codigo_servico_sfa as CODIGO_SERVICO,
+					sfa.des_codigo_servico as DESCRICAO_SERVICO,
+					sfa.tip_registro as TIPO_DOCUMENTO,
+					decode(sfa.idt_tipo_servico,
+					'CRB', 'Consumo de recargas BTSA',
+					'CBB', 'Consumo de bonus BTSA',
+					sfa.idt_tipo_servico)
+					as TIPO_SERVICO,
+					round(SUM(CON.vlr_total),2)      AS VALOR_TOTAL,
+					round(SUM(CON.vlr_duracao),2)    AS DURACAO_SEGUNDOS,
+					round(SUM(CON.qtd_registro),2)   AS QUANTIDADE_CHAMADAS,
+					cat.des_categoria                AS CATEGORIA
+				FROM tbl_con_contabil con,
+					TBL_GER_RATING  RATING,
+					tbl_con_codigo_servico_sfa sfa,
+					tbl_ger_plano_preco pla,
+                    tbl_ger_categoria cat
+				WHERE
+					CON.id_chave3 = RATING.RATE_NAME AND
+					con.idt_periodo_contabil = ? and
+					(con.id_chave1 = '14' OR con.id_chave1 = '00') and
+					INSTR ( ? ,con.idt_codigo_nacional) > 0 and
+					con.idt_codigo_nacional &lt;&gt; '00' and
+					con.idt_codigo_servico_sfa = sfa.idt_codigo_servico_sfa and
+					sfa.idt_tipo_servico in ('CRB', 'CBB') and
+					con.idt_plano_preco = pla.idt_plano_preco AND
+                    pla.idt_categoria = cat.idt_categoria AND 
+				    INSTR ( ? ,pla.idt_categoria) &gt; 0
+				GROUP BY
+					CON.idt_periodo_contabil,
+					CON.idt_codigo_nacional,
+					CON.id_chave1,
+					trim(replace(con.id_chave3,'-','')),
+					RATING.des_operacao,
+					sfa.idt_codigo_servico_sfa,
+					sfa.des_codigo_servico,
+					sfa.idt_tipo_servico,
+					sfa.tip_registro,
+					cat.des_categoria
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="DATA_CHAMADA" showName="Data" type="STRING"/>
+					<campo name="CN_ASSINANTE" showName="CN" type="STRING"/>
+					<campo name="CSP_CARRIER" showName="CSP" type="STRING"/>
+					<campo name="COD_TIPO_CHAMADA" showName="Codigo tipo chamada" type="STRING"/>
+					<campo name="DES_TIPO_CHAMADA" showName="Descricao tipo chamada" type="STRING"/>
+					<campo name="CODIGO_SERVICO" showName="Codigo servico" type="STRING"/>
+					<campo name="DESCRICAO_SERVICO" showName="Descricao servico" type="STRING"/>
+					<campo name="TIPO_DOCUMENTO" showName="Tipo de documento" type="STRING"/>
+					<campo name="TIPO_SERVICO" showName="Tipo de servico" type="STRING"/>
+					<campo name="VALOR_TOTAL" showName="Valor total" type="DOUBLE" mask="############0.00"/>
+					<campo name="DURACAO_SEGUNDOS" showName="Duracao" type="DOUBLE" mask="############0.00"/>
+					<campo name="QUANTIDADE_CHAMADAS" showName="Quantidade" type="DOUBLE" mask="############0.00"/>
+					<campo name="CATEGORIA" showName="Categoria" type="STRING"/>
+				</registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="TrafegoPorCSPDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DATAINICIAL"/>
+				<param mapName="DATAFINAL"/>
+				<param mapName="CN"/>
+				<param mapName="CATEGORIA"/>
+				<statement>
+				SELECT   
+  				  CDR.DAT_CDR											AS DATA_CHAMADAS,
+				  CDR.IDT_CODIGO_NACIONAL								AS CN_ASSINANTE,
+				  CDR.NUM_CSP											AS CSP_CARRIER,
+				  TRIM(REPLACE(CDR.tip_chamada,'-',''))					AS COD_TIPO_CHAMADA,         
+				  RATING.DES_OPERACAO									AS DES_TIPO_CHAMADA,
+				  ROUND(SUM(CDR.VLR_TOTAL),2)							AS VALOR_TOTAL,
+				  ROUND(SUM(CDR.VLR_DURACAO),2)							AS DURACAO_SEGUNDOS,
+				  ROUND(SUM(CDR.QTD_REGISTROS),2)						AS QUANTIDADE_CHAMADAS,
+				  CAT.des_categoria                                     AS CATEGORIA,
+				  CDR.idt_roaming_origin								AS CN_ORIGEM_CHAMADA,
+				  CDR.idt_eot_origem									AS EOT_ORIGEM
+				FROM
+				  TBL_REL_CDR_DIA		CDR,
+				  TBL_GER_RATING		RATING,
+				  TBL_GER_PLANO_PRECO	pla,
+                  TBL_GER_CATEGORIA     CAT
+				WHERE
+				  CDR.TIP_CHAMADA = RATING.RATE_NAME (+)		and
+				  CDR.DAT_CDR BETWEEN to_date( ? ,'DD/MM/YYYY') and TO_DATE( ? ,'DD/MM/YYYY') and
+				  CDR.num_csp &lt;&gt; '00'						and
+				  CDR.num_csp &lt;&gt; '14'						and
+				  CDR.IDT_CODIGO_NACIONAL &lt;&gt; '00'			and
+				  INSTR ( ? , CDR.idt_codigo_nacional) &gt; 0	and
+				  trim(cdr.idt_plano) = pla.idt_plano_preco		and
+                  pla.idt_categoria = cat.idt_categoria         and
+				  INSTR ( ? ,pla.idt_categoria) &gt; 0
+				GROUP BY
+				  CDR.DAT_CDR,
+				  CDR.IDT_CODIGO_NACIONAL,
+				  CDR.NUM_CSP,             
+				  trim(replace(CDR.tip_chamada,'-','')),
+				  RATING.DES_OPERACAO,
+			      CAT.des_categoria,
+    			  CDR.idt_eot_origem,
+				  CDR.idt_roaming_origin
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="DATA_CHAMADAS" showName="Data" type="DATE" mask="dd/MM/yyyy"/>
+					<campo name="CN_ASSINANTE" showName="CN" type="STRING"/>
+					<campo name="CSP_CARRIER" showName="CSP" type="STRING"/>
+					<campo name="COD_TIPO_CHAMADA" showName="Codigo tipo chamada" type="STRING"/>
+					<campo name="DES_TIPO_CHAMADA" showName="Descricao tipo chamada" type="STRING"/>
+					<campo name="VALOR_TOTAL" showName="Valor total" type="DOUBLE" mask="############0.00"/>
+					<campo name="DURACAO_SEGUNDOS" showName="Duracao" type="DOUBLE" mask="############0.00"/>
+					<campo name="QUANTIDADE_CHAMADAS" showName="Quantidade" type="DOUBLE" mask="############0.00"/>
+					<campo name="CATEGORIA" showName="Categoria" type="STRING"/>
+					<campo name="CN_ORIGEM_CHAMADA" showName="CN Origem" type="STRING"/>
+					<campo name="EOT_ORIGEM" showName="EOT" type="STRING"/>
+				</registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="ChamadasCobrarPorCSPDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DATAINICIAL"/>
+				<param mapName="DATAFINAL"/>
+				<param mapName="CSP"/>
+				<param mapName="CN"/>
+				<param mapName="CATEGORIA"/>
+				<statement>
+					SELECT dia.dat_cdr AS dataChamada
+					       ,cn.idt_regiao_anatel AS regiaoOrigem
+					       ,dia.idt_codigo_nacional AS cn
+					       ,dia.num_csp AS csp 
+					       ,dia.tip_chamada as tipChamada 
+					       ,sum(dia.vlr_total) AS valor
+					       ,sum(dia.vlr_duracao) AS duracao
+					       ,sum(dia.qtd_registros) as quantidade
+					       ,c.des_categoria AS categoria 
+					 FROM tbl_rel_cdr_dia dia, tbl_ger_codigo_nacional cn, tbl_ger_plano_preco pp, tbl_ger_categoria c
+					 WHERE dia.idt_cn_call_id = cn.idt_codigo_nacional
+					 AND   trim (dia.idt_plano) = pp.idt_plano_preco
+					 AND   pp.idt_categoria = c.idt_categoria
+					 AND   dia.dat_cdr &gt;= TO_DATE( ? ,'dd/MM/yyyy')
+					 AND   dia.dat_cdr &lt;= TO_DATE( ? ,'dd/MM/yyyy')
+					 AND   INSTR ( ? ,dia.num_csp)  &gt; 0 
+					 AND   INSTR ( ? ,dia.idt_codigo_nacional) &gt; 0
+					 AND   dia.tip_chamada LIKE 'RCLDN%'
+					 AND   INSTR ( ? ,c.idt_categoria) &gt; 0
+					 GROUP BY dia.dat_cdr
+					         ,cn.idt_regiao_anatel 
+					         ,dia.idt_codigo_nacional 
+					         ,dia.num_csp
+					         ,dia.tip_chamada 
+					         ,c.des_categoria
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="dataChamada" showName="Data Chamada" type="DATE" mask="dd/MM/yyyy"/>
+					<campo name="regiaoOrigem" showName="Regiao Origem" type="STRING"/>
+					<campo name="cn" showName="CN" type="STRING"/>
+					<campo name="csp" showName="CSP" type="STRING"/>
+					<campo name="tipChamada" showName="Codigo" type="STRING"/>
+					<campo name="valor" showName="Valor" type="DOUBLE" mask="############0.00"/>
+					<campo name="duracao" showName="Duracao" type="DOUBLE" mask="############0.00"/>
+					<campo name="quantidade" showName="Quantidade" type="DOUBLE" mask="############0.00"/>
+					<campo name="categoria" showName="Categoria" type="STRING"/>
+				</registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="TrafegoDiarioDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DDD"/>
+				<param mapName="DDD"/>
+				<param mapName="PLANO"/>
+				<param mapName="PLANO"/>
+				<param mapName="CSP"/>
+				<param mapName="CSP"/>
+				<param mapName="DATAINI"/>
+				<param mapName="DATAFIM"/>
+				<statement>
+					SELECT DECODE (idt_sentido,
+                 				   'O', 'Chamadas Originadas',
+                 				   'R', 'Chamadas Recebidas' ) AS tipo,
+         				   des_operacao AS grupo,
+         				   tip_chamada AS chamada,
+        				   DECODE (idt_modulacao,
+                 				   'F', 'Flat',
+                 				   'R', 'Reduzida',
+                 				   'N', 'Normal' ) AS modulacao,
+         				   SUM (qtd_registros) AS quantidade, 
+         				   SUM (vlr_total) AS custo,
+         				   SUM (vlr_duracao / 60) AS duracao
+  					  FROM tbl_rel_cdr_dia a, tbl_ger_rating b
+ 					 WHERE a.tip_chamada = b.rate_name
+   					   AND (idt_codigo_nacional = ? OR '-1' = ?)
+   					   AND (idt_plano = ? OR '-1' = ?)
+   					   AND (num_csp = ? OR '-1' = ?)
+   					   AND dat_cdr &gt;= TO_DATE (?, 'dd/mm/yyyy') 
+   					   AND dat_cdr &lt;= TO_DATE (?, 'dd/mm/yyyy')
+					 GROUP BY idt_sentido, 
+					 		  des_operacao, 
+					 		  tip_chamada, 
+					 		  idt_modulacao
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="tipo" showName="Tipo Chamada" type="STRING"/>
+					<campo name="grupo" showName="Grupo" type="STRING"/>
+					<campo name="chamada" showName="Chamada" type="STRING"/>
+					<campo name="modulacao" showName="Modulação" type="STRING"/>
+					<campo name="quantidade" showName="Quantidade" type="STRING"/>
+					<campo name="custo" showName="Valor (R$)" type="DOUBLE" mask="############0.00"/>
+					<campo name="duracao" showName="Duração (min)" type="DOUBLE" mask="############0.00"/>
+				</registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="RelatorioTrafego" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DATAINICIAL"/>
+				<param mapName="DATAFINAL"/>
+				<param mapName="CATEGORIA"/>
+				<param mapName="CN"/>
+				<param mapName="CSP"/>
+				<statement>
+					SELECT  
+					
+  						CDR.DAT_CDR                                          AS DATA_CHAMADAS,
+  						CDR.IDT_CODIGO_NACIONAL                              AS CN_ASSINANTE,
+  						CDR.NUM_CSP                                          AS CSP_CARRIER,
+  						TRIM(REPLACE(CDR.TIP_CHAMADA,'-',''))                AS COD_TIPO_CHAMADA,
+  						RATING.DES_OPERACAO                                  AS DES_TIPO_CHAMADA,
+  						ROUND(SUM(CDR.VLR_TOTAL),2)                          AS VALOR_TOTAL,
+  						ROUND(SUM(CDR.VLR_DURACAO),2)                        AS DURACAO_SEGUNDOS,
+  						ROUND(SUM(CDR.QTD_REGISTROS),2)                      AS QUANTIDADE_CHAMADAS, 
+  						CAT.DES_CATEGORIA                                    AS CATEGORIA,
+  						PLA.DES_PLANO_PRECO                                  AS PLANO
+  
+					FROM
+					
+ 						TBL_REL_CDR_DIA       CDR,
+ 						TBL_GER_RATING        RATING,
+ 						TBL_GER_PLANO_PRECO   PLA,
+  						TBL_GER_CATEGORIA     CAT
+  
+					WHERE
+
+    					CDR.TIP_CHAMADA = RATING.RATE_NAME (+)                  
+					AND CDR.DAT_CDR &gt;= TO_DATE( ? ,'dd/MM/yyyy')
+					AND CDR.DAT_CDR &lt;= TO_DATE( ? ,'dd/MM/yyyy')
+					AND TRIM(CDR.IDT_PLANO) = PLA.IDT_PLANO_PRECO 
+					AND PLA.IDT_CATEGORIA = CAT.IDT_CATEGORIA
+					AND INSTR ( ? ,PLA.IDT_CATEGORIA) &gt; 0
+					AND INSTR ( ? ,CDR.IDT_CODIGO_NACIONAL) &gt; 0
+					AND INSTR ( replace(?,'0','00') ,CDR.NUM_CSP) &gt; 0                        
+
+					GROUP BY
+					
+  						CDR.DAT_CDR,
+  						CDR.IDT_CODIGO_NACIONAL,
+  						CDR.NUM_CSP,             
+  						TRIM(REPLACE(CDR.TIP_CHAMADA,'-','')),
+  						RATING.DES_OPERACAO,
+  						CAT.DES_CATEGORIA,
+  						PLA.DES_PLANO_PRECO
+
+			</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="DATA_CHAMADAS" showName="Data" type="DATE" mask="dd/MM/yyyy"/>
+					<campo name="CN_ASSINANTE" showName="CN" type="STRING"/>
+					<campo name="CSP_CARRIER" showName="CSP" type="STRING"/>
+					<campo name="COD_TIPO_CHAMADA" showName="Codigo tipo chamada" type="STRING"/>
+					<campo name="DES_TIPO_CHAMADA" showName="Descricao tipo chamada" type="STRING"/>
+					<campo name="VALOR_TOTAL" showName="Valor total" type="DOUBLE" mask="############0.00"/>
+					<campo name="DURACAO_SEGUNDOS" showName="Duracao" type="DOUBLE" mask="############0.00"/>
+					<campo name="QUANTIDADE_CHAMADAS" showName="Quantidade" type="DOUBLE" mask="############0.00"/>
+					<campo name="CATEGORIA" showName="Categoria" type="STRING"/>
+					<campo name="PLANO" showName="Plano" type="STRING"/>
+				</registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="RelatorioFaleGratisOrelhao" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DATAINICIAL"/>
+				<param mapName="DATAFINAL"/>
+				<statement>
+			SELECT DAT_CDR             AS DATA_CDR,
+			       TGCN.IDT_UF         AS FILIAL,
+			       TRCD.TIP_CHAMADA	   AS TIPO_CHAMADA,
+			       TGR.DES_OPERACAO    AS DESCRICAO,
+			       ROUND(SUM(VLR_DURACAO/60),2)    AS DURACAO_DE_CHAMADAS,
+			       SUM(QTD_REGISTROS)  AS QUANTIDADE_DE_CHAMADAS,
+			       ROUND(SUM((VLR_DURACAO/60)*0.001),2)      AS VALOR_TOTAL
+			  FROM TBL_REL_CDR_DIA           TRCD,
+			       TBL_GER_CODIGO_NACIONAL   TGCN,
+			       TBL_GER_RATING            TGR,
+			       TBL_GER_PLANO_PRECO       TGPP 
+			 WHERE TGCN.IDT_CODIGO_NACIONAL = TRCD.IDT_CODIGO_NACIONAL
+			   AND TGR.RATE_NAME = TRCD.TIP_CHAMADA
+			   AND(TRCD.TIP_CHAMADA = 'UNICO_VC1FFI'
+			    OR TRCD.TIP_CHAMADA = 'UNICO_VC2FFI' 
+			    OR TRCD.TIP_CHAMADA = 'UNICO_VC3FFI')
+			   AND TRCD.IDT_MODULACAO = 'R'
+			   AND TRCD.DAT_CDR &gt;= TO_DATE( ? ,'dd/MM/yyyy')
+			   AND TRCD.DAT_CDR &lt;= TO_DATE( ? ,'dd/MM/yyyy')
+			   AND TRIM(TRCD.IDT_PLANO) = TGPP.IDT_PLANO_PRECO 
+			   AND TGPP.IDT_CATEGORIA in (0, 1)
+			GROUP BY TRCD.DAT_CDR, TGCN.IDT_UF, TGR.DES_OPERACAO,TRCD.TIP_CHAMADA
+			</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="DATA_CDR" showName="Data" type="DATE" mask="dd/MM/yyyy"/>
+					<campo name="FILIAL" showName="Filial" type="STRING"/>
+					<campo name="TIPO_CHAMADA" showName="Tipo Chamada" type="STRING"/>
+					<campo name="DESCRICAO" showName="Descricao" type="STRING"/>
+					<campo name="DURACAO_DE_CHAMADAS" showName="Duracao" type="STRING"/>
+					<campo name="QUANTIDADE_DE_CHAMADAS" showName="Qtd. de chamadas" type="STRING"/>
+					<campo name="VALOR_TOTAL" showName="Valor Total" type="DOUBLE" mask="############0.00"/>
+				</registro>
+			</dados>
+		</Relatorio>
+	</Relatorios>
+</RelatorioProperties>

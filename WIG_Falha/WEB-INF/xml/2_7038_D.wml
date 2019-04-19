@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+  "http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+    <card id="CADASTRAR">
+        <p>
+            <select title="Cadastrar" name="msg">
+                <option onpick="#REGISTRAR">Registrar</option> 
+                <option onpick="#TAPELIDO">Trocar apelido</option> 
+                <option onpick="#CPERFIL">Criar/Editar Perfil</option> 
+            </select>
+        </p>
+    </card>
+    
+    <card id="REGISTRAR">
+        <p>
+            <input title="Digite Apelido:" type="text" name="APELIDO" emptyok="false"/>
+            <sendsm>
+                <destaddress value="+889"/>
+                <userdata>AP $(APELIDO)</userdata>
+            </sendsm>  
+        </p>
+    </card>
+
+    <card id="TAPELIDO">
+        <p>
+            <input title="Digite Novo Apelido:" type="text" name="APELIDO" emptyok="false"/>
+            <sendsm>
+                <destaddress value="+889"/>
+                <userdata>AP $(APELIDO)</userdata>
+            </sendsm>  
+        </p>
+    </card>
+
+    <card id="CPERFIL">
+        <p>
+            <input title="Idade" type="text" name="IDADE" emptyok="false" format="*N" maxlength="2"/>
+            <input title="Sexo (H ou M)" type="text" name="SEXO" emptyok="false" maxlength="1"/>
+            <input title="Estado (UF)" type="text" name="ESTADO" emptyok="false" maxlength="2"/>
+            <sendsm>
+                <destaddress value="+889"/>
+                <userdata>MEUPERFIL $(IDADE) $(SEXO) $(ESTADO)</userdata>
+            </sendsm>  
+        </p>
+    </card>
+</wml>

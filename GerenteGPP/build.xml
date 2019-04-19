@@ -1,0 +1,131 @@
+<project name="ConsoleGPPPrePagoBRT" default="empacotamento" basedir=".">
+<!-- BUILD Console GPP Autor: Alberto Magno - Accenture -->
+  <description>
+   * Ant Script para Console GPP *
+    USO:
+	Parametros:
+      deploy.type {desenvolvimento|homologacao|producao}
+  </description>
+  <property name="app.name" value="gppConsole" /> 
+  <property name="app.name.gui" value="${app.name}" /> 
+  <property name="baseweb" value="./build" />
+  <property name="meta.home" value="${baseweb}/META-INF" /> 
+  <property name="web.home" value="${baseweb}/WEB-INF" /> 
+  <property name="web.meta.home" value="${web.home}/META-INF" /> 
+  <property name="libs.home" value="./WEB-INF/lib" /> 
+  <property name="deploy.type" value="desenvolvimento" />
+  <property name="bin" value="./bin" />
+  <property name="src" value="./src" />
+  <property name="build" value="./ear" />
+
+  <target name="preparacao" >
+    <mkdir dir="./temp" />
+    <mkdir dir="${bin}" />
+    <mkdir dir="${build}" />
+    <mkdir dir="${web.meta.home}" />
+    <tstamp>
+        <format property="deploy.time" pattern="dd/MM/yyyy hh:mm aa"/>
+    </tstamp>
+    <buildnumber file="${web.meta.home}/${deploy.type}.deploy.properties" />
+    <propertyfile file="${web.meta.home}/${deploy.type}.deploy.properties" comment="Console GPP">
+	  <entry  key="deploy.type" value="${deploy.type}"/>
+	</propertyfile>
+	<copy failonerror="false" file="${web.meta.home}/${deploy.type}.deploy.properties" tofile="${web.meta.home}/deploy.dat"/>
+    
+     <manifest file="${web.meta.home}/MANIFEST.MF">
+        <attribute name="Built-By" value="${user.name}"/>
+        <section name="${ant.project.name}">
+          <attribute name="Specification-Title" value="${ant.project.name}"/>
+          <attribute name="Specification-Version" value=" ${deploy.type} - JAVAC ${java.version}"/>
+          <attribute name="Specification-Vendor" value="Brasiltelecom"/>
+          <attribute name="Implementation-Title" value="${ant.project.name}"/>
+          <attribute name="Implementation-Version" value="${deploy.type} - ${deploy.time}."/> 
+          <attribute name="Implementation-Vendor" value="BrasilTelecom Pre Pago."/>
+        </section>
+       </manifest>
+  </target>
+
+  <target name="compilacao" depends="preparacao">
+  <javac srcdir="${src}" destdir="${bin}" debug="on" optimize="off" deprecation="off"> 
+    <classpath id="gppConsole.classpath">
+        <fileset dir="${web.home}\lib">
+          <include name="**\*.jar"/>
+          <include name="**\home\*.jar"/>
+        </fileset>
+    </classpath>
+  </javac>
+  </target>
+
+  <target name="empacotamento" depends="compilacao">
+
+     <war destfile="${build}/${app.name}.war" 
+     webxml="${web.home}/${deploy.type}.web.xml" 
+     basedir="./temp" manifest="${web.meta.home}/MANIFEST.MF">
+     <classes dir="${bin}" />
+	 <lib dir="${web.home}/lib"/>
+
+		<metainf dir="${web.meta.home}">
+        	<include name="deploy.dat" />
+		</metainf>
+
+		<fileset dir="${baseweb}" >
+		    <include name="**/*.html"/>
+		    <include name="**/*.htm"/>
+		    <include name="*.css"/>
+		    <include name="**/*.jsp"/>
+		</fileset>
+		
+		<zipfileset dir="${baseweb}/img" prefix="img">
+		    <include name="**/*.gif"/>
+		    <include name="**/*.jpg"/>
+		</zipfileset>
+		
+		<zipfileset dir="${baseweb}/script" prefix="script">
+		    <include name="**/*.js"/>
+		</zipfileset>
+		
+		<zipfileset dir="${web.home}" prefix="WEB-INF">
+		  <patternset id="pacoteWEB">
+		    <include name="**/templates/*.vm"/>
+		    <include name="**/*.xml"/>
+		    <include name="**/*.properties"/>
+		    <include name="**/*.tld"/>
+		    <include name="**/build.xml"/>
+		    <exclude name="**/application.xml"/>
+		    <exclude name="**/*.database.xml"/>
+		    <exclude name="**/*.web.xml"/>
+		  </patternset>
+		</zipfileset>
+     </war>
+
+     <ear destfile="${build}/${app.name}.ear" basedir="./temp" appxml="${meta.home}/application.xml" manifest="${web.meta.home}/MANIFEST.MF" >
+        <fileset dir="${build}">
+          <include name="**/*.war"/>
+        </fileset>
+		<zipfileset dir="${meta.home}" prefix="META-INF">
+          <include name="orion-sources.xml"/>
+          <include name="data-sources.xml"/>
+          <exclude name="*.data-sources.xml"/>
+		</zipfileset>
+     </ear>
+	  
+	<delete dir="./temp"/>
+	<delete file="${meta.home}/data-sources.xml"/>
+	<delete file="${web.home}/database.xml"/>
+	<delete>
+	    <fileset dir="${build}" includes="**/*.war"/>
+  	</delete>
+
+  </target>
+
+  <target name="sendmail" depends="empacotamento">
+    <concat destfile="${web.meta.home}/mail.txt">
+      <filelist dir="${web.meta.home}" files="MANIFEST.MF,deploy.dat"/>
+    </concat>
+    <mail mailhost="smtprelay.brasiltelecom.com.br" from="${user.name}" 
+          tolist="${listaemails}" subject="Foi feito deploy Console GPP tipo ${deploy.type}"
+          messagefile="mail.txt">
+    </mail>
+  </target>
+
+</project>

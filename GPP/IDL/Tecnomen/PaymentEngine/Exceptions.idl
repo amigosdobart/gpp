@@ -1,0 +1,70 @@
+/* $Id: Exceptions.idl,v 1.4 2004/02/16 14:30:46 gerardon Exp $ */
+
+
+//. **********************************************************************
+//.	NAME		: Exceptions.idl
+//.
+//.	CREATED BY	: Mike Mc Elligott
+//.	DATE		: June 98
+//.
+//.	DESCRIPTION	: Describes general exceptions returned from the
+//.			  Prepaid server to the client.
+//. **********************************************************************
+
+#ifndef __EXCEPTIONS_IDL
+#define __EXCEPTIONS_IDL
+
+#ifdef _TINC_MODULE
+module TINC {
+#endif //_TINC_MODULE
+
+   exception P_exception
+   {
+	short 	status;
+	string	reason;
+   };
+
+   exception Pi_exception
+   {
+	short	status;
+	short	error_code;
+   };
+
+   exception Pe_exception
+   {
+    short status;
+    short error_code;
+    string extra;
+   };
+
+   //exception PP_exception
+   //{
+   // short status;
+   // short error_code;
+   // string extra;
+   //};
+
+#ifdef _TINC_MODULE
+};
+#endif //_TINC_MODULE
+
+#endif
+/*
+   $Log: Exceptions.idl,v $
+   Revision 1.4  2004/02/16 14:30:46  gerardon
+   Took out PP_Exception as it
+   is in PP_Exception.idl in Gateway
+
+   Revision 1.3  2003/12/17 18:43:02  declan
+   Working on TINC
+
+   Revision 1.2  2003/10/16 16:08:42  attila
+   Booked in before attempting to tag with 'evita_1'
+
+   Revision 1.1.1.1  2003/02/03 11:51:06  attila
+   Placed under CVS
+
+   Revision 1.1.1.1  2002/11/05 09:49:04  attila
+   Placed under CVS
+
+*/

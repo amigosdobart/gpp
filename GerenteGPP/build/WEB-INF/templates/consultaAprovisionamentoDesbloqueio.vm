@@ -1,0 +1,15 @@
+#parse("menuVertical.vm")
+<h6><b>Desbloqueio</b></h6>
+<table width="100%">
+<tr>
+		<td> Código do Assinante</td>
+		<td>$aprovisionamentoDesbloqueioForm.msisdn</td>
+	</tr>
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$aprovisionamentoDesbloqueioForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

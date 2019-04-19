@@ -1,0 +1,227 @@
+/*
+ * File.......: ProcessosBatch.idl
+ * Description: Definição de interfaces CORBA para o GPP (Gateway de Pré-Pago)
+ *              para o componente de Processos Batch
+ *
+ * Author.....: Camile 
+ * Date.......: 23/03/2004
+ *                       
+ * Modified by: Vanessa
+ * Date.......: 24/03/2004
+ * Reason.....: Envio de usuario com status Shutdown
+ */
+
+#include "GPPExceptions.idl"
+
+module com 
+{ 
+	module brt 
+	{ 
+		module gpp
+		{
+			module componentes
+			{
+				module processosBatch
+				{
+					module orb 
+					{ 
+						interface processosBatch 
+						{	
+  						   // Metodo para gravar dados para envio de SMS
+						   boolean gravaMensagemSMS (in string aMsisdn, in string aMensagem, in short aPrioridade, in string aTipo) 
+													raises ( comum::gppExceptions::GPPInternalErrorException);
+
+						   // Metodo para extracao de usuarios com status Shutdown
+						   short enviaUsuariosShutdown (in string aData) raises ( comum::gppExceptions::GPPInternalErrorException);
+
+							// Metodo para extracao de usuarios com status Normal
+						   short enviarUsuariosStatusNormal (in string aData) raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para execucao de recargas do Geneva
+							boolean executaRecargaRecorrente () raises ( comum::gppExceptions::GPPInternalErrorException);
+							
+						   // Metodo para execucao de recargas do Microsiga
+							short executaRecargaMicrosiga () raises ( comum::gppExceptions::GPPInternalErrorException);
+
+						   // Metodo para envio de informacoes de recarga para Irmao 14
+						   short enviaInfosRecarga (in string aData) raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para envio de Bonus Toma La Da Ca
+						   short enviaBonusCSP14 (in string aData) raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para liberar a concessão do Bumerangue
+						   void liberaBumerangue (in string aData) raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para envio de informacoes de Cartao Unico
+						   short enviaInfosCartaoUnico() raises(comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para emissão de NF de Bonus Toma La Da Ca
+						   short emiteNFBonusTLDC (in string aData) raises ( comum::gppExceptions::GPPInternalErrorException);
+
+						   // Metodo para estorno de bonus sobre bonus
+						   short estornaBonusSobreBonus ( ) raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para envio de informações de recarga para Conciliação
+						   short enviarRecargasConciliacao (in string aData) raises ( comum::gppExceptions::GPPInternalErrorException);
+		
+						   // Metodo para executar a solicitacao de Voucher
+						   short executaTratamentoVoucher (in string aData) raises ( comum::gppExceptions::GPPInternalErrorException);
+		
+						   // Metodo para executar a contestacao de fatura
+						   short executaContestacao (in string aData) raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para enviar
+						   boolean envioComprovanteServico () raises ( comum::gppExceptions::GPPInternalErrorException);						   
+						   
+						   // Metodo para importacao de CDRs
+						   short importaArquivosCDR (in string aData) raises ( comum::gppExceptions::GPPInternalErrorException);
+
+						   // Metodo para envio de Bonus Toma La Da Ca
+						   short importaAssinantes () raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para importacao de Usuarios do NDS para o Portal
+						   short importaUsuarioPortalNDS () raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para importacao de Informacoes de estoque do SAP providas do ETI
+						   short importaEstoqueSap () raises ( comum::gppExceptions::GPPInternalErrorException);
+
+						   // Metodo para calculo do número de dias sem recarga
+						   short atualizaDiasSemRecarga () raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para sumarizar produtos por plano
+						   short sumarizarProdutoPlano (in string aData) raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para sumarizar ajustes
+						   short sumarizarAjustes (in string aData) raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para sumarizar contabilidade
+						   short sumarizarContabilidade (in string aData) raises ( comum::gppExceptions::GPPInternalErrorException);
+
+						   // Metodo para sumarizar contabilidade por cn
+						   short sumarizarContabilidadeCN (in string aData, in string aCN) raises ( comum::gppExceptions::GPPInternalErrorException);
+
+						   // Metodo para consolidar contabilidade
+						   short consolidarContabilidade (in string aData) raises ( comum::gppExceptions::GPPInternalErrorException);
+
+						   // Metodo para Exportacao de tabelas do DW
+						   short exportarTabelasDW () raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para importacao de pedidos de criacao de voucher
+						   short importaPedidosCriacaoVoucher() raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   typedef sequence <octet> BufferDados;
+						   // Metodo para gravar um buffer de dados em arquivo
+						   boolean gravaDadosArquivoOrdem(in string nomeArquivo, in BufferDados buffer)
+						   raises ( comum::gppExceptions::GPPInternalErrorException);
+
+						   // Metodo para buscar o Id User PGP do Requisitante da ordem
+						   string getUserIDRequisitante(in long long numOrdem);
+						   
+						   // Metodo para enviar consolidação de receita para o SCR
+						   short enviarConsolidacaoSCR(in string aData)
+						   raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para calcular índices de bonificação
+						   short calcularIndiceBonificacao(in string data)
+						   raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para automaticamente bloquear/desbloquear serviços de usuários 
+						   short bloqueioAutomaticoServicoPorSaldo (in string dataReferencia)
+						   raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para automaticamente bloquear/desbloquear serviços de usuários (incluindo os que passaram para RE)
+						   short bloqueioAutomaticoServicoIncluindoRE (in string dataReferencia)
+						   raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para enviar e-mail contendo os arquivos de cartoes por pedido
+						   void enviaPedidoPorEMail(in long long numeroOrdem)
+						   raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   void enviaContingenciaSolicitada() raises ( comum::gppExceptions::GPPInternalErrorException );
+							//Metodos para gerenciamento de promocoes
+    					   short gerenciarPromocao(in string data)
+						   raises ( comum::gppExceptions::GPPInternalErrorException);
+						
+						   // Metodo para gerenciamento de promocao
+						   short promocaoPrepago(in string data)
+						   raises ( comum::gppExceptions::GPPInternalErrorException);
+
+						   // Metodo para contingenciamento de desbloquio de hotline
+						   short contingenciaDaContingencia(in string data)
+						   raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para invocar o gerenciamento da promocao Londrina
+						   void cadastraAssinantesPromocaoLondrina(in double valorBonus)
+						   raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para executar mensalmente o gerenciamento da promocao londrina
+						   void executarPromocaoLondrina(in string data)
+						   raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para executar um aviso mensal para recarga da promocao Londrina
+						   void avisaRecargaPromocaoLondrina(in string data)
+						   raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   void atualizaNumLotePedido(in long long numOrdem, in long numItem, in long long numLoteIni, in long long numLoteFim)
+   						   raises ( comum::gppExceptions::GPPInternalErrorException);
+   						   
+   						   long long getQtdeCartoes(in long long numOrdem, in long numItem)
+   						   raises ( comum::gppExceptions::GPPInternalErrorException);
+   						   
+   						   short gerenteFeliz()
+   						   raises ( comum::gppExceptions::GPPInternalErrorException);
+   						   
+   						   short atualizaLimiteCreditoVarejo()
+   						   raises ( comum::gppExceptions::GPPInternalErrorException);
+   						   
+   						   short marretaGPP(in string paramIn)
+   						   raises ( comum::gppExceptions::GPPInternalErrorException);
+   						   
+   						   // Metodo batch de batimento de CDRs de cobilling
+   						   void gerarArquivoCobilling(in string csp,in string inicio,in string fim, in string UF)
+   						   raises ( comum::gppExceptions::GPPInternalErrorException);
+   						   
+   						   // Metodo batch de envio de Dados Pula-Pula para o DW
+   						   void enviaDadosPulaPulaDW(in string aData,in short aPromocao)
+   						   raises ( comum::gppExceptions::GPPInternalErrorException);
+   						   
+   						   // Metodo batch de reinicio do ciclo 3
+   						   void reiniciaCicloTres()
+   						   raises ( comum::gppExceptions::GPPInternalErrorException);
+   						   
+   						   void processaBumerangue14Dia(in string aData)
+   						   raises ( comum::gppExceptions::GPPInternalErrorException);
+   						   
+   						   void processaBumerangue14Mes(in short mes)
+   						   raises ( comum::gppExceptions::GPPInternalErrorException);
+   						   
+   						   short sumarizaAssinantesShutdown(in string dataAnalise)
+   						   raises (comum::gppExceptions::GPPInternalErrorException);
+						
+						   // Método para envio de notificação de data de expiração e saldo a expirar via SMS
+						   void gravaNotificacaoSMS() 
+						   raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para aprovisionamento/desaprovisionamento de assinantes na plataforma de MMS
+						   void aprovisionarAssinantesMMS(in string data)
+						   raises ( comum::gppExceptions::GPPInternalErrorException);
+						   
+						   // Metodo para execucao do processo de concessao de bonus Pula-Pula
+						   short executaConcessaoPulaPula(in string tipoExecucao, in string referencia, in long promocao);
+						
+						   // Metodo para execucao da sumarizacao de recargas efetuadas por assinantes para calculo
+						   // de limite dinamico de bonus Pula-Pula
+						   short sumarizaRecargasAssinantes(in string referencia);
+						
+						   // Definicao do parametro e do metodo para a execucao dos processos batch
+						   typedef sequence <string> paramsProcBatch;
+
+						   void executaProcessoBatch(in long idProcessoBatch, in paramsProcBatch parametros)
+						   raises (comum::gppExceptions::GPPInternalErrorException);						
+						};
+					};	
+				};
+			};
+		};
+	};
+};

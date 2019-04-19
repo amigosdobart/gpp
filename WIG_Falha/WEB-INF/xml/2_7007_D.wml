@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+<wml>
+ <card>
+  <p>
+   Acesse diversas informações úteis para você. Você vai acessar um site wap, clique ok para continuar.
+    </p>
+    <launchbrowser url="http://wapshow.brasiltelecom.com.br/sd" >
+    </launchbrowser>
+ </card>
+</wml>

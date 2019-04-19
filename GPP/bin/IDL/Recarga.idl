@@ -1,0 +1,157 @@
+/*
+ * File.......: Recharging.IDL
+ * Description: Definição de interfaces CORBA para o GPP (Gateway de Pré-Pago)
+ *              para o componente de Recarga (Recharging)
+ * Author.....: Daniel Abib
+ * Date.......: 10/02/2004
+ *                       
+ */
+
+#include "gppExceptions.idl"
+
+module com 
+{ 
+	module brt 
+	{ 
+		module gpp
+		{
+			module componentes
+			{
+				module recarga
+				{
+					module orb 
+					{ 
+						interface recarga
+						{
+							// Parametros XML
+							string executaRecargaXML ( in string GPPRecarga )
+								raises (comum::gppExceptions::GPPInternalErrorException,
+										comum::gppExceptions::GPPCorbaException,
+										comum::gppExceptions::GPPBadXMLFormatException,
+										comum::gppExceptions::GPPTecnomenException );
+	
+							short executaAjusteXML  ( in string GPPRecargaAjuste )
+								raises (comum::gppExceptions::GPPInternalErrorException,
+										comum::gppExceptions::GPPCorbaException,
+										comum::gppExceptions::GPPBadXMLFormatException,
+										comum::gppExceptions::GPPTecnomenException );
+	
+							short executaRecargaBanco ( in string MSISDN,
+											in string tipoTransacao,
+											in string identificacaoRecarga,
+											in string nsuInstituicao,
+											in string codLoja,
+											in string tipoCredito,
+											in double valor,
+											in string dataHora,
+											in string dataHoraBanco,
+											in string dataContabil,
+											in string terminal,
+											in string tipoTerminal,
+											in string sistemaOrigem,
+											in string operador )
+								raises (comum::gppExceptions::GPPInternalErrorException,
+										comum::gppExceptions::GPPCorbaException, 
+										comum::gppExceptions::GPPTecnomenException );
+
+							// Parametros CORBA
+							// recarga sem descrição de recarga
+							short executaRecarga ( 	in string MSISDN,
+										in string tipoTransacao,
+										in string identificacaoRecarga,
+										in string tipoCredito,
+										in double valor,
+										in string dataHora,
+										in string sistemaOrigem,
+										in string operador,
+										in string nsuInstituicao,
+										in string hash_cc,
+										in string cpf )
+								raises (comum::gppExceptions::GPPInternalErrorException,
+										comum::gppExceptions::GPPCorbaException, 
+										comum::gppExceptions::GPPTecnomenException );
+										
+							// ajuste sem descrição
+							short executaAjuste  (in string MSISDN,
+										in string tipoTransacao,
+										in string tipoCredito,
+										in double valor,
+										in string tipo,
+										in string dataHora,
+										in string sistemaOrigem,
+										in string operador,
+										in string data_expiracao )
+								raises (comum::gppExceptions::GPPInternalErrorException,
+										comum::gppExceptions::GPPCorbaException, 
+										comum::gppExceptions::GPPTecnomenException );
+							
+							// ajuste com descrição			
+							short executaAjusteDescrito  (in string MSISDN,
+										in string tipoTransacao,
+										in string tipoCredito,
+										in double valor,
+										in string tipo,
+										in string dataHora,
+										in string sistemaOrigem,
+										in string operador,
+										in string data_expiracao,
+										in string descricao )
+								raises (comum::gppExceptions::GPPInternalErrorException,
+										comum::gppExceptions::GPPCorbaException, 
+										comum::gppExceptions::GPPTecnomenException );
+										
+							short executaAjusteMultiplosSaldos ( in string MSISDN, 
+										in string tipoTransacao, 
+										in double ajustePrincipal, 
+										in double ajustePeriodico, 
+										in double ajusteBonus,
+										in double ajusteSms,
+										in double ajusteGprs,
+										in string expPrincipal,
+										in string expPeriodico,
+										in string expBonus,
+										in string expSms,
+										in string expGprs,
+										in string tipo, 
+										in string dataHora, 
+										in string sistemaOrigem, 
+										in string operador) 
+								raises	(comum::gppExceptions::GPPInternalErrorException, 
+										comum::gppExceptions::GPPCorbaException, 
+										comum::gppExceptions::GPPTecnomenException);										
+	
+							// Consulta
+							short podeRecarregar ( in string MSISDN, in double valorCreditos )
+								raises (comum::gppExceptions::GPPInternalErrorException,
+										comum::gppExceptions::GPPCorbaException, 
+										comum::gppExceptions::GPPTecnomenException );
+
+							// Consulta pré-Recarga para Canais TEF
+							short podeRecarregarVarejo ( in string MSISDN, in double valorCreditos, in string tipoTransacao )
+								raises (comum::gppExceptions::GPPInternalErrorException,
+										comum::gppExceptions::GPPCorbaException, 
+										comum::gppExceptions::GPPTecnomenException );
+
+							// Alteracao de status do voucher
+							short alteraStatusVoucher ( in string numeroVoucher, in double statusVoucher, in string comentario )
+								raises (comum::gppExceptions::GPPInternalErrorException,
+										comum::gppExceptions::GPPCorbaException, 
+										comum::gppExceptions::GPPTecnomenException );
+
+							// Resubmete pedido de voucher para a plataforma Tecnomen
+							void resubmeterPedidoVoucher ( in long long numeroPedido )
+								raises (comum::gppExceptions::GPPInternalErrorException );
+							
+							// Consulta Pre Recarga para Bancos para o Controle Total
+							short consultaPreRecarga (in string MSISDN, in double valorCreditos,
+													  in string tipoTransacao, in string origem )
+								raises (comum::gppExceptions::GPPInternalErrorException,
+										comum::gppExceptions::GPPTecnomenException,
+										comum::gppExceptions::GPPCorbaException);
+						};
+					};
+				};
+			};
+		};
+	};
+};

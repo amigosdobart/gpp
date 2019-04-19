@@ -1,0 +1,18 @@
+//. **********************************************************************
+//.	NAME		: PPExceptions.idl
+//.	DESCRIPTION	: Describes general exceptions returned from the
+//.			  Prepaid server to the client.
+//. **********************************************************************
+
+#ifndef __PPEXCEPTIONS_IDL
+#define __PPEXCEPTIONS_IDL
+
+exception PP_exception
+{
+    short status;
+    short error_code;
+    string extra;
+};
+
+#endif
+

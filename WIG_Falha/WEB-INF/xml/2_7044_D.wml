@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+  "http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+    <card id="ESAIR">
+        <p>
+            <select title="Entrar / Sair" name="msg">
+                <option onpick="#STEMP">Sair Temp</option>
+                <option onpick="#VOLTAR">Voltar</option>
+                <option onpick="#SPERM">Sair Perm</option>
+            </select>
+        </p>
+    </card>
+    
+    <card id="STEMP">
+        <sendsm>
+            <destaddress value="+889"/>
+            <userdata>S</userdata>
+        </sendsm>
+    </card>
+
+    <card id="VOLTAR">
+        <sendsm>
+            <destaddress value="+889"/>
+            <userdata>ENTRAR</userdata>
+        </sendsm>
+    </card>
+
+    <card id="SPERM">
+        <sendsm>
+            <destaddress value="+889"/>
+            <userdata>F</userdata>
+        </sendsm>
+    </card>
+</wml>

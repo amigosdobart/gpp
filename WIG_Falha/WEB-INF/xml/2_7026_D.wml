@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+  <card>
+    <p>
+    Ponto Frio: Camera digital 3.1M por apenas R$299,00. Clique Ok para mais detalhes.
+    </p>
+    <p>
+    <select title="Camera Digital" name="op">
+        <option onpick="#cup">Receba Cupom</option>
+      </select>
+    </p>
+</card>
+
+  <card id="cup">
+    <p>
+    Em instantes voce recebera uma mensagem de texto com detalhes da promocao.Clique Ok.
+    <go enterwait="false" href="!CWIG!/msgPromocional?pr=16&amp;bts=2&amp;btc=7026"/>
+   </p>
+  </card>
+
+</wml>

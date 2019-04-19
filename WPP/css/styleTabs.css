@@ -1,0 +1,32 @@
+#tablist{
+		padding: 3px 0;
+		margin-left: 0;
+		margin-bottom: -19;
+		margin-top: 0.1em;
+		font: fontverde3;
+	}
+	#tablist li{
+		list-style: none;
+		display: inline;
+		margin: 0;
+	}
+	#tablist li a{
+		padding: 3px 0.5em;
+		margin-left: 0px;
+		border: 1px solid #778;
+		border-bottom: none;
+	}
+	#tablist li a:link, #tablist li a:visited{
+		color: black;
+	}
+	#tablist li a.current{
+		background: white;
+	}
+	#tabcontentcontainer{
+		width: 100%;
+		padding: 10px;
+		border: 1px solid black;
+	}
+	.tabcontent{
+	display:none;
+	}

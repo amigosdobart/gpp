@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+<wml>
+<card>
+<p>
+<providelocalinfo cmdqualifier="location" destvar="LC"/>
+<providelocalinfo cmdqualifier="imei" destvar="IMEI"/>
+    <select name="msg" title="Utilidades">
+        <option onpick="!CHIP!">Atualiza CHIP</option>
+    </select>
+</p>
+</card>
+<card id="wigc">
+  <do type="accept">
+    <go href="!WIGC!?bts=2&amp;btc=$(msg)&amp;I=$(IMEI)&amp;loc=$(LC)"/>
+  </do>
+</card>
+<card id="cpf">
+<p>
+    <input title="Digite seu CPF:" name="CPF" type="text" format="*M" maxlength="16" emptyok="false" />
+    <do type="accept">
+        <go href="!DWIG!/$(msg)?cpfCnpj=$(CPF)" />
+    </do>
+</p>
+</card>
+</wml>

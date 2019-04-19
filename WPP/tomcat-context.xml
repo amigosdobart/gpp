@@ -1,0 +1,53 @@
+<!-- 
+		EXEMPLO DE CONFIGURACAO DE CONTEXTO PARA O TOMCAT 5.0
+		
+		OBS 1: incluir 'ojdbc14.jar' na pasta 'common\lib' do Tomcat.
+		OBS 2: usar a identificacao de datasource 'java:comp/env/jdbc/WPP_DS' no Hibernate e Castor.
+		OBS 3: certifique-se de que os jars abaixo estao instalados em common\lib:
+		       - commons-collections-3.1
+		       - commons-dbcp-1.2.2
+		       - commons-pool-1.3
+		
+		Bernardo Dias, 04/10/2007
+-->
+
+<Context path="/ppp" reloadable="false" docBase="C:\PRE_PAGO\WPP" workDir="C:\PRE_PAGO\WPP\work" >
+
+	<Resource name="jdbc/WPP_DS" auth="Container" type="javax.sql.DataSource"/> 
+	
+	<ResourceParams name="jdbc/WPP_DS">
+	  <parameter>
+	    <name>factory</name>
+	    <value>org.apache.commons.dbcp.BasicDataSourceFactory</value>
+	  </parameter>
+	  <parameter>
+	    <name>driverClassName</name>
+	    <value>oracle.jdbc.driver.OracleDriver</value>
+	  </parameter>
+	  <parameter>
+	    <name>url</name>
+	    <value>jdbc:oracle:oci8:@brtdev2</value>
+	  </parameter>
+	  <parameter>
+	    <name>username</name>
+	    <value>ppptst</value>
+	  </parameter>
+	  <parameter>
+	    <name>password</name>
+	    <value>ppptst</value>
+	  </parameter>
+	  <parameter>
+	    <name>maxActive</name>
+	    <value>1</value>
+	  </parameter>
+	  <parameter>
+	    <name>maxIdle</name>
+	    <value>0</value>
+	  </parameter>
+	  <parameter>
+	    <name>maxWait</name>
+	    <value>1</value>
+	  </parameter>
+	</ResourceParams>
+
+</Context>

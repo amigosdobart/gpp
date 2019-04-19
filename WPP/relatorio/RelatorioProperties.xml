@@ -1,0 +1,26 @@
+<RelatorioProperties>
+	<Relatorios>
+		<Relatorio	name="<NOME_RELATORIO>" 
+					showHeader="<TRUE|FALSE>" 
+					delimitedHdr="<TRUE|FALSE>" 
+					delimiter="<DELIMITER>" 
+					format="<DELIMITED|HTML|XML>"
+					fileExt="<EXTENSAO_ARQUIVO>">
+			<cabecalho title="<TITULO_RELATORIO>">
+				<campo	mapName="<NOME_CAMPO>" 	showName="<NOME_CAMPO_FORMATADO>"/>
+			</cabecalho>
+			<consulta type="PREP|SQL">
+				<param mapName="<NOME_PARAMETRO>"/>
+				<statement/>
+			</consulta>
+			<dados>
+				<registro>
+					<campo	name="<NOME_CAMPO_RESULT_SET>" 			
+							showName="<NOME_CAMPO_RESULT_SET_FORMATADO>"
+							type="<BOOLEAN|CHAR|DATE|DOUBLE|FLOAT|INT|INTEGER|LONG|STRING|TIMESTAMP>"
+							mask="<MASCARA_FORMATO_VALOR>"/>
+				</registro>
+			</dados>
+		</Relatorio>
+	</Relatorios>
+</RelatorioProperties>

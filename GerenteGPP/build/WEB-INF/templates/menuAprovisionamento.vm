@@ -1,0 +1,24 @@
+#parse("menuVertical.vm")
+
+<table width="100%">
+<tr>
+<td>
+<h6><b>Aprovisionamento</b></h6><br>
+<a href="/gppConsole/showFiltroAtivacao.do"><h6>Ativação</h6></a><br>
+<a href="/gppConsole/showFiltroDesativacao.do"><h6>Desativação</h6></a><br>
+<a href="/gppConsole/showFiltroBloqueio.do"><h6>Bloqueio</h6></a><br>
+<a href="/gppConsole/showFiltroDesbloqueio.do"><h6>Desbloqueio</h6></a><br>
+<a href="/gppConsole/showFiltroTrocaMsisdn.do"><h6>Troca de MSISDN</h6></a><br>
+<a href="/gppConsole/showFiltroTrocaPlanoPrecos.do"><h6>Troca de Plano de Precos</h6></a><br>
+<a href="/gppConsole/showFiltroTrocaSimcard.do"><h6>Troca de Simcard</h6></a><br>
+<a href="/gppConsole/showFiltroFriendsFamily.do"><h6>Atualiza Friends and Family</h6></a><br>
+<a href="/gppConsole/showFiltroTrocaSenha.do"><h6>Troca de Senha</h6></a><br>
+<a href="/gppConsole/showFiltroConsultaAssinante.do"><h6>Consulta Assinante</h6></a><br>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

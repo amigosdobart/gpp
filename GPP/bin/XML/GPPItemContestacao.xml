@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<root>
+	<header>
+		<id_evento></id_evento>
+		<evento></evento>
+	</header>
+	<USER>
+		<numeroBS></numeroBS>          
+		<status></status>            
+		<datahoraFechamento></datahoraFechamento>
+		<operador></operador>          
+		<msisdnOrigem></msisdnOrigem>      
+		<msisdnDestino></msisdnDestino>     
+		<datahoraServico></datahoraServico>   
+		<descricaoAnalise></descricaoAnalise>  
+		<valorRetornado></valorRetornado>    
+	</USER>
+</root>

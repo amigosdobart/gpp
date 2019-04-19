@@ -1,0 +1,11 @@
+#parse("menuVertical.vm")
+<h6><b>Pool de conexões</b></h6><br>
+<table width="100%">
+
+	<tr>		
+		<td>$mensagem </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

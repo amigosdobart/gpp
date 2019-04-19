@@ -1,0 +1,27 @@
+#parse("menuVertical.vm")
+<h6><b>Desativação</b></h6>
+<table width="100%">
+<tr>
+		<td> Código do Assinante</td>
+		<td>$aprovisionamentoDesativacaoForm.msisdn</td>
+	</tr>
+	<tr>
+		<td> Motivo da Desativação</td>
+		<td>$aprovisionamentoDesativacaoForm.motivo</td>
+	</tr>
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td></td>
+	</tr>
+	<tr>
+		<td><b>Código de Retorno:</b> </td>
+		<td>$aprovisionamentoDesativacaoForm.codigoRetorno</td>
+	</tr>
+	<tr>
+		<td><b>Saldo Final:</b> </td>
+		<td>$aprovisionamentoDesativacaoForm.saldoFinal</td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

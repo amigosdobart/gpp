@@ -1,0 +1,141 @@
+
+/* $Workfile:   AuthFactory.idl  $ $Revision: 1.14 $ */
+
+//
+// NAME		: AuthFactory.idl
+//
+// CREATED BY	: Declan Lynch
+// DATE 	: May 2002
+//
+// COPYRIGHT	: 
+//
+// DESCRIPTION	: 
+// This interface describes the AuthFactory object
+//
+#ifndef __AUTH_FACTORY_IDL
+#define __AUTH_FACTORY_IDL
+
+#include <Exceptions.idl>
+
+#ifdef _TINC_MODULE
+module TINC {
+#endif //_TINC_MODULE
+
+struct UserInfo
+{
+   long id;
+   short type;
+};
+
+
+struct AuthUserRec
+{
+  string user;
+  string passwd;
+};
+
+struct ServiceKeyRec
+{
+  short service;
+  string ior;
+  long key;
+  //<DOS> Global Voucher
+  short locationId;
+  //</DOS>
+
+};
+
+struct AuthFeatureRec {
+    string        feature;
+    string        value; 
+};
+
+typedef  short eFactory_t;
+const eFactory_t eNone = -1;
+const eFactory_t eAuth = 0;
+const eFactory_t eCCServer = 1;
+const eFactory_t ePPServer = 2;
+const eFactory_t ePayment =3;
+const eFactory_t eProvisioning = 4;
+const eFactory_t eEmpty = 5;
+const eFactory_t eVoucher = 6;
+const eFactory_t eTariffing = 7;
+const eFactory_t eVAdmin = 8;
+const eFactory_t eRating = 9;
+const eFactory_t eRechargeGateway = 10;
+const eFactory_t eRechargeGatewayProxy = 11;
+const eFactory_t ePPOnline = 12;
+const eFactory_t eAdmin = 13;
+const eFactory_t eIdlGateway = 14;
+const eFactory_t ePaymentInterface1 = 100;
+const eFactory_t ePaymentInterface2 = 101;
+const eFactory_t ePaymentInterface3 = 102;
+const eFactory_t ePaymentInterface4 = 103;
+const eFactory_t ePaymentInterface5 = 104;
+
+
+
+// Parameter Sequence
+typedef sequence<ServiceKeyRec>  ServiceKeySeq;
+typedef sequence<AuthFeatureRec> AuthFeatureSeq;
+typedef sequence<AuthUserRec>    AuthUserSeq;
+
+interface AuthFactory {
+
+    //
+    // these operations are for internal use only
+    //
+    // Normal Register of a server to the AuthServer
+    long Register(in short service,
+		  in string ior,
+		  inout AuthUserSeq uSeq,
+		  inout AuthFeatureSeq fSeq)
+        raises (Pi_exception);
+
+    // Register of a Server from one AuthServer to another
+    long RegisterRemote(in short service,
+		  in string ior,
+		  in long key,
+                  in short location)
+        raises (Pi_exception);
+
+    // Get a list of all servers back
+    void getServiceList(in string user, 
+			in string password, 
+			inout ServiceKeySeq sSeq)
+	 raises (Pi_exception);
+
+    UserInfo validate(in string user, 
+		      in string password, 
+		      inout ServiceKeySeq sSeq)
+	 raises (Pi_exception);
+
+    void getIor(in short service, inout ServiceKeySeq sSeq)
+	 raises (Pi_exception);
+
+    short refreshUserList()
+	 raises (Pi_exception);
+
+    boolean addUser(in string login,
+		  in string passwd,
+		  in short userType,
+		  in long id)
+	 raises (Pi_exception);
+
+    boolean removeUser(in string login)
+	 raises (Pi_exception);
+
+    //
+    // the following operations are for external clients
+    //
+    UserInfo login(in string user, in string password, inout ServiceKeySeq sSeq)
+	 raises (Pi_exception);
+
+};
+
+#ifdef _TINC_MODULE
+};
+#endif //_TINC_MODULE
+
+#endif
+

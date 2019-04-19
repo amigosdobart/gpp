@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<root>
+	<case>
+		<evento></evento> 
+		<id_evento></id_evento> 
+		<codigo></codigo>
+		<descricao></descricao>
+	</case>
+</root>

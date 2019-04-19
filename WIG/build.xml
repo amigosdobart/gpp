@@ -1,0 +1,114 @@
+<project name="WIGBRT" default="empacotamento" basedir=".">
+  <description>
+   * Ant Script para WIG *
+    USO:
+	Parametros:
+      deploy.type {desenvolvimento|homologacao|producao}
+  </description>
+  <property name="app.name" value="wig" /> 
+  <property name="app.name.gui" value="${app.name}" /> 
+  <property name="meta.home" value="./META-INF" /> 
+  <property name="web.home" value="./WEB-INF" /> 
+
+  <property name="web.meta.home" value="${web.home}/META-INF" /> 
+  <property name="libs.home" value="./WEB-INF/lib" /> 
+  <property name="deploy.type" value="desenvolvimento" />
+  <property name="bin" value="${web.home}/classes" />
+  <property name="src" value="./src" />
+  <property name="build" value="./build" />
+
+
+  <target name="preparacao" >
+    <mkdir dir="./temp" />
+    <mkdir dir="${build}" />
+    <mkdir dir="${web.meta.home}" />
+    <tstamp>
+        <format property="deploy.time" pattern="dd/MM/yyyy hh:mm aa"/>
+    </tstamp>
+     <manifest file="${web.meta.home}/MANIFEST.MF">
+        <attribute name="Built-By" value="${user.name}"/>
+        <section name="${ant.project.name}">
+          <attribute name="Specification-Title" value="${ant.project.name}"/>
+          <attribute name="Specification-Version" value=" ${deploy.type} - JAVAC ${java.version}"/>
+          <attribute name="Specification-Vendor" value="Brasiltelecom"/>
+          <attribute name="Implementation-Title" value="${ant.project.name}"/>
+          <attribute name="Implementation-Version" value="${deploy.type} - ${deploy.time}."/> 
+          <attribute name="Implementation-Vendor" value="BrasilTelecom WIG."/>
+        </section>
+       </manifest>
+  </target>
+
+  <target name="compilacao" depends="preparacao">
+  <javac srcdir="${src}" destdir="${bin}" debug="on" optimize="off" deprecation="off"> 
+    <classpath id="wig.classpath">
+        <fileset dir="${web.home}\lib">
+          <include name="**\*.jar"/>
+          <include name="**\home\*.jar"/>
+        </fileset>
+    </classpath>
+  </javac>
+  </target>
+
+  <target name="empacotamento" depends="compilacao">
+ 	 <copy failonerror="false" file="${web.home}/${deploy.type}.cacerts" 			tofile="${web.home}/cacerts"/>
+  	 <copy failonerror="false" file="${web.home}/${deploy.type}.log4j.properties" 	tofile="${web.home}/log4j.properties"/>
+     <war destfile="${build}/${app.name}.war" 
+     webxml="${web.home}/${deploy.type}.web.xml" 
+     basedir="./temp" manifest="${web.meta.home}/MANIFEST.MF">
+     <classes dir="${bin}" />
+	 <lib dir="${web.home}/lib"/>
+
+		<metainf dir="${web.meta.home}">
+		</metainf>
+
+		<fileset dir="." >
+		    <include name="*.jsp"/>
+		</fileset>
+		<zipfileset dir="${web.home}" prefix="WEB-INF">
+		  <patternset id="pacoteWEB">
+		    <include name="**/cacerts"/>
+		  	<include name="**/log4j.properties"/>
+		    <exclude name="**/build.xml"/>
+		    <exclude name="**/application.xml"/>
+		    <exclude name="**/*.database.xml"/>
+		    <exclude name="**/*.web.xml"/>
+		    <exclude name="**/desenvolvimento.log4j.properties"/>
+		    <exclude name="**/homologacao.log4j.properties"/>
+		    <exclude name="**/producao.log4j.properties"/>
+		  </patternset>
+		</zipfileset>
+     	
+     </war>
+     <ear destfile="${build}/${app.name}.ear" basedir="./temp" appxml="${meta.home}/application.xml" manifest="${web.meta.home}/MANIFEST.MF" >
+        <fileset dir="${build}">
+          <include name="**/*.war"/>
+        </fileset>
+		<zipfileset dir="${meta.home}" prefix="META-INF">
+          <include name="orion-application.xml"/>
+          <include name="data-sources.xml"/>
+          <exclude name="*.data-sources.xml"/>
+		</zipfileset>
+     </ear>
+	  
+	<delete dir="./temp"/>
+	<delete file="${web.home}/database.xml"/>
+	<delete file="${web.home}/log4j.properties"/>
+	
+	<delete>
+	    <fileset dir="${build}" includes="**/*.war"/>
+  	</delete>
+
+  </target>
+
+
+  <target name="sendmail" depends="empacotamento">
+    <concat destfile="${web.meta.home}/mail.txt">
+      <filelist dir="${web.meta.home}" files="MANIFEST.MF,deploy.dat"/>
+    </concat>
+    <mail mailhost="smtprelay.brasiltelecom.com.br" from="${user.name}" 
+          tolist="${listaemails}" subject="Foi feito deploy no Portal WIG PrePago tipo ${deploy.type}"
+          messagefile="mail.txt">
+    </mail>
+  </target>
+
+</project>

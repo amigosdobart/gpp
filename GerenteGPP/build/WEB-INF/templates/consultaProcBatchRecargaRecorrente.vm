@@ -1,0 +1,16 @@
+#parse("menuVertical.vm")
+<h6><b>Recarga Recorrente</b></h6>
+<table width="100%">
+	<tr>
+		<td><b>&nbsp;Resultado:</b> </td>
+		<td>#if ($procBatchRecargaRecorrenteForm.resultado)
+				Recarga recorrente efetuada com <b>sucesso</b>
+			#else
+				Recarga recorrente <b>não</b> efetuada
+			#end
+		 </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

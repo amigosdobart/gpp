@@ -1,0 +1,30 @@
+/*
+ * File.......: GPPExceptions.idl
+ * Description: Definição de Exceptions CORBA do GPP (Gateway de Pré-Pago)
+ * Author.....: Daniel Abib
+ * Date.......: 18/02/2004
+ *                       
+ * Modified by: 
+ * Date.......: 
+ * Reason.....: 
+ */
+
+module com 
+{ 
+	module brt 
+	{ 
+		module gpp
+		{
+			module comum
+			{
+				module gppExceptions
+				{
+					exception GPPCorbaException { string codigoErro; };
+					exception GPPBadXMLFormatException { string codigoErro; };
+					exception GPPTecnomenException { string codigoErro; };
+					exception GPPInternalErrorException { string codigoErro; };
+				};
+			};
+		};
+	};
+};

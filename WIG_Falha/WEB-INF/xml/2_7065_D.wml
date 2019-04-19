@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+<card>
+<p>
+    <providelocalinfo cmdqualifier="location" destvar="LC" />
+    <providelocalinfo cmdqualifier="imei" destvar="IM" />
+    Digite o numero no seguinte formato 6184XXXXXX para realizar o OptOut.
+    <input title="Numero:" name="num" emptyok="false" format="*N" maxlength="10"/>
+    
+    <do type="accept">
+        <go href="!CWIG!/desativarOptIn?btc=7059&amp;loc=$(LC)&amp;i=$(IM)&amp;MSISDN=55$(num)" />
+    </do>
+</p>
+</card>
+</wml>

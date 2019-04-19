@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<GPPConsultaEstornoPulaPula>
+	<retorno/>
+	<msisdn/>
+	<dataInicio/>
+	<dataFim/>
+	<listaEstornos>
+		<estorno>
+			<dataReferencia/>
+			<msisdn/>
+			<promocao/>
+			<numeroOrigem/>
+			<origem/>
+			<dataProcessamento/>
+			<valorExpurgo/>
+			<valorExpurgoSaturado/>
+			<valorEstorno/>
+			<valroEstornoEfetivo/>
+		</estorno>
+	</listaEstornos>
+	<listaTotais>
+		<totalExpurgo/>
+		<totalExpurgoSaturado/>
+		<totalEstorno/>
+		<totalEstornoEfetivo/>
+	</listaTotais>
+</GPPConsultaEstornoPulaPula>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+  "http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+<wml>
+<card id="main">
+<p>
+        <select title="Recarga">
+                <option onpick="#B">Bancos</option>
+                <!--option onpick="#c1">Cartao Credito</option-->
+                <option onpick="#rec">Cartao Recarga</option>
+                <option onpick="#c2">Atendimento</option>
+                <option onpick="!WIGC!?bts=3&amp;btc=4018">Transf Saldo</option>
+        </select>
+</p>
+</card>
+<!--card id="c1">
+    <setupcall cmdqualifier="if-not-busy">
+       <destaddress value="*111"/>
+     </setupcall>
+</card-->
+<card id="c2">
+    <setupcall cmdqualifier="if-not-busy">
+       <destaddress value="*1414"/>
+    </setupcall>
+</card>
+<card id="rec">
+<p>
+    <input title="Codigo Cartao:" name="pin" emptyok="false" format="*N" maxlength="14" class="SMS-DEFAULT"/>
+    <sendsm>
+          <destaddress value="772"/>
+                <userdata>$(pin)</userdata>
+     </sendsm>
+ </p>
+ </card>
+ <card id="B">
+ <p>
+ <select title="Bancos">
+    <option onpick="!RB1!">Banco do Brasil</option>
+ </select>
+ </p>
+ </card>
+</wml>

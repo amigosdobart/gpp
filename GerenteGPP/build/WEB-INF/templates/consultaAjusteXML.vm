@@ -1,0 +1,47 @@
+#parse("menuVertical.vm")
+<h6><b>Realização de ajuste via XML</b></h6>
+<table width="100%">
+<tr>
+		<td> Código do Assinante</td>
+		<td>$recargaAjusteXMLForm.msisdn</td>
+	</tr>
+	<tr>
+		<td> Tipo da transação</td>
+		<td>$recargaAjusteXMLForm.tipoTransacao</td>
+	</tr>
+	<tr>
+		<td> Tipo de crédito</td>
+		<td>$recargaAjusteXMLForm.tipoCredito</td>
+	</tr>
+	<tr>
+		<td> Valor</td>
+		<td>$recargaAjusteXMLForm.valor</td>
+	</tr>
+	<tr>
+		<td> Tipo</td>
+		<td>$recargaAjusteXMLForm.tipo</td>
+	</tr>
+	<tr>
+		<td> Data/hora (AAAAMMDDHHMMSS)</td>
+		<td>$recargaAjusteXMLForm.dataHora</td>
+	</tr>
+	<tr>
+		<td> Sistema de origem</td>
+		<td>$recargaAjusteXMLForm.sistemaOrigem</td>
+	</tr>
+	<tr>
+		<td> Data de expiração(AAAAMMDD)</td>
+		<td>$recargaAjusteXMLForm.dataExpiracao</td>
+	</tr>	
+	<tr>
+		<td> XML gerado</td>
+		<td>$recargaAjusteXMLForm.xml</td>
+	</tr>
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$recargaAjusteXMLForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

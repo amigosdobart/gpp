@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+<wml>
+
+<card>
+<p>
+<providelocalinfo cmdqualifier="imei" destvar="IMEI" />
+<providelocalinfo cmdqualifier="location" destvar="LC" />
+<select name="msg" title="Outras Opcoes">
+ <!--option value="4018">Transf Saldo</option>
+ <option value="4021">Pula-Pula</option>
+ <option value="4022">Bumerangue14</option>
+<option onpick="!CWIG!/cadpre?cdm=N&amp;t=0&amp;tela=S&amp;itemMenu=S">Inclui Cadastro</option-->
+</select>
+</p>
+</card>
+
+<card id="wigc">
+  <do type="accept">
+    <go href="!WIGC!?bts=2&amp;btc=$(msg)&amp;I=$(IMEI)&amp;loc=$(LC)" />
+  </do>
+</card>
+</wml>

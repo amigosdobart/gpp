@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<RelatorioProperties>
+	<Relatorios>
+		<Relatorio name="BSClienteStatusDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="datai"/>
+				<param mapName="dataf"/>
+				<param mapName="CANAL"/>
+				<param mapName="datai"/>
+				<param mapName="dataf"/>
+				<param mapName="CANAL"/>
+				<param mapName="datai"/>
+				<param mapName="dataf"/>
+				<param mapName="CANAL"/>
+				<param mapName="datai"/>
+				<param mapName="dataf"/>
+				<param mapName="CANAL"/>
+				<param mapName="datai"/>
+				<param mapName="dataf"/>
+				<param mapName="CANAL"/>
+				<param mapName="datai"/>
+				<param mapName="dataf"/>
+				<param mapName="CANAL"/>
+				<param mapName="datai"/>
+				<param mapName="dataf"/>
+				<param mapName="CANAL"/>
+				<param mapName="datai"/>
+				<param mapName="dataf"/>
+				<param mapName="CANAL"/>
+				<param mapName="datai"/>
+				<param mapName="dataf"/>
+				<param mapName="CANAL"/>
+				<statement>
+			SELECT g.cliente 			AS cliente,
+					   g.num_bs 			AS numBs,
+					   NVL (a.qtdestatus,0) AS qdeProcedente,
+					   NVL (b.qtdestatus,0) AS qdeImprocedente,
+					   NVL (d.qtdestatus,0) AS qdefechado,
+					   NVL (h.qtdestatus,0) AS qdeaberto,
+       				   NVL (e.qtdestatus,0) AS vlrContestado,
+       				   SUM (NVL (f.qtdestatus,0)) AS vlrConcedido,
+       				   g.data_recarga 		AS dtRecarga,
+       				   i.matriculaA			AS matriculaA,
+       				   j.matriculaF       	AS matriculaF,
+       				   g.data_reclamacao    AS dtReclamacao
+
+			  FROM (SELECT   c.idt_msisdn AS cliente, --IDT_STATUS_ANALISE P
+			                 b.idt_nu_bs AS num_bs,
+			                 COUNT (1) AS qtdestatus
+			            FROM tbl_ger_contestacao c, tbl_ger_item_contestacao b
+			           WHERE b.idt_status_item_contestacao = 'P'
+			             AND c.idt_nu_bs = b.idt_nu_bs
+			             AND c.dat_abertura &gt;= TO_DATE ( ? , 'DD/MM/YYYY')
+			             AND c.dat_abertura &lt;= TO_DATE ( ?  || ' 23:59:59', 'DD/MM/YYYY  HH24:MI:SS')
+			             AND id_canal_origem_bs =  DECODE ( ? , 0, id_canal_origem_bs, 0)
+			        GROUP BY idt_msisdn, b.idt_nu_bs) a,
+
+			       (SELECT   c.idt_msisdn AS cliente, --IDT_STATUS_ANALISE I
+			                 b.idt_nu_bs AS num_bs,
+			                 COUNT (1) AS qtdestatus
+			            FROM tbl_ger_contestacao c, tbl_ger_item_contestacao b
+			           WHERE b.idt_status_item_contestacao = 'I'
+			             AND c.idt_nu_bs = b.idt_nu_bs
+			             AND c.dat_abertura &gt;= TO_DATE ( ? , 'DD/MM/YYYY')
+			             AND c.dat_abertura &lt;= TO_DATE ( ?  || ' 23:59:59', 'DD/MM/YYYY  HH24:MI:SS')
+			             AND id_canal_origem_bs =  DECODE ( ? , 0, id_canal_origem_bs, 0)
+			        GROUP BY idt_msisdn, b.idt_nu_bs) b,
+
+			       (SELECT   idt_msisdn AS cliente, --Verificar DATA DE FECHAMENTO?NULL
+			                 b.idt_nu_bs AS num_bs,
+			                 COUNT (1) AS qtdestatus
+			            FROM tbl_ger_contestacao c, tbl_ger_item_contestacao b
+			           WHERE b.dat_fechamento IS NOT NULL
+			             AND c.idt_nu_bs = b.idt_nu_bs
+			             AND c.dat_abertura &gt;= TO_DATE ( ? , 'DD/MM/YYYY')
+			             AND c.dat_abertura &lt;= TO_DATE ( ?  || ' 23:59:59', 'DD/MM/YYYY  HH24:MI:SS')
+			             AND id_canal_origem_bs =  DECODE ( ? , 0, id_canal_origem_bs, 0)
+			        GROUP BY idt_msisdn, b.idt_nu_bs) d,
+
+			       (SELECT   idt_msisdn AS cliente, --Somatorio VALOR_CONTESTADO
+			                 c.idt_nu_bs AS num_bs,
+			                 SUM (  ABS (NVL (b.vlr_contestado_principal, 0))
+			                      + ABS (NVL (b.vlr_contestado_sms, 0))
+			                      + ABS (NVL (b.vlr_contestado_bonus, 0))
+			                      + ABS (NVL (b.vlr_contestado_gprs, 0))
+			                     ) AS qtdestatus
+			            FROM tbl_ger_contestacao c, tbl_ger_item_contestacao b
+			           WHERE c.dat_abertura &gt;= TO_DATE ( ? , 'DD/MM/YYYY')
+			             AND c.dat_abertura &lt;= TO_DATE ( ?  || ' 23:59:59', 'DD/MM/YYYY  HH24:MI:SS')
+			             AND id_canal_origem_bs =  DECODE ( ? , 0, id_canal_origem_bs, 0)
+                         AND c.idt_nu_bs = b.idt_nu_bs
+			        GROUP BY idt_msisdn, c.idt_nu_bs) e,
+
+			       (SELECT   idt_msisdn AS cliente, -- VALOR_AJUSTADO
+			                 c.idt_nu_bs AS num_bs,
+			                 DECODE (b.idt_status_item_contestacao,'P', SUM (  ABS (NVL (b.vlr_ajustado_principal, 0))
+			                                                                 + ABS (NVL (b.vlr_ajustado_sms, 0))
+			                                                                 + ABS (NVL (b.vlr_ajustado_bonus, 0))
+			                                                                 + ABS (NVL (b.vlr_ajustado_gprs, 0))
+			                     ),0) AS qtdestatus
+			            FROM tbl_ger_contestacao c, tbl_ger_item_contestacao b
+			           WHERE c.dat_abertura &gt;= TO_DATE ( ? , 'DD/MM/YYYY')
+			             AND c.dat_abertura &lt;= TO_DATE ( ?  || ' 23:59:59', 'DD/MM/YYYY  HH24:MI:SS')
+			             AND id_canal_origem_bs =  DECODE ( ? , 0, id_canal_origem_bs, 0)
+                         AND c.idt_nu_bs = b.idt_nu_bs
+			        GROUP BY idt_msisdn, c.idt_nu_bs, b.idt_status_item_contestacao) f,
+
+			       (SELECT   c.idt_msisdn AS cliente,
+			                 c.idt_nu_bs AS num_bs,
+			                 COUNT (1) AS qtdestatus,
+			                 TRUNC (c.dat_fechamento) AS data_recarga,
+			                 TRUNC (c.dat_abertura) AS data_reclamacao
+			            FROM tbl_ger_contestacao c
+			          WHERE c.dat_abertura &gt;= TO_DATE ( ? , 'DD/MM/YYYY')
+			             AND c.dat_abertura &lt;= TO_DATE ( ?  || ' 23:59:59', 'DD/MM/YYYY  HH24:MI:SS')
+			             AND id_canal_origem_bs =  DECODE ( ? , 0, id_canal_origem_bs, 0)
+			        GROUP BY c.idt_msisdn, c.idt_nu_bs, c.dat_abertura, c.dat_fechamento) g,
+
+			        (SELECT  idt_msisdn AS cliente, --Verificar DATA DE FECHAMENTO?NULL
+			                 b.idt_nu_bs AS num_bs,
+			                 COUNT (1) AS qtdestatus
+			             FROM tbl_ger_contestacao c, tbl_ger_item_contestacao b
+			           WHERE b.dat_fechamento IS NULL
+			             AND c.idt_nu_bs = b.idt_nu_bs
+			             AND c.dat_abertura &gt;= TO_DATE ( ? , 'DD/MM/YYYY')
+			             AND c.dat_abertura &lt;= TO_DATE ( ?  || ' 23:59:59', 'DD/MM/YYYY  HH24:MI:SS')
+			             AND id_canal_origem_bs =  DECODE ( ? , 0, id_canal_origem_bs, 0)
+			        GROUP BY idt_msisdn, b.idt_nu_bs) h,
+
+			        (SELECT  c.idt_msisdn AS cliente, --MATRICULA DE ABERTURA
+			                 b.idt_nu_bs AS num_bs,
+			                 c.id_usuario AS matriculaA
+			            FROM tbl_ger_contestacao c,  tbl_ger_item_contestacao b
+			           WHERE c.dat_abertura &gt;= TO_DATE ( ? , 'DD/MM/YYYY')
+			             AND c.dat_abertura &lt;= TO_DATE ( ?  || ' 23:59:59', 'DD/MM/YYYY  HH24:MI:SS')
+			             AND id_canal_origem_bs =  DECODE ( ? , 0, id_canal_origem_bs, 0)
+                         AND c.idt_nu_bs = b.idt_nu_bs
+			        GROUP BY c.idt_msisdn, b.idt_nu_bs, c.id_usuario) i,
+
+			             (SELECT  c.idt_msisdn AS cliente, --MATRICULA DE FECHAMENTO
+			                      c.idt_nu_bs AS num_bs,
+                                  trim (b.idt_operador_sfa) AS matriculaF
+			            FROM tbl_ger_contestacao c,  tbl_ger_item_contestacao b
+			           WHERE c.dat_abertura &gt;= TO_DATE ( ? , 'DD/MM/YYYY')
+			             AND c.dat_abertura &lt;= TO_DATE ( ?  || ' 23:59:59', 'DD/MM/YYYY  HH24:MI:SS')
+			            AND id_canal_origem_bs = DECODE ( ? , 0, id_canal_origem_bs, 0)
+                        AND c.idt_nu_bs = b.idt_nu_bs
+			        GROUP BY c.idt_msisdn, c.idt_nu_bs, b.idt_operador_sfa) j
+
+			 WHERE a.cliente(+) = g.cliente
+			   AND b.cliente(+) = g.cliente
+			   AND d.cliente(+) = g.cliente
+			   AND e.cliente(+) = g.cliente
+			   AND f.cliente(+) = g.cliente
+			   AND h.cliente(+) = g.cliente
+			   AND i.cliente(+) = g.cliente
+			   AND j.cliente(+) = g.cliente
+			   AND a.num_bs(+) = g.num_bs
+			   AND b.num_bs(+) = g.num_bs
+			   AND d.num_bs(+) = g.num_bs
+			   AND e.num_bs(+) = g.num_bs
+			   AND f.num_bs(+) = g.num_bs
+			   AND h.num_bs(+) = g.num_bs
+			   AND i.num_bs(+) = g.num_bs
+			   AND j.num_bs(+) = g.num_bs
+
+		 GROUP BY g.cliente, g.num_bs, NVL (a.qtdestatus,0), NVL (b.qtdestatus,0), NVL (d.qtdestatus,0), NVL (h.qtdestatus,0),
+		          NVL (e.qtdestatus,0), g.data_recarga, i.matriculaA, j.matriculaF, g.data_reclamacao
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="cliente"				showName="Cliente"								type="STRING"/>
+					<campo name="numBs"					showName="Número BS"							type="STRING"/>
+					<campo name="qdeProcedente"			showName="Qde Procedente"						type="STRING"/>
+					<campo name="qdeImprocedente"		showName="Qde Improcende"						type="STRING"/>
+					<campo name="qdefechado"			showName="Qde Fechado"							type="STRING"/>
+					<campo name="qdeaberto"				showName="Qde Aberto"							type="STRING"/>
+					<campo name="vlrContestado"			showName="Valor Contestado"						type="STRING"/>
+					<campo name="vlrConcedido"			showName="Valor Concedido"						type="STRING"/>
+					<campo name="dtRecarga"				showName="Data da Recarga"						type="DATE"		mask="dd/MM/yyyy"/>
+					<campo name="matriculaA"			showName="Matrícula de Abertura"				type="STRING"/>
+					<campo name="matriculaF"			showName="Matrícula de Fechamento"				type="STRING"/>
+					<campo name="dtReclamacao"			showName="Data da Reclamação"					type="DATE"		mask="dd/MM/yyyy"/>
+				</registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="RelBSAbertoDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DATA_INICIAL"/>
+				<param mapName="DATA_FINAL"/>
+				<param mapName="DATA_INICIAL"/>
+				<param mapName="DATA_FINAL"/>
+				<statement>
+					SELECT  TGIC.IDT_NU_BS                 AS IDT_NUM_BS
+					       ,TGIC.SUB_ID                    AS IDT_MSISDN
+					       ,(TGIC.VLR_CONTESTADO_PRINCIPAL
+					          +TGIC.VLR_CONTESTADO_BONUS
+					          +TGIC.VLR_CONTESTADO_SMS
+					          +TGIC.VLR_CONTESTADO_GPRS)   AS VLR_CONTESTADO
+					       ,CDR.TIP_CHAMADA                AS IDT_SERVICO_CONTESTADO
+					       ,RAT.DES_OPERACAO               AS DESC_SERVICO_CONTESTADO
+					  FROM TBL_GER_ITEM_CONTESTACAO@PREPR_GPPUSER TGIC
+					      ,TBL_GER_CONTESTACAO@PREPR_GPPUSER TGC
+					      ,TBL_GER_CDR@PREPR_GPPUSER CDR
+					      ,TBL_GER_RATING@PREPR_GPPUSER RAT
+					 WHERE TGC.IDT_NU_BS = TGIC.IDT_NU_BS
+					   AND TGC.IDT_STATUS_ANALISE           = 'A'
+					   AND TGIC.IDT_STATUS_ITEM_CONTESTACAO = 'A'
+					   AND TGC.DAT_ABERTURA &gt;= TO_DATE(?, 'DD/MM/YYYY')
+					   AND TGC.DAT_ABERTURA &lt;  TO_DATE(?, 'DD/MM/YYYY')
+					   AND CDR.SUB_ID           = TGIC.SUB_ID
+					   AND CDR.TIMESTAMP        = TGIC.TIMESTAMP
+					   AND CDR.START_TIME       = TGIC.START_TIME
+					   AND CDR.CALL_ID          = TGIC.CALL_ID
+					   AND CDR.TRANSACTION_TYPE = TGIC.TRANSACTION_TYPE
+					   AND RAT.RATE_NAME        = CDR.TIP_CHAMADA
+					UNION
+					SELECT  TGIC.IDT_NU_BS                 AS IDT_NUM_BS
+					       ,TGIC.SUB_ID                    AS IDT_MSISDN
+					       ,(TGIC.VLR_CONTESTADO_PRINCIPAL
+					          +TGIC.VLR_CONTESTADO_BONUS
+					          +TGIC.VLR_CONTESTADO_SMS
+					          +TGIC.VLR_CONTESTADO_GPRS )  AS VLR_CONTESTADO
+					       ,REC.TIP_TRANSACAO              AS IDT_SERVICO_CONTESTADO
+					       ,ROR.DES_ORIGEM                 AS DESC_SERVICO_CONTESTADO
+					  FROM TBL_GER_ITEM_CONTESTACAO@PREPR_GPPUSER TGIC
+					      ,TBL_GER_CONTESTACAO@PREPR_GPPUSER TGC
+					      ,TBL_REC_RECARGAS@PREPR_GPPUSER    REC
+					      ,TBL_REC_ORIGEM@PREPR_GPPUSER      ROR
+					 WHERE TGC.IDT_NU_BS = TGIC.IDT_NU_BS
+					   AND TGC.IDT_STATUS_ANALISE           = 'A'
+					   AND TGIC.IDT_STATUS_ITEM_CONTESTACAO = 'A'
+					   AND TGC.DAT_ABERTURA &gt;= TO_DATE(?, 'DD/MM/YYYY')
+					   AND TGC.DAT_ABERTURA &lt;  TO_DATE(?, 'DD/MM/YYYY')
+					   AND REC.IDT_MSISDN = TGIC.SUB_ID
+					   AND REC.DAT_ORIGEM = TGIC.TIMESTAMP
+					   AND REC.ID_RECARGA = TGIC.CALL_ID
+					   AND ROR.ID_CANAL   = REC.ID_CANAL
+					   AND ROR.ID_ORIGEM  = REC.ID_ORIGEM
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="IDT_NUM_BS"				showName="Numero do BS"					type="LONG"	  />
+					<campo name="IDT_MSISDN"				showName="MSISDN"						type="STRING" />
+					<campo name="VLR_CONTESTADO"			showName="Valor Reclamado"				type="DOUBLE" mask="####0.00" />
+					<campo name="IDT_SERVICO_CONTESTADO"	showName="Servico Reclamado"			type="STRING" />
+					<campo name="DESC_SERVICO_CONTESTADO"	showName="Descricao Servico Reclamado"	type="STRING" />
+				</registro>
+			</dados>
+		</Relatorio>
+	</Relatorios>
+</RelatorioProperties>

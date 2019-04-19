@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+<wml>
+ <card>
+  <p>
+    Selecionamos alguns dos mais acessados sites WAP para voce. Acesse por apenas 0,04 R$/KB. Clique Ok
+    </p>
+    <launchbrowser url="http://wap.brasiltelecom.com.br/brasilcelular_wap/iqservlet/con_mostramenu?sit_cod=1&amp;men_cod=127" >
+    </launchbrowser>
+ </card>
+</wml>
+

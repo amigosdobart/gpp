@@ -1,0 +1,14 @@
+<project name="WIG" default="all" basedir="../">
+	<property name="TOMCAT_HOME" value="C:\Arquivos de programas\Apache Software Foundation\Tomcat 5.0"/>
+<target name="all" depends="init"/>
+<target name="init">
+  <copy todir="${TOMCAT_HOME}/webapps/wig">
+  	<fileset dir=".">
+  		<exclude name="src/**" />
+  		<exclude name=".classpath" />
+  		<exclude name=".project" />
+  	</fileset>
+  </copy>
+</target>
+
+</project>

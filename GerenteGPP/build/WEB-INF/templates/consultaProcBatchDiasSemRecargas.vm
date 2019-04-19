@@ -1,0 +1,11 @@
+#parse("menuVertical.vm")
+<h6><b>Sumarização de dias sem recarga</b></h6>
+<table width="100%">
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$procBatchDiasSemRecargasForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

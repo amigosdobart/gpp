@@ -1,0 +1,10 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+<!-- DTD PARA EXTRATO --> 
+<!ELEMENT GPPExtrato ( saldo+) >
+<!ELEMENT saldo ( saldo, saldoPrincipal, saldoBonus, saldoSMS, saldoGPRS, saldoPeriodico, saldoTotal ) >
+<!ELEMENT saldoPrincipal ( #PCDATA ) >
+<!ELEMENT saldoBonus ( #PCDATA ) >
+<!ELEMENT saldoSMS ( #PCDATA ) >
+<!ELEMENT saldoGPRS ( #PCDATA ) >
+<!ELEMENT saldoPeriodico ( #PCDATA ) >
+<!ELEMENT saldoTotal ( #PCDATA ) >

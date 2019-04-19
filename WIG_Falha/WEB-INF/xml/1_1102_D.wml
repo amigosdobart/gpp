@@ -1,0 +1,13 @@
+<wml>
+<card>
+<p>
+<select name="c" title="Consultas">
+ <option value="1104">Modelo/MSISDN</option>
+ <option value="1105">Modelo/TAC</option>
+</select>
+<do type="accept">
+<go href="!WIGC!?bts=1&amp;btc=$(c)"/>
+</do>
+</p>
+</card>
+</wml>

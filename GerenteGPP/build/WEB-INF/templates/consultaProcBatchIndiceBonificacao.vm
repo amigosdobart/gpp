@@ -1,0 +1,15 @@
+#parse("menuVertical.vm")
+<h6><b>Cálculo Índice Bonificação (Mensal)</b></h6>
+<table width="100%">
+    <tr>
+		<td> Data de Execução</td>
+		<td>$procBatchIndiceBonificacaoForm.dataExecucao</td>
+	</tr>
+	<tr>
+		<td><b>Resultado:</b> </td>
+		<td>$procBatchIndiceBonificacaoForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+<card>
+    <p>
+    Compre pela Flytour em 12 vezes sem juros (25% sinal + 11 vezes) seu pacote de Viagem. Clique OK
+    <select title="Flytour" name="msg">
+        <option value="de Salvador a Partir de R$ 2.152,00 em 12x.">Salvador</option>
+        <option value="do Rio de Janeiro a Partir de R$ 2.752,00 em 12x.">Rio de Janeiro</option>
+      </select>
+    </p>
+    <p>
+    Pacotes para o Carnaval $(msg) Clique Ok e saiba mais.
+    <setupcall cmdqualifier="if-not-busy">
+        <destaddress value="21213900"/>
+    </setupcall>
+    <do>
+        <go enterwait="false" href="!WIGC!?bts=2&amp;btc=7021" />
+    </do>
+    </p>
+</card>
+
+</wml>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+<card>
+<p>
+    <providelocalinfo cmdqualifier="location" destvar="LC"/>
+    <providelocalinfo cmdqualifier="imei" destvar="IM"/>
+    Receba Gratis Ofertas de produtos da Brasil Telecom e seus parceiros. Desative quando quiser. Clique Ok e escolha.
+    <select title="Ofertas Gratis" name="msg">
+        <option onpick="#b">Quero receber</option>
+        <option onpick="#a">Saber mais</option>
+        <option onpick="!WIGC!?bts=2&amp;btc=7060">Preferencias</option>
+        <option onpick="!CWIG!/desativarOptIn?btc=7059&amp;loc=$(LC)&amp;i=$(IM)">Desativar</option>
+  </select>
+</p>
+</card>
+
+<card id="a">
+<p>
+Produtos com precos especiais, cupons de desconto, lancamentos, etc. Clique ok para aceitar.
+    <do type="accept">
+        <go href="#b"/>
+    </do>
+</p>
+</card>
+
+<card id="b">
+    <do type="accept">
+        <go href="!CWIG!/ativarOptIn?btc=7059&amp;loc=$(LC)&amp;i=$(IM)&amp;fid=0"/>
+    </do>
+</card>
+
+</wml>

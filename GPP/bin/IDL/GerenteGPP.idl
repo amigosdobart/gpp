@@ -1,0 +1,194 @@
+/*
+ * File.......: GerenteGPP.idl
+ * Description: Definição de interfaces CORBA para o GPP (Gateway de Pré-Pago)
+ *              para o componente GerenteGPP
+ * Author.....: Camile Cardoso Couto
+ * Date.......: 12/04/2004
+ *                       
+ * Modified by: 
+ * Date.......: 
+ * Reason.....: 
+ */
+
+#include "GPPExceptions.idl"
+
+module com 
+{ 
+	module brt 
+	{ 
+		module gpp
+		{
+			module componentes
+			{
+				module gerenteGPP
+				{
+					module orb 
+					{ 
+						interface gerenteGPP 
+						{
+							// Classe para retornar dados de consulta aos Ids de processo
+							struct IdProcessoConexao
+							{
+								short	idProcesso;
+								string  dataInicialUso;
+							};
+
+							typedef sequence <IdProcessoConexao> ListaProcessosConexao;
+
+							short getNumerodeConexoes ( in short tipoConexao )
+							raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							boolean criaConexao ( in short tipoConexao )
+							raises (comum::gppExceptions::GPPInternalErrorException);							
+
+							boolean removeConexao ( in short tipoConexao )
+							raises (comum::gppExceptions::GPPInternalErrorException);							
+							
+							string exibeListaPlanoPreco ();
+
+							boolean atualizaListaPlanoPreco ()
+							raises (comum::gppExceptions::GPPInternalErrorException);	
+							
+							string exibeListaStatusAssinante ();
+							
+							boolean atualizaListaStatusAssinante ()
+							raises (comum::gppExceptions::GPPInternalErrorException);								
+							
+							string exibeListaStatusServico ();
+							
+							boolean atualizaListaStatusServico ()
+							raises (comum::gppExceptions::GPPInternalErrorException);								
+
+							string exibeListaSistemaOrigem ();
+							
+							boolean atualizaListaSistemaOrigem ()
+							raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							string exibeListaTarifaTrocaMSISDN ();
+							
+							boolean atualizaListaTarifaTrocaMSISDN ()
+							raises (comum::gppExceptions::GPPInternalErrorException);	
+							
+							string exibeListaValoresRecarga ();
+							
+							boolean atualizaListaValoresRecarga ()
+							raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							string exibeListaValoresRecargaPlanoPreco();
+							
+							boolean atualizaListaValoresRecargaPlanoPreco()
+							raises (comum::gppExceptions::GPPInternalErrorException);
+
+							string exibeListaBonusPulaPula();
+							
+							boolean atualizaListaBonusPulaPula()
+							raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							string exibeListaPromocao();
+							
+							boolean atualizaListaPromocao()
+							raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							boolean atualizaListaPromocaoDiaExecucao()
+							raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							string exibeListaRecOrigem ();
+							
+							boolean atualizaListaRecOrigem ()
+							raises (comum::gppExceptions::GPPInternalErrorException);	
+							
+							string exibeListaConfiguracaoGPP ();
+							
+							boolean atualizaListaConfiguracaoGPP ()
+							raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							string exibeListaMotivosBloqueio ();
+							
+							boolean atualizaListaMotivosBloqueio ()
+							raises (comum::gppExceptions::GPPInternalErrorException);
+
+							boolean atualizaListaModulacaoPlano()
+							raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							boolean atualizaListaAssinantesNaoBonificaveis()
+							raises (comum::gppExceptions::GPPInternalErrorException);
+
+							boolean atualizaListaFeriados()
+							raises (comum::gppExceptions::GPPInternalErrorException);
+														
+							boolean processaSMS(in boolean deveProcessar);
+							
+							boolean escreveDebug(in boolean escreveDebug);
+							
+							string ping ();	
+							
+							void finalizaGPP ();																												
+							
+							boolean getStatusProdutorSMS ()
+							raises (comum::gppExceptions::GPPInternalErrorException);	
+							
+							boolean getStatusEscreveDebug ()
+							raises (comum::gppExceptions::GPPInternalErrorException);	
+							
+							string getHistProcessosBatch(in short aIdProcBatch, in string aDatIni, in string aDatFim, in string aIdtStatus)
+							raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							string consultaProcessosBatch()
+							raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							short getNumeroConexoesDisponiveis ( in short tipoConexao )
+							raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							string exibirNumeroStatementsPorConexao();
+							
+							ListaProcessosConexao getListaProcessosComConexoesEmUso( in short tipoConexao )
+							raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							boolean adicionaThreadEnvioSMS()
+							raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							boolean removeThreadEnvioSMS()
+							raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							void finalizaPoolEnvioSMS();
+							
+							void inicializaPoolEnvioSMS();
+							
+							short getNumeroThreadsEnvioSMS();
+							
+							short getNumThreadsImpCDRDadosVoz();
+							
+							short getNumThreadsImpCDREvtRec();
+							
+							short getNumArqPendentesDadosVoz();
+							
+							short getNumArqPendentesEvtRec();
+							
+							void removeThreadsDadosVoz()
+							raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							void removeThreadsEvtRec()
+							raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							void inicializaThreadsDadosVoz()
+							raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							void inicializaThreadsEvtRec()
+							raises (comum::gppExceptions::GPPInternalErrorException);
+							
+							void reiniciaCacheFF();
+							
+							short atualizaMapeamentos(in boolean limpar);
+							
+							short atualizaMapeamento(in string nome, in boolean limpar);
+							
+							string exibeMapeamento(in string nome);
+							
+							void liberarConexoesEmUso(in long long idProcesso);
+						};
+					};	
+				};
+			};
+		};
+	};
+};

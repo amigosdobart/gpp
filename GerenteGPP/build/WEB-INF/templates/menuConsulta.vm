@@ -1,0 +1,19 @@
+#parse("menuVertical.vm")
+
+<table width="100%">
+<tr>
+<td>
+<h6><b>Consultas</b></h6><br>
+<a href="/gppConsole/showFiltroConsultaVoucher.do"><h6>Voucher</h6></a><br>
+<a href="/gppConsole/showFiltroConsultaConsultaAssinante.do"><h6>Assinante</h6></a><br>
+<a href="/gppConsole/showFiltroConsultaRecargaAssinanteXML.do"><h6>Recarga para Assinante (XML)</h6></a><br>
+<a href="/gppConsole/showFiltroConsultaRecargaAssinante.do"><h6>Recarga para Assinante</h6></a><br>
+<a href="/gppConsole/showFiltroConsultaComprovanteServico.do"><h6>Comprovante de Servico</h6></a><br>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

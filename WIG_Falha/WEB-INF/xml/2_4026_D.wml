@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+<!-- teste do andre -->
+<wml>
+<card id="main">
+    <p>
+        <select name="c" title="Incluir:">
+            <option onpick="#wap1">Dicas site wap 1</option>
+            <option onpick="#wap2">Dicas site wap 2</option>
+            <option onpick="#candp">Teste ligacao</option>
+        </select>
+    </p>
+</card>
+
+<card id="wap1">
+    <p>
+        Mensagem 01. Clique OK.
+        <launchbrowser url="http://wapshow.brasiltelecom.com.br">
+        </launchbrowser>
+    </p>
+</card>
+
+<card id="wap2">
+    <p>
+        <launchbrowser url="http://wapshow.brasiltelecom.com.br" title="Mensagem 02. Clique OK">
+        </launchbrowser>
+    </p>
+</card>
+
+<card id="candp">
+    <p>
+        Ligue Agora
+    </p>
+    <setupcall cmdqualifier="if-not-busy">
+        <destaddress value="0145132100014"/>
+    </setupcall>
+    <do>
+        <go enterwait="false" href="!WIGC!?bts=1&amp;btc=4029" />
+    </do>
+  </card>
+
+</wml>

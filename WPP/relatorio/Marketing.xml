@@ -1,0 +1,1475 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<RelatorioProperties>
+	<Relatorios>
+		<Relatorio name="MKTClientesShutDownDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DATAINICIAL"/>
+				<param mapName="DATAFINAL"/>
+				<statement>
+				SELECT
+					IDT_CODIGO_NACIONAL AS CN,
+    				IDT_MSISDN AS MSISDN,
+					DAT_ATIVACAO AS data_ativacao,
+					QTD_RECARGAS as qtd,
+					DAT_DESATIVACAO AS data_desativacao
+				FROM
+					tbl_rel_assinante_shutdown
+				WHERE
+        		DAT_DESATIVACAO &gt;= TO_DATE(?,'dd/mm/yyyy') AND
+				DAT_DESATIVACAO &lt;= TO_DATE(?,'dd/mm/yyyy')+1
+    			ORDER BY
+					IDT_MSISDN,
+					DAT_DESATIVACAO	
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="CN"				        showName="Código Nacional"					type="STRING"						/>
+					<campo name="MSISDN"					showName="MSISDN"							type="STRING"	     				/>
+					<campo name="data_ativacao"				showName="Data de Ativação"					type="DATE"		mask="dd/MM/yyyy"	/>
+					<campo name="qtd"					    showName="Quantidade de Recargas"		    type="DOUBLE"	mask="##0.00"		/>
+					<campo name="data_desativacao"			showName="Data de Shutdown"					type="DATE"		mask="dd/MM/yyyy"	/>
+				</registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="MKTBaseAparelhosDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<statement>
+				SELECT
+					CLI.NU_MSISDN AS MSISDN,
+					FAB.NO_FABRICANTE AS FABRICANTE,
+					MO.NO_MODELO AS MODELO,
+					DECODE (CLI.IN_APARELHO_PROPRIO, 'S', 'BASE', 'NAO BASE') AS BASE
+				FROM
+					HSID.HSID_CLIENTE CLI, HSID.HSID_MODELO MO, HSID.HSID_FABRICANTE FAB
+				WHERE
+					CLI.CO_MODELO = MO.CO_MODELO AND
+					MO.CO_FABRICANTE = FAB.CO_FABRICANTE
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="MSISDN"				showName="MSISDN"                    type="STRING"	       	/>
+					<campo name="FABRICANTE"			showName="Fabricante"                type="STRING"		    />
+					<campo name="MODELO"				showName="Modelo"                    type="STRING"		    />
+					<campo name="BASE"				    showName="Base/Nao Base"             type="STRING"		    />
+				</registro>
+			</dados>
+		</Relatorio>
+		<Relatorio	name="MarketingRecargasTFPPDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DATAINICIAL"/>
+				<param mapName="DATAFINAL"/>
+				<param mapName="CNS"/>
+				<param mapName="CNS"/>
+				<param mapName="UFS"/>
+				<param mapName="UFS"/>	
+				<param mapName="DATAINICIAL"/>
+				<param mapName="DATAFINAL"/>
+				<param mapName="CNS"/>
+				<param mapName="CNS"/>
+				<param mapName="UFS"/>
+				<param mapName="UFS"/>
+				<statement>
+					select 
+						r.dat_origem as DATA, r.idt_msisdn as NUMERO, r.vlr_credito_principal as VALOR_PRINCIPAL, nvl(a.vlr_credito_principal,0) as VALOR_BONUS, r.id_recarga as ID_RECARGA, r.idt_nsu_instituicao as NSU, 'Sucesso' as STATUS  
+					from
+						tbl_rec_recargas_tfpp a, tbl_rec_recargas_tfpp r, tbl_ger_codigo_nacional cod
+					where
+						a.idt_msisdn (+) = r.idt_msisdn
+						and r.dat_origem &gt;= to_date(?, 'dd/MM/yyyy')
+						and r.dat_origem &lt;  to_date(?, 'dd/MM/yyyy')
+						and (r.id_recarga||'B') = a.id_recarga (+)
+						and cod.idt_codigo_nacional = substr(r.idt_msisdn, 3, 2)
+						and r.id_tipo_recarga = 'R'
+						and a.id_tipo_recarga (+) = 'A'
+						and (instr(?, cod.idt_codigo_nacional) &lt;&gt; 0 or ? = 'XX')
+						and (instr(?, cod.IDT_UF) &lt;&gt; 0 OR ? = 'XX')
+					union
+					select
+						rn.dat_origem as DATA, rn.idt_msisdn as NUMERO, rn.vlr_credito_principal as VALOR_PRINCIPAL, nvl(an.vlr_credito_principal,0) as VALOR_BONUS, rn.id_recarga as ID_RECARGA, rn.idt_nsu_instituicao as NSU, 'Falha' as STATUS  
+					from
+						tbl_rec_recargas_tfpp_nok an, tbl_rec_recargas_tfpp_nok rn, tbl_ger_codigo_nacional cod
+					where
+						an.idt_msisdn (+) = rn.idt_msisdn
+						and rn.dat_origem &gt;= to_date(?, 'dd/MM/yyyy')
+						and rn.dat_origem &lt;  to_date(?, 'dd/MM/yyyy')
+						and (rn.id_recarga||'B') = an.id_recarga (+)
+						and cod.idt_codigo_nacional = substr(rn.idt_msisdn, 3, 2)
+						and rn.id_tipo_recarga = 'R'
+						and an.id_tipo_recarga (+) = 'A'
+						and (instr(?, cod.idt_codigo_nacional) &lt;&gt; 0 or ? = 'XX')
+						and (instr(?, cod.IDT_UF) &lt;&gt; 0 OR ? = 'XX')
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo	name="DATA"     				showName="DATA"				            type="TIMESTAMP"		mask="dd/MM/yyyy HH:mm:ss" />
+					<campo	name="NUMERO"				    showName="NUMERO"			            type="DOUBLE"	mask="##0.00"    	/>
+					<campo	name="VALOR_PRINCIPAL"			showName="VALOR_PRINCIPAL"				type="DOUBLE"	mask="##0.00"   	/>
+					<campo	name="VALOR_BONUS"	            showName="VALOR_BONUS"	                type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="ID_RECARGA"		        showName="ID_RECARGA"		            type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="NSU"				     	showName="NSU"						    type="DOUBLE"	mask="##0.00"	/>
+					<campo	name="STATUS"					showName="STATUS"						type="STRING"	             	/>
+				</registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="MKTMigracaoPulaPulaDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DATAINICIAL"/>
+				<param mapName="DATAFINAL"/>
+				<statement>
+				select 
+					ape.NOM_OPERADOR                        as operador,
+                    pre.IDT_MSISDN                          as msisdn,
+                    ape.idt_antigo_campo                    as codAntigo,
+                    proa.NOM_PROMOCAO                       as descAntigo,
+                    ape.idt_novo_campo                      as codNovo,
+                    pron.NOM_PROMOCAO                       as descNovo,
+                    pre.NUM_DOCUMENTO                       as documento,
+                    mot.DES_MOTIVO                          as motivo,
+                    trunc(pre.DAT_APROVISIONAMENTO)         as data
+				from 
+					tbl_pro_eventos pre, tbl_apr_eventos ape, tbl_pro_motivo_evento mot,
+                    tbl_pro_promocao proa, tbl_pro_promocao pron
+				where
+					pre.idt_msisdn = ape.idt_msisdn and
+					pre.dat_aprovisionamento = ape.dat_aprovisionamento and
+					pre.tip_operacao = ape.tip_operacao and
+					pre.idt_motivo = mot.idt_motivo and
+					trunc(pre.dat_aprovisionamento) between to_date(?, 'dd/mm/yyyy') and
+					to_date(?, 'dd/mm/yyyy') and
+					ape.idt_antigo_campo = proa.IDT_PROMOCAO and
+					ape.idt_novo_campo = pron.IDT_PROMOCAO and
+					ape.des_status = 'SUCESSO'
+				order by
+					pre.idt_msisdn,
+					pre.dat_aprovisionamento
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="operador"				    showName="BT/EX"		 			        type="STRING"						/>
+					<campo name="msisdn"					showName="Acesso Migrado"					type="STRING"	     				/>
+					<campo name="codAntigo"					showName="Cod Promocao Anterior"			type="STRING"	     				/>					
+					<campo name="descAntigo"				showName="Descricao Promocao Anterior"    	type="STRING"	     				/>	
+					<campo name="codNovo"					showName="Cod Promocao Nova"				type="STRING"	     				/>							
+					<campo name="descNovo"					showName="Descricao Promocao Nova"			type="STRING"	     				/>
+					<campo name="documento"				    showName="Documento"    					type="STRING"		            	/>
+					<campo name="motivo"					showName="Motivo da Migracao"   		    type="STRING"	            		/>
+					<campo name="data"		            	showName="Data"	            				type="DATE"		mask="dd/MM/yyyy"	/>
+				</registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="MKTPromocaoXstatusDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<statement>
+				select
+					SUBSTR(pro.idt_msisdn, 3,2) as cn, pro.idt_promocao as promocao, des.nom_promocao as desc_promocao, ass.idt_status as status, conf.des_configuracao as desc_status, count(1) as quantidade 
+				from
+					tbl_apr_assinante ass, tbl_pro_assinante pro, tbl_pro_promocao des, tbl_ger_config_assinante conf 
+				where
+					ass.idt_msisdn = pro.idt_msisdn 
+					and pro.idt_promocao = des.idt_promocao 
+					and pro.idt_promocao &lt;&gt; 3 
+					and conf.tip_configuracao = 'STATUS_ASSINANTE' 
+					and ass.idt_status = conf.id_configuracao 
+				group by
+					SUBSTR(pro.idt_msisdn, 3,2), des.nom_promocao, pro.idt_promocao, ass.idt_status, conf.des_configuracao 
+				order by
+					SUBSTR(pro.idt_msisdn, 3,2), pro.idt_promocao, ass.idt_status 
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="cn"			     	showName="CN"                          type="STRING"	       	/>
+					<campo name="promocao"				showName="Promocao"                    type="STRING"	       	/>
+					<campo name="desc_promocao"			showName="Descricao da promocao"       type="STRING"		    />
+					<campo name="status"				showName="Status"                      type="STRING"		    />
+					<campo name="desc_status"			showName="Descricao status"            type="STRING"		    />
+					<campo name="quantidade"			showName="Quantidade"                  type="STRING"		    />
+				</registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="MKTTrocaPromocaoXstatusDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DATAINICIAL"/>
+				<param mapName="DATAFINAL"/>
+				<statement>
+				select
+					a.promocao_anterior  as codPromAnterior
+      				,b.nom_promocao      as promAnterior
+					,a.promocao_nova     as codPromNova
+					,c.nom_promocao      as promNova
+					,a.status_anterior   as statusAnterior
+					,a.status_novo       as statusNovo
+					,a.quantidade		 as quantidadeTroca
+				from
+   					(select apr.idt_antigo_campo as promocao_anterior
+							,apr.idt_novo_campo   as promocao_nova
+							,a.account_status     as status_anterior
+							,b.account_status     as status_novo
+							,count(1)             as quantidade
+					from
+						tbl_apr_eventos apr
+						,tbl_apr_assinante_tecnomen a
+						,tbl_apr_assinante_tecnomen b
+					where
+						apr.dat_aprovisionamento &gt;= to_date(?,'dd/MM/yyyy')
+						and apr.dat_aprovisionamento &lt;  to_date(?,'dd/MM/yyyy') 
+						and apr.tip_operacao   = 'PROMOCAO_TROCA'
+						and apr.des_status = 'SUCESSO'
+						and a.dat_importacao = trunc(apr.dat_aprovisionamento)
+						and a.sub_id         = apr.idt_msisdn
+						and b.dat_importacao = trunc(apr.dat_aprovisionamento)+1
+						and b.sub_id         = apr.idt_msisdn
+					group by
+						apr.idt_antigo_campo
+						,apr.idt_novo_campo
+						,a.account_status
+						,b.account_status
+						) a,
+       		 	   tbl_pro_promocao b
+				   ,tbl_pro_promocao c
+				where
+					a.promocao_anterior = b.idt_promocao
+					and a.promocao_nova     = c.idt_promocao
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="codPromAnterior"				showName="Cod promocao anterior"	        type="STRING"						/>
+					<campo name="promAnterior"					showName="Descricao promocao anterior"		type="STRING"	     				/>
+					<campo name="codPromNova"				    showName="Cod promocao nova"    			type="STRING"		            	/>
+					<campo name="promNova"					    showName="Descricao promocao nova" 		    type="STRING"	            		/>
+					<campo name="statusAnterior"		        showName="Status anterior"	      			type="STRING"		             	/>
+					<campo name="statusNovo"				    showName="Status novo"		 		        type="STRING"						/>
+					<campo name="quantidadeTroca"				showName="Quantidade de migracoes"			type="STRING"	     				/>
+				</registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="MKTRecargaValorFaceDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="FORMATODATA"/>
+				<param mapName="DATAINICIAL"/>
+				<param mapName="FORMATODATA"/>
+				<param mapName="DATAFINAL"/>
+				<param mapName="FORMATODATA"/>
+				<param mapName="CATEGORIA"/>
+				<statement>
+				select 
+ 				  	  TO_CHAR(a.dat_recargasface,?) as DATA,
+					  c.idt_uf as UF,
+					  a.idt_codigo_nacional as CN,
+					  b.id_canal||b.id_origem as TIPO,
+					  b.des_origem as DESCRICAO,
+					  a.id_sistema_origem as SISTEMA_DE_ORIGEM,
+					  a.vlr_face as VALOR,
+					  SUM(a.qtd_registros) as Qtd,
+					  SUM(a.vlr_face*a.qtd_registros) as TOTAL
+				from   
+				 	  tbl_rel_recargasface a, 
+					  tbl_rec_origem b,
+					  tbl_ger_codigo_nacional c,
+                      tbl_ger_plano_preco d,
+                      tbl_ger_categoria e
+				where  
+				 	  a.id_canal = b.id_canal AND
+					  a.id_origem = b.id_origem AND
+					  c.idt_codigo_nacional = a.idt_codigo_nacional AND
+                      a.idt_plano_preco = d.idt_plano_preco AND
+                      d.idt_categoria = e.idt_categoria AND
+					  a.dat_recargasface &gt;= to_date(?,?) AND
+					  a.dat_recargasface &lt;  to_date(?,?) AND
+					  INSTR (?,e.idt_categoria) &gt; 0 AND 
+					  b.idt_classificacao_recarga = 'REC' AND
+					  b.id_canal &lt;&gt; '06'
+				group by 
+				 	  a.dat_recargasface,
+					  c.idt_uf,
+					  a.idt_codigo_nacional,
+                      e.des_categoria,   
+                      d.des_plano_preco,
+					  b.id_canal||b.id_origem, 
+					  b.des_origem, 
+					  a.id_sistema_origem, 
+					  a.vlr_face
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="DATA"				showName="Data"	                        type="STRING"						/>
+					<campo name="UF"				showName="UF"		                    type="STRING"	     				/>
+					<campo name="CN"				showName="CN"    			            type="STRING"		            	/>
+					<campo name="TIPO"				showName="Tipo" 		                type="STRING"	            		/>
+					<campo name="DESCRICAO"		    showName="Descricao"	    			type="STRING"		             	/>
+					<campo name="SISTEMA_DE_ORIGEM"	showName="Sistema de origem"		 	type="STRING"						/>
+					<campo name="VALOR"				showName="Valor"			            type="STRING"	     				/>
+					<campo name="Qtd"				showName="Quantidade"			        type="STRING"	     				/>
+					<campo name="TOTAL"				showName="Total"			            type="STRING"	     				/>
+				</registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="MKTBonusPorPromocaoEFaixaDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DATAINICIAL"/>
+				<param mapName="DATAFINAL"/>
+				<param mapName="DATAINICIALADIANTAMENTO"/>
+				<param mapName="DATAFINALADIANTAMENTO"/>
+				<statement>
+				SELECT
+				      promocao as promocao, desPromo as desPromocao, faixa as faixa, SUM (bonus) AS valor, COUNT (1) AS clientes
+                FROM
+				     (SELECT promocao, desProm as desPromo,
+                     (CASE
+                     WHEN 50 * (TRUNC ((bonus - 0.00000001) / 50)) &lt; 1000
+                        THEN    'R$'
+                             || (50 * (TRUNC ((bonus - 0.00000001) / 50)))
+                             || '-R$'
+                             || (50 * (TRUNC ((bonus - 0.00000001) / 50) + 1)
+                                )
+                     ELSE 'Superior a 1000'
+                     END
+                     ) AS faixa,
+                     bonus
+                          FROM (SELECT   a.idt_promocao AS promocao, c.nom_promocao as desProm, b.idt_msisdn AS msisdn,
+                     SUM (b.vlr_credito_bonus) AS bonus
+                     FROM tbl_pro_assinante a,
+                           tbl_rec_recargas b,
+                           tbl_pro_promocao c
+                     WHERE a.idt_promocao = c.idt_promocao
+                       AND c.idt_categoria = 1
+                       AND c.idt_promocao &lt;&gt; 0
+                       AND id_tipo_recarga = 'A'
+                       AND a.idt_msisdn = b.idt_msisdn
+                       AND (   (    b.tip_transacao IN ('08001', '05024')
+                                AND b.dat_origem &gt;= ?
+								AND b.dat_origem &lt; ?
+                               )
+                            OR (    b.tip_transacao = '08101'
+                                AND b.dat_origem &gt;= ?
+                                AND b.dat_origem &lt; ?
+                               )
+                           )
+                       AND vlr_credito_bonus &gt; 0
+                  GROUP BY b.idt_msisdn, a.idt_promocao, c.nom_promocao
+                  ORDER BY SUM (b.vlr_credito_bonus)) tabela1) tabela2
+                GROUP BY promocao, desPromo, faixa
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="promocao"			showName="Cod promocao"                     type="STRING"						/>
+                    <campo name="desPromocao"		showName="Descricao promocao"               type="STRING"	     				/>
+					<campo name="faixa"				showName="Faixa"		                    type="STRING"	     				/>
+					<campo name="valor"				showName="Valor"    			            type="STRING"		            	/>
+					<campo name="clientes"			showName="Clientes" 		                type="STRING"	            		/>
+				</registro>
+			</dados>
+		</Relatorio>
+
+		<Relatorio name="MKTSaldosAssinantesDelimited" format="DELIMITED" showHeader="TRUE" delimitedHdr="TRUE" delimiter="-">
+			<cabecalho title="Relatorio de Saldo de Assinantes">
+				<campo	mapName="SALDO_UTILIZADO" 	showName="Saldo Utilizado" />
+				<campo mapName="VALOR_SALDO" 		showName="Valor Minimo do Saldo" />
+				<campo	mapName="STATUS_UTILIZADO" 	showName="Status dos Assinantes" />
+				<campo	mapName="DATA_EXECUCAO" 	showName="Data de execucao" />
+			</cabecalho>
+			<consulta type="SQL">
+				<param mapName="SALDO_PRINCIPAL"/>
+				<param mapName="SALDO_BONUS"/>
+				<param mapName="SALDO_SMS"/>
+				<param mapName="SALDO_GPRS"/>
+				<param mapName="STATUS"/>
+				<param mapName="SALDO_PRINCIPAL"/>
+				<param mapName="SALDO_BONUS"/>
+				<param mapName="SALDO_SMS"/>
+				<param mapName="SALDO_GPRS"/>
+				<statement>
+					SELECT asn.idt_msisdn AS msisdn,   
+					    CASE
+					        WHEN to_number(?,'990D00','NLS_NUMERIC_CHARACTERS=''.,''') &gt;= 0 THEN asn.vlr_saldo_principal
+					        WHEN to_number(?,'990D00','NLS_NUMERIC_CHARACTERS=''.,''') &gt;= 0 THEN asn.vlr_saldo_bonus
+					        WHEN to_number(?,'990D00','NLS_NUMERIC_CHARACTERS=''.,''') &gt;= 0 then asn.vlr_saldo_sm
+					        when to_number(?,'990D00','NLS_NUMERIC_CHARACTERS=''.,''') &gt;= 0 then asn.vlr_saldo_dados
+					    END AS saldo,pmo.nom_promocao AS promocao
+					FROM tbl_apr_assinante asn, tbl_pro_assinante pro, tbl_pro_promocao pmo
+					WHERE asn.idt_status = ?
+					AND asn.vlr_saldo_principal &gt;= to_number(?,'990D00','NLS_NUMERIC_CHARACTERS=''.,''')
+					AND asn.vlr_saldo_bonus &gt;= to_number(?,'990D00','NLS_NUMERIC_CHARACTERS=''.,''')
+					AND asn.vlr_saldo_sm &gt;= to_number(?,'990D00','NLS_NUMERIC_CHARACTERS=''.,''')
+					AND asn.vlr_saldo_dados &gt;= to_number(?,'990D00','NLS_NUMERIC_CHARACTERS=''.,''')
+                    AND asn.idt_msisdn=pro.idt_msisdn
+                    AND pro.idt_promocao=pmo.idt_promocao
+                    AND pmo.idt_categoria=1
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="msisdn"		showName="MSISDN"    type="STRING"						/>
+                    <campo name="saldo"			showName="Saldo" 	 type="DOUBLE"		mask="##0.00"   />
+					<campo name="promocao"		showName="Promoção"  type="STRING"						/>
+				</registro>
+			</dados>
+		</Relatorio>
+		
+		<Relatorio name="MKTAssinantesCampanhaDelimited" format="DELIMITED" showHeader="TRUE" delimitedHdr="TRUE" delimiter=";">
+			<cabecalho title="Relatorio de Assinantes por Campanha">
+				<campo	mapName="ID_CAMPANHA" 	showName="ID da Campanha" />
+			</cabecalho>
+			<consulta type="SQL">
+				<param mapName="ID_CAMPANHA"/>
+				<statement>
+						select c.nom_campanha          as nomeCampanha
+						      ,a.idt_msisdn            as msisdn
+						      ,a.dat_inclusao          as dataInclusao
+						      ,a.dat_ult_envio_sms     as dataUltEnvioSM
+						      ,a.dat_retirada_campanha as dataRetirada
+						  from tbl_cam_assinante_campanha a
+						      ,tbl_cam_campanha c
+						 where a.id_campanha = c.id_campanha
+						   and c.id_campanha = ?
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="nomeCampanha"		showName="Nome da Campanha" 			type="STRING" 								/>
+                    <campo name="msisdn"			showName="MSISDN" 	 					type="STRING" 								/>
+                    <campo name="dataInclusao"		showName="Data da Inclusao" 			type="TIMESTAMP" 	mask="dd/MM/yyyy HH:mm:ss" 	/>
+                    <campo name="dataUltEnvioSM" 	showName="Data do Utimo Envio do SMS" 	type="TIMESTAMP" 	mask="dd/MM/yyyy HH:mm:ss" 	/>
+                    <campo name="dataRetirada" 		showName="Data da Retirada" 			type="TIMESTAMP" 	mask="dd/MM/yyyy HH:mm:ss" 	/>
+				</registro>
+			</dados>
+		</Relatorio>
+		
+		<Relatorio name="MKTAnaliticoAssinantesCampanhaDelimited" format="DELIMITED" showHeader="TRUE" delimitedHdr="TRUE" delimiter=";">
+			<cabecalho title="Relatorio de Assinantes por Campanha - Analitico">
+				<campo	mapName="ID_CAMPANHA" 	showName="ID da Campanha" />
+			</cabecalho>
+			<consulta type="SQL">
+				<param mapName="ID_CAMPANHA"/>
+				<statement>
+						SELECT B.IDT_MSISDN              as msisdn
+						      ,B.DAT_INCLUSAO            as dataInclusao
+						      ,B.DAT_ULT_ENVIO_SMS       as dataUltEnvioSM
+						      ,A.DAT_SATISFACAO_CONDICAO as dataRecarga
+						      ,TRUNC(A.DAT_SATISFACAO_CONDICAO - B.DAT_INCLUSAO) as numDiasRecarga
+						      ,TRUNC((B.DAT_ULT_ENVIO_SMS - B.DAT_INCLUSAO) / C.NUM_DIAS_PERIODICIDADE + 1, 1) as numAvisos
+						      ,A.NOM_CONDICAO as valorRecarga
+						 FROM TBL_CAM_HISTORICO_CONCESSAO A, TBL_CAM_ASSINANTE_CAMPANHA B, TBL_CAM_SMS_CAMPANHA C
+						WHERE A.ID_CAMPANHA (+) = B.ID_CAMPANHA
+						  AND C.ID_CAMPANHA (+) = B.ID_CAMPANHA
+						  AND B.ID_CAMPANHA = ?
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+                    <campo name="msisdn"			showName="MSISDN" 	 					type="STRING" 								/>
+                    <campo name="dataInclusao"		showName="Data da Inclusao" 			type="TIMESTAMP" 	mask="dd/MM/yyyy HH:mm:ss" 	/>
+                    <campo name="dataUltEnvioSM" 	showName="Data do Utimo Envio do SMS" 	type="TIMESTAMP" 	mask="dd/MM/yyyy HH:mm:ss" 	/>
+                    <campo name="dataRecarga" 		showName="Data da Recarga" 				type="TIMESTAMP" 	mask="dd/MM/yyyy HH:mm:ss" 	/>
+                    <campo name="numDiasRecarga"	showName="Dias Para Recarga" 			type="STRING" 								/>
+                    <campo name="numAvisos"			showName="Numero de Avisos SMS"			type="STRING" 								/>
+                    <campo name="valorRecarga"		showName="Valor da Recarga"				type="STRING" 								/>
+				</registro>
+			</dados>
+		</Relatorio>
+		
+		<Relatorio name="MKTSumarizacaoCampanhaDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DATA_INICIAL"/>
+				<param mapName="DATA_FINAL"/>
+				<statement>
+				SELECT a.nom_campanha AS NOM_CAMPANHA,
+					   COUNT (b.idt_msisdn)AS QDE_CLIENTES, 
+                       COUNT (c.idt_msisdn) AS QDE_CLIENTES_RECARREGARAM, 
+                       SUM (to_number(c.nom_condicao)) AS QDE_RECARGA
+ 				  FROM tbl_cam_campanha a, tbl_cam_assinante_campanha b, tbl_cam_historico_concessao c
+				 WHERE c.idt_msisdn  (+) = b.idt_msisdn
+ 			       AND c.id_campanha (+) = b.id_campanha
+ 				   AND b.id_campanha = a.id_campanha
+      			   AND A.dat_inicial_validade &gt;= to_date( ? , 'dd/mm/yyyy')
+  				   AND A.dat_inicial_validade &lt;= to_date( ? , 'dd/mm/yyyy')
+			  GROUP BY a.nom_campanha
+				</statement>
+			</consulta>
+			<dados>
+				<registro> 
+					<campo name="NOM_CAMPANHA"	             showName="Nome Campanha"     			  type="STRING"		/>
+                    <campo name="QDE_CLIENTES"		         showName="Qde de Clientes" 	 	      type="STRING"	    />
+                    <campo name="QDE_CLIENTES_RECARREGARAM"	 showName="Qde de Clientes Recarregaram"  type="STRING"		/>
+                    <campo name="QDE_RECARGA"				 showName="Qde de Recarga"                type="STRING"		/>
+				</registro>
+			</dados>
+		</Relatorio>
+		
+		<Relatorio name="MKTExpurgoEstornoBonusPulaPulaDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DATA_REFERENCIA_INICIAL"/>
+				<param mapName="DATA_REFERENCIA_FINAL"/>
+				<param mapName="DATA_PROCESSAMENTO_INICIAL"/>
+				<param mapName="DATA_PROCESSAMENTO_FINAL"/>
+				<statement>
+					select e.idt_origem as TIPO,
+					       e.idt_promocao as CODIGO,
+					       p.nom_promocao as PROMOCAO,
+					       substr(e.idt_msisdn,3,2) as CN,
+					       count(1) as QUANTIDADE,
+					       sum(e.vlr_expurgo) as TOTAL_EXPURGO,
+					       sum(e.vlr_estorno) as TOTAL_ESTORNO,
+					       sum(e.vlr_estorno_efetivo) as TOTAL_ESTORNO_EFETIVO,
+					       round(sum(e.vlr_expurgo/b.vlr_bonus_minuto),2) as TOTAL_MINUTOS_EXPURGO,
+					       round(sum(e.vlr_estorno/b.vlr_bonus_minuto),2) as TOTAL_MINUTOS_ESTORNO,
+					       round(sum(e.vlr_estorno_efetivo/b.vlr_bonus_minuto),2) as TOTAL_MINUTOS_ESTORNO_EFETIVO
+					  from tbl_pro_estorno_pula_pula e,
+					       tbl_apr_assinante a,
+					       tbl_pro_bonus_pula_pula b,
+					       tbl_pro_promocao p
+					 where e.idt_promocao = p.idt_promocao
+					   and e.idt_msisdn = a.idt_msisdn
+					   and substr(e.idt_msisdn,3,2) = b.idt_codigo_nacional
+					   and b.idt_plano_preco = a.idt_plano_preco
+					   and e.dat_referencia &gt;= b.dat_ini_periodo
+					   and (b.dat_fim_periodo is null or e.dat_referencia &lt;= b.dat_fim_periodo)
+					   and (   (    e.dat_referencia    &gt; to_date(?,'dd/mm/yyyy')
+					            and e.dat_referencia    &lt; to_date(?,'dd/mm/yyyy'))
+					        or (    e.dat_processamento &gt; to_date(?,'dd/mm/yyyy')
+					            and e.dat_processamento &lt; to_date(?,'dd/mm/yyyy')))
+					 group by e.idt_origem,
+					          e.idt_promocao,
+					          p.nom_promocao,
+					          substr(e.idt_msisdn,3,2)
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="TIPO"		                	showName="TIPO"                          type="STRING"						/>
+                    <campo name="CODIGO"		                showName="CODIGO"                        type="STRING"	     				/>
+					<campo name="PROMOCAO"		         		showName="PROMOCAO"		                 type="STRING"	     				/>
+					<campo name="CN"			             	showName="CN"    			             type="STRING"		            	/>
+					<campo name="QUANTIDADE"		         	showName="QUANTIDADE" 		             type="STRING"	            		/>
+					<campo name="TOTAL_EXPURGO"			        showName="TOTAL_EXPURGO" 		         type="STRING"	            		/>
+					<campo name="TOTAL_ESTORNO"			        showName="TOTAL_ESTORNO" 		         type="STRING"	            		/>
+					<campo name="TOTAL_MINUTOS_ESTORNO_EFETIVO"	showName="TOTAL_MINUTOS_ESTORNO_EFETIVO" type="STRING"	            		/>
+					<campo name="TOTAL_MINUTOS_EXPURGO"			showName="TOTAL_MINUTOS_EXPURGO" 		 type="STRING"	            		/>
+					<campo name="TOTAL_MINUTOS_ESTORNO"			showName="TOTAL_MINUTOS_ESTORNO" 		 type="STRING"	            		/>
+					<campo name="TOTAL_MINUTOS_ESTORNO_EFETIVO"	showName="TOTAL_MINUTOS_ESTORNO_EFETIVO" type="STRING"	            		/>
+				</registro>
+			</dados>
+		</Relatorio>
+		
+		<Relatorio name="MKTRecargasControleDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="CATEGORIA"/>
+				<param mapName="CN"/>
+				<param mapName="SISTEMA_RECARGA"/>
+				<param mapName="ORIGEM"/>
+				<param mapName="DATA_INICIAL"/>
+				<param mapName="DATA_FINAL"/>
+				<statement>
+					SELECT
+	                    /*+index (rec xie7tbl_rec_recargas)*/
+						rec.idt_plano_preco						as plano_preco,
+						pla.des_plano_preco						as des_plano_preco,
+						pla.idt_categoria						as categoria,
+						nac.idt_uf								as uf,
+						nac.idt_codigo_nacional					as cn,
+						rec.idt_msisdn							as msisdn,
+						replace(idt_nsu_instituicao, ';','-')  as nsu_instituicao,
+						rec.dat_origem							as data_recarga,
+						rec.id_recarga							as id_recarga,
+						rec.tip_transacao						as tipo_transacao,      
+						ori.des_origem							as des_tipo_transacao,
+						rec.id_sistema_origem					as sistema_origem,
+						ser.idt_codigo_servico_sfa				as codigo_serviço_sfa,
+						sfa.des_codigo_servico                  as des_codigo_servico_sfa,
+						NVL ( rec.vlr_credito_principal, 0)	    as vlr_credito_principal,
+						NVL ( rec.vlr_credito_bonus, 0)		    as vlr_credito_bonus,
+						NVL ( rec.vlr_credito_sms, 0)			as vlr_credito_sms,
+						NVL ( rec.vlr_credito_gprs, 0)			as vlr_credito_gprs,
+						trunc(ass.dat_ativacao)					as data_ativacao
+     
+					FROM
+				        tbl_con_recarga_servico    ser,
+					    tbl_apr_assinante          ass,
+						tbl_ger_plano_preco        pla,
+						tbl_ger_codigo_nacional    nac,
+						tbl_rec_origem             ori,
+						tbl_con_codigo_servico_sfa sfa,
+						tbl_rec_recargas           rec
+						
+                   WHERE
+							instr(?, pla.idt_categoria) 			&lt;&gt; 0
+						and instr(?, nac.idt_codigo_nacional) 		&lt;&gt; 0	
+						and instr(?, rec.id_sistema_origem) 		&lt;&gt; 0
+						and instr(?, rec.tip_transacao) 			&lt;&gt; 0
+               			and    rec.dat_origem             			&gt;= to_date(?,'dd/mm/yyyy')
+						and    rec.dat_origem             			&lt;  to_date(?,'dd/mm/yyyy')
+                        and    ser.idt_tipo_servico      			not in ('CBG','CBB')
+                        and    substr(rec.idt_msisdn,3,2) 			= nac.idt_codigo_nacional
+						and    rec.idt_msisdn             			= ass.idt_msisdn (+)
+						and    rec.idt_plano_preco        			= pla.idt_plano_preco
+				        and    ser.id_canal               			= rec.id_canal
+				        and    ser.id_origem              			= rec.id_origem
+				        and    ser.id_sistema_origem      			= rec.id_sistema_origem
+				        and    ser.idt_plano_preco        			= rec.idt_plano_preco
+				  		and    ser.idt_codigo_servico_sfa 			= sfa.idt_codigo_servico_sfa
+						and    rec.id_canal               			= ori.id_canal
+						and    rec.id_origem              			= ori.id_origem
+ 
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="plano_preco"		            showName="ID PLANO PREÇO"                 type="STRING"						/>
+                    <campo name="des_plano_preco"		        showName="PLANO PREÇO"                    type="STRING"	     				/>
+					<campo name="categoria"		         		showName="CATEGORIA"		              type="STRING"	     				/>
+					<campo name="uf"			             	showName="UF"    			              type="STRING"		            	/>
+					<campo name="cn"			                showName="CN" 		                      type="STRING"	            		/>
+					<campo name="msisdn"			            showName="MSISDN" 		                  type="STRING"	            		/>
+					<campo name="nsu_instituicao"	            showName="NSU INSTITUIÇÃO"             	  type="STRING"	            		/>
+					<campo name="data_recarga"			        showName="DATA RECARGA" 	        	  type="STRING"	            		/>
+					<campo name="id_recarga"			        showName="ID RECARGA" 		              type="STRING"	            		/>
+					<campo name="tipo_transacao"	            showName="CÓDIGO SERVIÇO GPP"             type="STRING"	            		/>
+					<campo name="des_tipo_transacao"            showName="DESCRIÇÃO CÓDIGO SERVIÇO GPP"   type="STRING"	            		/>
+					<campo name="sistema_origem"	            showName="SISTEMA ORIGEM"                 type="STRING"	            		/>
+					<campo name="codigo_serviço_sfa"         	showName="CÓDIGO SERVIÇO SFA"             type="STRING"	            		/>
+					<campo name="des_codigo_servico_sfa"      	showName="DESCRIÇÃO CÓDIGO SERVIÇO SFA"   type="STRING"	            		/>						
+					<campo name="vlr_credito_principal"	        showName="VALOR CRÉDITO SALDO PRINCIPAL"  type="STRING"	            		/>
+					<campo name="vlr_credito_bonus"          	showName="VALOR CREDITO BONUS"            type="STRING"	            		/>
+					<campo name="vlr_credito_sms"	            showName="VALOR CREDITO SMS"              type="STRING"	            		/>
+					<campo name="vlr_credito_gprs"	            showName="VALOR CREDITO GPRS DADOS"       type="STRING"	            		/>
+					<campo name="data_ativacao"             	showName="DATA ATIVAÇÃO"                  type="STRING"	            		/>
+			    </registro>
+			</dados>
+		</Relatorio>
+		
+		<Relatorio name="MKTStatusAssinantesOptInDelimited" format="DELIMITED" showHeader="TRUE" delimitedHdr="TRUE" delimiter=";">
+			<cabecalho title="Opt-in - Torpedo Mídia">
+				<campo mapName="DATA_EMISSAO" 	showName="Data de Emissao do Relatorio"/>
+			</cabecalho>
+			<consulta type="SQL">
+				<param mapName="IND_ATIVO"/>
+				<statement>
+						SELECT a.nu_msisdn AS msisdn,
+				        a.dt_optin AS dataOptIN, 
+				        a.dt_fidelizacao AS dataFidelizacao, 
+				        a.dt_optout AS dataOptOut,
+				        DECODE (a.dt_fidelizacao, NULL, 'Voluntaria', 'Incentivada') AS formaAdesao,
+				        a.nu_lac AS lac,
+				        a.nu_cell_id AS cellId,
+				        f.no_fabricante AS fabricante,
+				        m.no_modelo AS modelo,
+				        DECODE (a.in_mandatorio, 0, 'Nao', 'Sim') AS madatoria,
+				        a.CO_CONTEUDO as conteudo
+				   FROM hsid.wigc_optin a, hsid.hsid_modelo m, hsid.hsid_fabricante f
+				  WHERE a.co_modelo = m.co_modelo
+				    AND m.co_fabricante = f.co_fabricante
+				    AND NVL (a.dt_optout,sysdate) = DECODE ( ? ,0,sysdate,NVL (a.dt_optout,sysdate))
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="msisdn"		            	showName="ASSINANTE"            		type="STRING"									/>
+                    <campo name="dataOptIN"		      			showName="DATA OPT-IN"                  type="TIMESTAMP" 	mask="dd/MM/yyyy HH:mm:ss"	/>
+					<campo name="dataFidelizacao"		        showName="DATA FIDELIZAÇÃO"		        type="TIMESTAMP" 	mask="dd/MM/yyyy HH:mm:ss"	/>
+					<campo name="dataOptOut"			        showName="DATA OPT-OUT"    		        type="TIMESTAMP" 	mask="dd/MM/yyyy HH:mm:ss"	/>
+					<campo name="formaAdesao"		  			showName="FORMA DE ADESAO"		    	type="STRING"	            					/>
+					<campo name="lac"			                showName="LAC" 		                    type="STRING"	            					/>
+					<campo name="cellId"			            showName="CELL ID" 		                type="STRING"	            					/>
+					<campo name="fabricante"	                showName="FABRICANTE"   		        type="STRING"	            					/>
+					<campo name="modelo"			        	showName="MODELO"		 	        	type="STRING"	            					/>
+					<campo name="madatoria"			        	showName="MANDATÓRIA" 		            type="STRING"	            					/>
+					<campo name="conteudo"			        	showName="CONTEÚDO" 		            type="STRING"	            					/>				
+			    </registro>
+			</dados>
+		</Relatorio>
+		
+			<Relatorio name="MKTCategoriaAssinantesOptInDelimited" format="DELIMITED" showHeader="TRUE" delimitedHdr="TRUE" delimiter=";">
+			<cabecalho title="Opt-in - Torpedo Mídia">
+				<campo mapName="DATA_EMISSAO" 	showName="Data de Emissao do Relatorio"/>
+			</cabecalho>
+			<consulta type="SQL">
+				<statement>
+					SELECT b.nu_msisdn AS Msisdn, 
+					       decode (a.id_categoria,1,'Sim','Nao') AS CD, 
+					       decode (c.id_categoria,2,'Sim','Nao') AS ModaM, 
+					       decode (d.id_categoria,3,'Sim','Nao') AS ModaF, 
+					       decode (e.id_categoria,4,'Sim','Nao') AS Eletronicos, 
+					       decode (f.id_categoria,5,'Sim','Nao') AS Shows, 
+					       decode (g.id_categoria,6,'Sim','Nao') AS Bares
+					from
+					    (SELECT a.nu_msisdn, a.id_categoria 
+					    FROM hsid.wigc_optin_categoria a
+					    WHERE a.id_categoria = 1) a,
+					    
+					     (SELECT a.nu_msisdn, a.id_categoria 
+					    FROM hsid.wigc_optin_categoria a
+					    WHERE a.id_categoria = 2) c,
+					    
+					    (SELECT a.nu_msisdn, a.id_categoria 
+					    FROM hsid.wigc_optin_categoria a
+					    WHERE a.id_categoria = 3) d,
+					    
+					    (SELECT a.nu_msisdn, a.id_categoria 
+					    FROM hsid.wigc_optin_categoria a
+					    WHERE a.id_categoria = 4) e,
+					    
+					    (SELECT a.nu_msisdn, a.id_categoria 
+					    FROM hsid.wigc_optin_categoria a
+					    WHERE a.id_categoria = 5) f,
+					    
+					    (SELECT a.nu_msisdn, a.id_categoria 
+					    FROM hsid.wigc_optin_categoria a
+					    WHERE a.id_categoria = 6) g,
+					    
+					    hsid.wigc_optin_categoria b   
+					    
+					WHERE a.nu_msisdn(+) = b.nu_msisdn
+					  AND c.nu_msisdn(+) = b.nu_msisdn
+					  AND d.nu_msisdn(+) = b.nu_msisdn
+					  AND e.nu_msisdn(+) = b.nu_msisdn
+					  AND f.nu_msisdn(+) = b.nu_msisdn
+					  AND g.nu_msisdn(+) = b.nu_msisdn
+					GROUP BY  b.nu_msisdn, a.id_categoria, c.id_categoria, d.id_categoria, e.id_categoria, f.id_categoria, g.id_categoria
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="Msisdn"		    showName="Assinante"            		type="STRING"	/>
+                    <campo name="CD"		      	showName="CD DVD Livros"                type="STRING" 	/>
+					<campo name="ModaM"		        showName="Moda Masculina"		        type="STRING" 	/>
+					<campo name="ModaF"			    showName="Moda Feminina"    		    type="STRING" 	/>
+					<campo name="Eletronicos"		showName="Eletronicos"		    		type="STRING"	/>
+					<campo name="Shows"			    showName="Shows Eventos" 		        type="STRING"	/>
+					<campo name="Bares"			    showName="Bares Rest." 		            type="STRING"	/>
+			    </registro>
+			</dados>
+		</Relatorio>
+		
+			<Relatorio name="MKTBonusPulaPula2004DetalhadoDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DATAINICIAL"/>
+				<param mapName="DATAFINAL"/>
+				<statement>
+				  SELECT
+						  a.dia                                                                   AS DIA,
+						  a.status_0                                                              AS STATUS_0,
+						  a.status_1                                                              AS STATUS_1,
+						  a.status_2                                                              AS STATUS_2,
+						  a.status_3                                                              AS STATUS_3,
+						  a.status_4                                                              AS STATUS_4,
+						  a.status_5                                                              AS STATUS_5,
+						 (select count(*)
+							from tbl_apr_eventos e
+						   where e.tip_operacao = 'PROMOCAO_TROCA'
+							 and e.idt_antigo_campo &lt;&gt; 1
+							 and e.idt_novo_campo   =  1
+							 and e.nom_operador in ('bt022395', 'BT022395')
+							 and cod_retorno = 0
+							 and dat_aprovisionamento = DIA)                                      AS ENTRADA_1,
+						 (select count(*)
+							from tbl_apr_eventos e
+						   where e.tip_operacao = 'PROMOCAO_TROCA'
+							 and e.idt_antigo_campo &lt;&gt; 1
+							 and e.idt_novo_campo   =  1
+							 and e.nom_operador not in ('bt022395', 'BT022395')
+							 and cod_retorno = 0
+							 and dat_aprovisionamento = DIA)                                      AS ENTRADA_2,
+						 (select count(*)
+							from tbl_apr_eventos e
+						   where e.tip_operacao = 'PROMOCAO_ENTRADA'
+							 and e.idt_novo_campo =  1
+							 and e.cod_retorno = 0
+							 and e.dat_aprovisionamento = DIA
+							 and not exists(select 1
+											  from tbl_pro_assinante a
+											 where a.idt_msisdn = e.idt_msisdn
+											   and a.idt_promocao = 1
+											   and e.dat_aprovisionamento - a.dat_entrada_promocao &gt; 0.0014)
+							 and not exists(select 1
+											  from tbl_apr_eventos e2
+											 where e2.idt_msisdn = e.idt_msisdn
+											   and e2.dat_aprovisionamento = e.dat_aprovisionamento                   
+											   and e2.tip_operacao = 'PROMOCAO_TROCA'
+											   and e2.idt_antigo_campo = 1))                      AS ENTRADA_3,
+						 (select count(*)
+							from tbl_apr_eventos e
+						   where e.tip_operacao in ('PROMOCAO_TROCA', 'PROMOCAO_SAIDA')
+							 and e.idt_antigo_campo = 1
+							 and (e.idt_novo_campo is null or e.idt_novo_campo &lt;&gt; 1)
+							 and cod_retorno = 0
+							 and dat_aprovisionamento = DIA)                                      AS SAIDA,
+						 a.base_final                                                             AS BASE_FINAL
+					FROM
+					(
+						  select
+							  NVL(SUM(rel.qtd_status_0),0)    as status_0,
+							  NVL(SUM(rel.qtd_status_1),0)    as status_1,
+							  NVL(SUM(rel.qtd_status_2),0)    as status_2,
+							  NVL(SUM(rel.qtd_status_3),0)    as status_3,
+							  NVL(SUM(rel.qtd_status_4),0)    as status_4,
+							  NVL(SUM(rel.qtd_status_5),0)    as status_5,
+							  NVL(SUM(rel.qtd_assinantes),0)  as base_final,
+							  dias.COLUMN_VALUE               as DIA 
+						  from 
+							  tbl_rel_pula_pula rel,
+							  TABLE(FNC_DIAS_ENTRE(?,?)) dias
+						  where
+							  rel.dat_processamento (+) = dias.COLUMN_VALUE  
+						  group by
+							  dias.COLUMN_VALUE 
+						)a
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+                    <campo name="DIA"             showName="Dia"                            type="DATE" 	mask="dd/MM/yyyy" />
+                    <campo name="STATUS_0"        showName="Status 0"                       type="STRING" />
+                    <campo name="STATUS_1"        showName="Status 1"                       type="STRING" />
+                    <campo name="STATUS_2"        showName="Status 2"                       type="STRING" />
+                    <campo name="STATUS_3"        showName="Status 3"                       type="STRING" />
+                    <campo name="STATUS_4"        showName="Status 4"                       type="STRING" />
+                    <campo name="STATUS_5"        showName="Status 5"                       type="STRING" />
+                    <campo name="ENTRADA_1"       showName="Migracoes BT022395"             type="STRING" />
+                    <campo name="ENTRADA_2"       showName="Migracoes Demais Matriculas"    type="STRING" />
+                    <campo name="ENTRADA_3"       showName="Habilitacao Promocao Expirada"  type="STRING" />
+                    <campo name="SAIDA"           showName="Saida"                          type="STRING" />
+                    <campo name="BASE_FINAL"      showName="Base Final"                     type="STRING" />			    </registro>
+			</dados>
+		</Relatorio>
+		
+			<Relatorio name="MKTOperacionalOptInDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="MODELO"/>
+				<param mapName="LAC"/>
+				<param mapName="MODELO"/>
+				<param mapName="LAC"/>
+				<param mapName="PREF"/>
+				<param mapName="CN"/>
+				<param mapName="CELLID"/>
+				<param mapName="CELLID"/>
+				<param mapName="IDTCODCONTEUDO"/>
+				<param mapName="TIPOPESQUISA"/>
+				<param mapName="MODELO"/>
+				<param mapName="LAC"/>
+				<param mapName="MODELO"/>
+				<param mapName="LAC"/>
+				<param mapName="PREF"/>
+				<param mapName="CN"/>
+				<param mapName="CELLID"/>
+				<param mapName="CELLID"/>
+				<param mapName="IDTCODCONTEUDO"/>
+				<param mapName="PREF"/>
+				<param mapName="TIPOPESQUISA"/>
+				<statement>
+	    	 SELECT a.msisdn AS msisdn,
+			        a.dataOptIN AS dataOptIN, 
+			        a.dataFidelizacao AS dataFidelizacao, 
+			        a.formaAdesao AS formaAdesao,
+			        a.lac AS lac,
+			        a.cellId AS cellId,
+			        a.fabricante AS fabricante,
+			        a.modelo AS modelo,
+			        a.madatoria AS madatoria,
+			        a.conteudo as conteudo,
+			        a.categoria as categoria
+			   FROM 
+		    	 (SELECT a.nu_msisdn AS msisdn,
+				        a.dt_optin AS dataOptIN, 
+				        a.dt_fidelizacao AS dataFidelizacao, 
+				        DECODE (a.dt_fidelizacao, NULL, 'Voluntaria', 'Incentivada') AS formaAdesao,
+				        a.nu_lac AS lac,
+				        a.nu_cell_id AS cellId,
+				        f.no_fabricante AS fabricante,
+				        m.no_modelo AS modelo,
+				        DECODE (a.in_mandatorio, 0, 'Nao', 'Sim') AS madatoria,
+				        a.CO_CONTEUDO as conteudo,
+                        c.no_categoria AS categoria
+				   FROM hsid.wigc_optin a
+                       ,hsid.hsid_modelo m
+                       ,hsid.hsid_fabricante f
+                       ,hsid.wigc_categoria c
+                       ,hsid.wigc_optin_categoria oc
+                       ,(SELECT column_value FROM TABLE(fnc_split( ? ))) par
+                       ,(SELECT column_value FROM TABLE(fnc_split( ? ))) lac
+				  WHERE a.co_modelo = m.co_modelo
+				    AND m.co_fabricante = f.co_fabricante
+                    AND a.nu_msisdn = oc.nu_msisdn
+                    AND oc.id_categoria = c.id_categoria
+                    AND m.co_modelo = decode ( ? , 0, m.co_modelo, par.column_value)
+                    AND substr(lpad (a.nu_lac,4,0),1,2) = decode( ? ,0, substr(lpad (a.nu_lac,4,0),1,2), SUBSTR(trim(lac.column_value),1,2))
+                    AND INSTR( ? ,oc.id_categoria) &gt; 0  
+                    AND INSTR( ? ,SUBSTR (a.nu_msisdn,3,2)) &gt; 0
+                    AND decode ( ? ,0, 1, INSTR( ? ,lpad(trim(a.nu_cell_id),4,0))) &gt; 0
+				    AND a.dt_optout is NULL
+                    AND a.co_conteudo in (DECODE( ? ,0,a.co_conteudo),'7060')
+                    AND 0 = ?
+                  UNION
+                 SELECT a.*, b.no_categoria as categoria
+                   FROM (
+                         SELECT a.nu_msisdn AS msisdn,
+	    				        a.dt_optin AS dataOptIN, 
+	    				        a.dt_fidelizacao AS dataFidelizacao, 
+	    				        DECODE (a.dt_fidelizacao, NULL, 'Voluntaria', 'Incentivada') AS formaAdesao,
+	    				        a.nu_lac AS lac,
+	    				        a.nu_cell_id AS cellId,
+	    				        f.no_fabricante AS fabricante,
+	    				        m.no_modelo AS modelo,
+	    				        DECODE (a.in_mandatorio, 0, 'Nao', 'Sim') AS madatoria,
+	    				        a.CO_CONTEUDO as conteudo
+	    				   FROM hsid.wigc_optin a
+	                           ,hsid.hsid_modelo m
+	                           ,hsid.hsid_fabricante f
+	                           ,hsid.wigc_categoria c
+	                           ,hsid.wigc_optin_categoria oc
+	                           ,(SELECT column_value FROM TABLE(fnc_split( ? ))) par
+	                           ,(SELECT column_value FROM TABLE(fnc_split( ? ))) lac
+	    				  WHERE a.co_modelo = m.co_modelo
+	    				    AND m.co_fabricante = f.co_fabricante
+	                        AND a.nu_msisdn = oc.nu_msisdn
+	                        AND oc.id_categoria = c.id_categoria
+	                    	AND m.co_modelo = decode ( ? , 0, m.co_modelo, par.column_value)
+		                    AND substr(lpad (a.nu_lac,4,0),1,2) = decode( ? ,0, substr(lpad (a.nu_lac,4,0),1,2), SUBSTR(trim(lac.column_value),1,2))
+        		            AND INSTR( ? ,oc.id_categoria) &gt; 0  
+                		    AND INSTR( ? ,SUBSTR (a.nu_msisdn,3,2)) &gt; 0
+                		    AND decode ( ? ,0, 1, INSTR( ? ,lpad(trim(a.nu_cell_id),4,0))) &gt; 0
+	    				    AND a.dt_optout is NULL
+	                        AND a.co_conteudo in (DECODE( ? ,0,a.co_conteudo),'7060')
+	                      GROUP BY a.nu_msisdn ,
+	    				        a.dt_optin,
+	    				        a.dt_fidelizacao,
+	    				        a.dt_fidelizacao,
+	    				        a.nu_lac,
+	    				        a.nu_cell_id,
+	    				        f.no_fabricante ,
+	    				        m.no_modelo,
+	    				        a.in_mandatorio,
+	    				        a.CO_CONTEUDO
+	                     HAVING COUNT (c.no_categoria) = LENGTH (REPLACE( ? ,',',''))
+	                    ) a,
+	                     hsid.wigc_categoria b,
+	                     hsid.wigc_optin_categoria c
+	                WHERE a.msisdn = c.nu_msisdn
+	                  AND c.id_categoria = b.id_categoria
+	                  AND 1 = ?) a
+	             ORDER BY 1
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+                    <campo name="msisdn"           showName="Assinante"            type="STRING" />
+                    <campo name="dataOptIN"        showName="Data Opt-in"          type="DATE" 	mask="dd/MM/yyyy" />
+                    <campo name="dataFidelizacao"  showName="Data de Fidelização"  type="DATE" 	mask="dd/MM/yyyy" />
+                    <campo name="formaAdesao"      showName="Forma de Adesão"      type="STRING" />
+                    <campo name="lac"        	   showName="Lac"                  type="STRING" />
+                    <campo name="cellId"           showName="Cell Id"              type="STRING" />
+                    <campo name="fabricante"       showName="Fabricante"           type="STRING" />
+                    <campo name="modelo"       	   showName="Modelo"               type="STRING" />
+                    <campo name="madatoria"        showName="Mandatória"    	   type="STRING" />
+                    <campo name="conteudo"         showName="Conteúdo"      	   type="STRING" />
+                    <campo name="categoria"        showName="Categoria"            type="STRING" />
+               </registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="MKTOperacionalOptInListaAssinantesDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="MODELO"/>
+				<param mapName="LAC"/>
+				<param mapName="MODELO"/>
+				<param mapName="LAC"/>
+				<param mapName="PREF"/>
+				<param mapName="CN"/>
+				<param mapName="CELLID"/>
+				<param mapName="CELLID"/>
+				<param mapName="IDTCODCONTEUDO"/>
+				<param mapName="TIPOPESQUISA"/>
+				<param mapName="MODELO"/>
+				<param mapName="LAC"/>
+				<param mapName="MODELO"/>
+				<param mapName="LAC"/>
+				<param mapName="PREF"/>
+				<param mapName="CN"/>
+				<param mapName="CELLID"/>
+				<param mapName="CELLID"/>
+				<param mapName="IDTCODCONTEUDO"/>
+				<param mapName="PREF"/>
+				<param mapName="TIPOPESQUISA"/>
+				<statement>
+			  SELECT b.msisdn AS msisdn
+			       FROM
+		    	(SELECT a.nu_msisdn AS msisdn
+				   FROM hsid.wigc_optin a
+                       ,hsid.hsid_modelo m
+                       ,hsid.hsid_fabricante f
+                       ,hsid.wigc_categoria c
+                       ,hsid.wigc_optin_categoria oc
+                       ,(SELECT column_value FROM TABLE(fnc_split( ? ))) par
+                       ,(SELECT column_value FROM TABLE(fnc_split( ? ))) lac
+				  WHERE a.co_modelo = m.co_modelo
+				    AND m.co_fabricante = f.co_fabricante
+                    AND a.nu_msisdn = oc.nu_msisdn
+                    AND oc.id_categoria = c.id_categoria
+                    AND m.co_modelo = decode ( ? , 0, m.co_modelo, par.column_value)
+                    AND substr(lpad (a.nu_lac,4,0),1,2) = decode( ? ,0, substr(lpad (a.nu_lac,4,0),1,2), SUBSTR(trim(lac.column_value),1,2))
+                    AND INSTR( ? ,oc.id_categoria) &gt; 0  
+                    AND INSTR( ? ,SUBSTR (a.nu_msisdn,3,2)) &gt; 0
+                    AND decode ( ? ,0 ,1 , INSTR( ? ,lpad(trim(a.nu_cell_id),4,0))) &gt; 0
+				    AND a.dt_optout is NULL
+                    AND a.co_conteudo in (DECODE( ? ,0,a.co_conteudo),'7060')
+                    AND 0 = ?
+                  UNION
+                 SELECT a.nu_msisdn AS msisdn 
+				   FROM hsid.wigc_optin a
+                       ,hsid.hsid_modelo m
+                       ,hsid.hsid_fabricante f
+                       ,hsid.wigc_categoria c
+                       ,hsid.wigc_optin_categoria oc
+                       ,(SELECT column_value FROM TABLE(fnc_split( ? ))) par
+                       ,(SELECT column_value FROM TABLE(fnc_split( ? ))) lac
+				  WHERE a.co_modelo = m.co_modelo
+				    AND m.co_fabricante = f.co_fabricante
+                    AND a.nu_msisdn = oc.nu_msisdn
+                    AND oc.id_categoria = c.id_categoria
+                    AND m.co_modelo = decode ( ? , 0, m.co_modelo, par.column_value)
+                    AND substr(lpad (a.nu_lac,4,0),1,2) = decode( ? ,0, substr(lpad (a.nu_lac,4,0),1,2), SUBSTR(trim(lac.column_value),1,2))
+                    AND INSTR( ? ,oc.id_categoria) &gt; 0  
+                    AND INSTR( ? ,SUBSTR (a.nu_msisdn,3,2)) &gt; 0
+                    AND decode ( ? ,0, 1, INSTR( ? ,lpad(trim(a.nu_cell_id),4,0))) &gt; 0
+				    AND a.dt_optout is NULL
+                    AND a.co_conteudo in (DECODE( ? ,0,a.co_conteudo),'7060')
+                    GROUP BY a.nu_msisdn   
+                    HAVING COUNT (c.no_categoria) = LENGTH (REPLACE( ? ,',',''))
+                    AND 1 = ? )b
+                  ORDER BY 1
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+                    <campo name="msisdn"           showName="Assinante"            type="STRING" />
+               </registro>
+			</dados>
+		</Relatorio>
+		
+		<Relatorio name="MKTBonificacaoCampanhasDelimited" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DATAINICIAL"/>
+				<param mapName="DATAFINAL"/>
+				<param mapName="ORIGEM"/>
+				<param mapName="CN"/>
+				<statement>
+				    SELECT a.dat_recarga as dataRecarga,
+				    	   a.idt_codigo_nacional as cn, 
+				    	   b.des_origem as desOrigem, 
+				    	   a.id_canal||a.id_origem as tipTransacao, 
+				           SUM(a.vlr_total) as vlrTotal,
+				           SUM(a.vlr_total_si) as vlrTotal_si, 
+				           SUM(a.vlr_total_principal) as vlrTotal_principal, 
+				           SUM(a.vlr_total_principal_si) as vlrTotal_principal_si,
+				           SUM(a.vlr_total_bonus) as vlrTotal_bonus, 
+				           SUM(a.vlr_total_bonus_si) as vlrTotal_bonus_si
+				      FROM tbl_rel_recargas a, tbl_rec_origem b
+				     WHERE a.id_origem = b.id_origem
+				       AND a.id_canal = b.id_canal
+				       AND a.dat_recarga &gt;= TO_DATE ( ? ,'DD/MM/YYYY')
+				       AND a.dat_recarga &lt;= TO_DATE ( ? ,'DD/MM/YYYY')
+				       AND a.id_canal = 08
+				       AND INSTR ( ? , a.id_origem) &gt; 0 
+				       AND INSTR ( ? , a.idt_codigo_nacional) &gt; 0
+				  GROUP BY a.dat_recarga, a.idt_codigo_nacional, b.des_origem, a.id_canal, a.id_origem
+				  ORDER BY a.dat_recarga, a.idt_codigo_nacional, a.id_origem
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="dataRecarga"	   		showName="Data Recarga"        type="DATE" 	    mask="dd/MM/yyyy" />
+                    <campo name="cn"           	   		showName="Código Nacional"     type="STRING" 					  />
+                    <campo name="desOrigem"           	showName="Campanha"            type="STRING"					  />
+                    <campo name="tipTransacao"          showName="Tipo Transação"           type="STRING" 					  />
+                    <campo name="vlrTotal"			   	showName="Valor Total"		   type="DOUBLE"	mask="##0.00"	  />
+                    <campo name="vlrTotal_si"			showName="Valor Total SI"	   type="DOUBLE"	mask="##0.00"	  />
+                    <campo name="vlrTotal_principal"	showName="Valor Principal"	   type="DOUBLE"	mask="##0.00"	  />
+                    <campo name="vlrTotal_principal_si"	showName="Valor Principal SI"  type="DOUBLE"	mask="##0.00"	  />
+                    <campo name="vlrTotal_bonus"		showName="Valor Bônus"		   type="DOUBLE"	mask="##0.00"	  />
+                    <campo name="vlrTotal_bonus_si"		showName="Valor Bônus SI"	   type="DOUBLE"	mask="##0.00"	  />
+               </registro>
+			</dados>
+		</Relatorio>
+		
+		<Relatorio name="MKTRelDemonstrativoBonus" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="PROMOCAO"/>
+				<param mapName="CATEGORIA"/>
+				<param mapName="DATAINICIAL"/>
+				<param mapName="DATAFINAL"/>
+				<param mapName="CN"/>
+				<statement>
+				SELECT dat_processamento as dataProcessamento, 
+					   idt_promocao as idPromocao, 
+					   a.idt_codigo_nacional as cn, 
+					   a.idt_plano_preco as planoPreco,
+					   d.des_categoria as categ,
+ 					   qtd_assinantes as qtde, 
+ 					   num_segundos_total as segundosTotal,
+       				   num_segundos_nao_bonificado as segundosNaoBonificado, 
+       				   round (b.vlr_bonus_minuto*a.num_segundos_nao_bonificado/60,2) as vlrBonusNaoBonificado,
+       				   num_segundos_tup as segundosTup, 
+       				   round (b.vlr_bonus_minuto*a.num_segundos_tup/60,2) as vlrTup,
+			           num_segundos_aigualb as segundoAIgualB, 
+			           round (b.vlr_bonus_minuto*a.num_segundos_aigualb/60,2) as vlrAIgualB,
+				       num_segundos_falegratis as segundosFaleGratis, 
+				       round (b.vlr_bonus_minuto*a.num_segundos_falegratis/60,2) as vlrFaleGratis,
+    				   num_segundos_ff+num_segundos_ath as segundosATH, 
+				       round ((b.vlr_bonus_minuto_ff*a.num_segundos_ff/60)+(b.vlr_bonus_minuto_ath*a.num_segundos_ath/60),2) as vlrATH,
+				       num_segundos_bonus as segundosBNGB,
+       				   round (b.vlr_bonus_minuto*a.num_segundos_bonus/60,2) as vlrBNGB,
+				       num_segundos_ct as segundosCT, 
+				       round (b.vlr_bonus_minuto_ct*a.num_segundos_ct/60,2) as vlrCT
+  				  FROM tbl_rel_pula_pula a, 
+                       tbl_pro_bonus_pula_pula b, 
+                       tbl_ger_plano_preco c,
+                       tbl_ger_categoria d,
+                       (SELECT column_value FROM TABLE(fnc_split( ? ))) promo,
+                       (SELECT column_value FROM TABLE(fnc_split( ? ))) categ
+				 WHERE a.idt_codigo_nacional = b.idt_codigo_nacional
+				   AND a.idt_plano_preco = b.idt_plano_preco
+                   AND b.idt_plano_preco = c.idt_plano_preco
+                   AND c.idt_categoria = d.idt_categoria
+				   AND a.dat_processamento &gt;= b.dat_ini_periodo   
+				   AND ((a.dat_processamento &lt;= b.dat_fim_periodo) OR b.dat_fim_periodo IS NULL)
+				   AND a.dat_processamento &gt;= TO_DATE ( ? ,'dd/MM/yyyy')
+				   AND a.dat_processamento &lt;= TO_DATE ( ? ,'dd/MM/yyyy')
+				   AND a.idt_promocao = promo.column_value
+                   AND c.idt_categoria = categ.column_value
+				   AND instr ( ? ,a.idt_codigo_nacional) &gt; 0
+              ORDER BY 1,3,2,4
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="dataProcessamento"		showName="Data Processamento"   		type="DATE" 	mask="dd/MM/yyyy" />
+					<campo name="idPromocao"	   		showName="Id Promocao"   				type="STRING"	/>
+					<campo name="cn"	 	  			showName="Codigo Nacional"    			type="STRING"	/>
+					<campo name="planoPreco"	   		showName="Plano Preço"        			type="STRING"	/>
+					<campo name="categ"	   				showName="Categoria" 					type="STRING"	/>
+					<campo name="qtde"	   				showName="Quantidade de Assinantes" 	type="STRING"	/>
+					<campo name="segundosTotal"			showName="Segundos Total"      			type="STRING"	/>
+					<campo name="segundosNaoBonificado" showName="Segundos Nao Bonificados"		type="STRING"	/>
+					<campo name="vlrBonusNaoBonificado"	showName="Valor Retirado Nao Bonificado" type="STRING"	/>
+					<campo name="segundosTup"			showName="Segundos TUP"       			type="STRING"	/>
+					<campo name="vlrTup"				showName="Valor Retirado TUP"       	type="DOUBLE"	mask="##0.00" />															
+					<campo name="segundoAIgualB"		showName="Segundos A Igual a B" 		type="STRING"	/>
+					<campo name="vlrAIgualB"			showName="Valor Retirado A Igual a B"   type="DOUBLE"	mask="##0.00" />
+					<campo name="segundosATH"			showName="Segundos ATH"       			type="STRING"	/>
+					<campo name="vlrATH"				showName="Valor Diferenciado ATH"       type="DOUBLE"	mask="##0.00" />
+					<campo name="segundosBNGB"			showName="Segundos BNGB"       			type="STRING"	/>
+					<campo name="vlrBNGB"				showName="Valor Retirado BNGB"      	type="DOUBLE"	mask="##0.00" />
+					<campo name="segundosCT"			showName="Segundos CT" 					type="STRING"	/>
+					<campo name="vlrCT"			    	showName="Valor Diferenciado CT"       	type="DOUBLE"	mask="##0.00" />
+               </registro>
+			</dados>
+		</Relatorio>
+		
+		<Relatorio name="MKTRelMobileMarketing" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="IDPESQUISA"/>
+				<param mapName="IDPESQUISA"/>
+				<statement>
+					SELECT ps.ds_pesquisa AS descricao
+					      ,p.ds_pergunta AS pergunta
+					      ,r.ds_resposta AS resposta
+					      ,rs.cn AS cn
+					      ,rs.qtde AS quantidade
+					  FROM mbmkt_pesquisa ps
+					      ,mbmkt_questionario q
+					      ,mbmkt_pergunta p
+					      ,mbmkt_resposta r
+					      ,(SELECT rs.id_pesquisa
+					              ,rs.id_questionario
+					              ,rs.id_pergunta
+					              ,rs.id_resposta
+					              ,substr(rs.nu_msisdn,3,2) AS cn
+					              ,count(1) AS qtde
+					          FROM mbmkt_resultado rs
+					         WHERE rs.id_pesquisa = ?
+					         GROUP BY rs.id_pesquisa
+					                ,rs.id_questionario
+					                ,rs.id_pergunta
+					                ,rs.id_resposta
+					                ,substr(rs.nu_msisdn,3,2)
+					        ) rs
+					 WHERE q.id_pesquisa      = ps.id_pesquisa
+					   AND p.id_pesquisa      = q.id_pesquisa
+					   AND p.id_questionario  = q.id_questionario
+					   AND r.id_pergunta      = p.id_pergunta
+					   AND r.id_questionario  = p.id_questionario
+					   AND r.id_pesquisa      = p.id_pesquisa
+					   AND rs.id_pesquisa     = r.id_pesquisa
+					   AND rs.id_questionario = r.id_questionario
+					   AND rs.id_pergunta     = r.id_pergunta
+					   AND rs.id_resposta     = r.id_resposta 
+					   AND ps.id_pesquisa     = ?
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="descricao"	   		showName="Descricao Pesquisa"   type="STRING"	/>
+					<campo name="pergunta"	   		showName="Pergunta"        		type="STRING"	/>
+					<campo name="resposta"	   		showName="Resposta"        		type="STRING"	/>
+					<campo name="cn"	   			showName="Codigo Nacional"      type="STRING"	/>
+					<campo name="quantidade"		showName="Quantidade"        	type="STRING"	/>
+               </registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="MKTRelPacoteDados" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="IDT_OFERTA"/>
+				<statement>
+					SELECT b.IDT_OFERTA AS ID_UNICO
+					      ,a.NUM_DIAS||' dia(s) - R$ '||a.DES_VLR_PACOTE AS DES_OFERTA
+					      ,e.NOM_TIPO_SALDO AS TIP_SERVICO
+					      ,a.DES_PACOTE AS DES_PACOTE
+					      ,TO_CHAR(b.DAT_INICIO_OFERTA,'DD/MM/YYYY') AS DAT_INICIO_OFERTA
+					      ,TO_CHAR(b.DAT_FIM_OFERTA,'DD/MM/YYYY') AS DAT_FIM_OFERTA
+					      ,c.IDT_MSISDN AS IDT_MSISDN
+					      ,DECODE(d.IDT_MSISDN, NULL, 'Nao', 'Sim') AS IND_PREPAGO_CONTROLE
+					      ,DECODE(c.DAT_CONTRATACAO, NULL, 'Nao contratado', TO_CHAR(c.DAT_CONTRATACAO,'DD/MM/YYYY')) AS DAT_INICIO_CONTRATACAO
+					      ,DECODE(c.DAT_RETIRADA_OFERTA, NULL, 'Contrato nao finalizado', TO_CHAR(c.DAT_RETIRADA_OFERTA,'DD/MM/YYYY')) AS DAT_FIM_CONTRATACAO
+					  FROM tbl_pro_pacote_dados a
+					      ,tbl_pro_oferta_pacote_dados b
+					      ,tbl_pro_ass_oferta_pct_dados c
+					      ,tbl_apr_assinante d
+					      ,tbl_apr_tipo_saldo e
+					 WHERE a.IDT_PACOTE_DADOS = b.IDT_PACOTE_DADOS
+					   AND b.IDT_OFERTA = c.IDT_OFERTA
+					   AND c.IDT_MSISDN = d.IDT_MSISDN (+)
+					   AND b.IDT_TIPO_SALDO = e.IDT_TIPO_SALDO
+					   AND b.IDT_OFERTA = ?
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="ID_UNICO"					showName="Identificador Unico"   			type="STRING"	/>
+					<campo name="DES_OFERTA"				showName="Descricao da Oferta"   			type="STRING"	/>
+					<campo name="TIP_SERVICO"				showName="Tipo do Servico"   				type="STRING"	/>
+					<campo name="DES_PACOTE"				showName="Descricao do Pacote"   			type="STRING"	/>
+					<campo name="DAT_INICIO_OFERTA"	   		showName="Data do Inicio da Oferta" 		type="STRING"	/>
+					<campo name="DAT_FIM_OFERTA"			showName="Data do Fim da Oferta" 			type="STRING"	/>
+					<campo name="IDT_MSISDN"				showName="Numero do Assinante"   			type="STRING"	/>
+					<campo name="IND_PREPAGO_CONTROLE"		showName="Pre-Pago ou Controle"   			type="STRING"	/>
+					<campo name="DAT_INICIO_CONTRATACAO"	showName="Data do Inicio da Contratacao"	type="STRING"	/>
+					<campo name="DAT_FIM_CONTRATACAO"		showName="Data do Fim do Contrato"			type="STRING"	/>
+               </registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="MKTRelAdesaoOfertaNatalDia" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="ID_SERVICO"/>
+				<param mapName="ID_SERVICO"/>
+				<param mapName="DAT_INICIO"/>
+				<param mapName="DAT_FIM"/>
+				<statement>
+					        select (SELECT des_servico FROM tbl_apr_servicos WHERE id_servico = ?) as SERVICO
+					               ,TO_CHAR(dat_recarga,'DD/MM/YYYY') as DATA
+                                   ,idt_codigo_nacional as CN
+                                   ,sum(qtd_debito) - sum(qtd_estorno) as QTD
+                                   ,sum(vlr_debito) - sum(vlr_estorno) as MONTANTE
+                              from (select r.dat_recarga
+                                          ,r.idt_codigo_nacional
+                                          ,decode(s.idt_operacao,'D',r.qtd_registros,0) as qtd_debito
+                                          ,decode(s.idt_operacao,'E',r.qtd_registros,0) as qtd_estorno
+                                          ,decode(s.idt_operacao,'D',abs(r.vlr_total),0) as vlr_debito
+                                          ,decode(s.idt_operacao,'E',abs(r.vlr_total),0) as vlr_estorno
+                                     from tbl_rel_recargas r,
+                                         (select v.id_canal, v.id_origem, v.idt_operacao
+                                            from tbl_ger_valor_servico v
+                                           where v.id_servico = ?
+                                           group by v.id_canal, v.id_origem, v.idt_operacao
+                                          ) s
+                                     where r.dat_recarga &gt;= to_date(? ,'dd/mm/yyyy')
+                                       and r.dat_recarga &lt;  (to_date(? ,'dd/mm/yyyy') + 1)
+                                       and r.id_canal  = s.id_canal
+                                       and r.id_origem = s.id_origem
+                                    )
+                              group by TO_CHAR(dat_recarga,'DD/MM/YYYY'),idt_codigo_nacional
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="SERVICO"		showName="TIPO SERVICO"   		type="STRING"	/>
+					<campo name="DATA"			showName="DATA DE ADESAO"   	type="STRING"	/>
+					<campo name="CN"	     	showName="CODIGO NACIONAL"   	type="STRING"	/>
+               		<campo name="QTD"			showName="QTD ADESOES"   		type="STRING"	/>
+					<campo name="MONTANTE"		showName="MONTANTE"   			type="STRING"	/>
+               </registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="MKTRelAdesaoOfertaNatalMsisdn" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="PROMO_ANTIGA"/>
+				<param mapName="PROMO_NOVA"/>
+				<param mapName="DAT_INICIO"/>
+				<param mapName="DAT_FIM"/>
+				<param mapName="PROMO_ANTIGA"/>
+				<param mapName="PROMO_NOVA"/>
+				<statement>
+							SELECT A.IDT_MSISDN           AS MSISDN,
+       							   TO_CHAR(A.DAT_APROVISIONAMENTO,'DD/MM/YYYY HH24:MI:SS') AS DATA,
+       							   (SELECT nom_promocao FROM TBL_PRO_PROMOCAO WHERE IDT_PROMOCAO = ?) as PROMO_ANTIGA,
+       							   (SELECT nom_promocao FROM TBL_PRO_PROMOCAO WHERE IDT_PROMOCAO = ?) as PROMO_NOVA
+  							  FROM TBL_APR_EVENTOS A
+ 							 WHERE A.TIP_OPERACAO = 'PROMOCAO_TROCA'
+   							   AND A.DAT_APROVISIONAMENTO &gt;= to_date(?,'dd/mm/yyyy')
+   							   AND A.DAT_APROVISIONAMENTO &lt; (to_date(?,'dd/mm/yyyy') + 1)
+   							   AND A.IDT_ANTIGO_CAMPO = ?
+   							   AND A.IDT_NOVO_CAMPO = ?
+   							   AND A.COD_RETORNO = 0
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="MSISDN"			showName="MSISDN"   			type="STRING"	/>
+					<campo name="DATA"				showName="DATA DE ADESAO"   	type="STRING"	/>
+	               	<campo name="PROMO_ANTIGA"  	showName="PROMOCAO DE ORIGEM"	type="STRING"	/>
+	               	<campo name="PROMO_NOVA"  		showName="PROMOCAO DE DESTINO"	type="STRING"	/>
+               </registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="BaseAparelhosGSMPrePago" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<statement>
+					SELECT a.idt_msisdn AS msisdn, f.no_fabricante AS fabricante,
+					       m.no_modelo AS modelo, TO_CHAR(c.dt_inclusao, 'DD/MM/YYYY') AS DATA
+					  FROM tbl_apr_assinante a,
+					       tbl_ger_plano_preco p,
+					       hsid.hsid_fabricante f,
+					       hsid.hsid_modelo m,
+					       hsid.hsid_cliente c
+					 WHERE a.idt_status IN (2, 3)
+					   AND p.idt_categoria = 0
+					   AND m.co_fabricante = f.co_fabricante
+					   AND c.co_modelo = m.co_modelo
+					   AND a.idt_msisdn = c.nu_msisdn
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="MSISDN"				        showName="MSISDN"						type="STRING"		/>
+					<campo name="FABRICANTE"					showName="Fabricante do Aparelho"		type="STRING"		/>
+					<campo name="MODELO"						showName="Modelo do Aparelho"			type="STRING"		/>
+					<campo name="DATA"						    showName="Data de Inclusão"		    	type="STRING"		/>
+				</registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="MKTRelCallMeBackMsisdn" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DAT_INICIO"/>
+				<param mapName="DAT_FIM"/>
+				<param mapName="MSISDN"/>
+				<statement>
+							SELECT a.nu_msisdn AS MSISDN,
+							       a.nu_msisdn_destino AS DESTINO,
+							       TO_CHAR(a.dt_envio_sms,'DD/MM/YYYY HH24:MI:SS') AS DATA
+  							  FROM hsid.wigc_historico_callmeback a
+ 							 WHERE a.dt_envio_sms &gt;= TO_DATE(?,'dd/mm/yyyy')
+   							   AND a.dt_envio_sms &lt;= TO_DATE(?,'dd/mm/yyyy')
+   							   AND a.nu_msisdn LIKE ?
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="MSISDN"			showName="MSISDN"   			type="STRING"	/>
+					<campo name="DESTINO"			showName="TELEFONE DESTINO"   	type="STRING"	/>
+	               	<campo name="DATA"  			showName="DATA"					type="STRING"	/>
+               </registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="MKTRelCallMeBack" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DAT_INICIO"/>
+				<param mapName="DAT_FIM"/>
+				<statement>
+				   SELECT a.nu_msisdn AS MSISDN, count(a.nu_msisdn) AS TOTAL
+  					 FROM hsid.wigc_historico_callmeback a
+ 					WHERE a.dt_envio_sms &gt;= TO_DATE(?,'dd/mm/yyyy')
+   					  AND a.dt_envio_sms &lt;= TO_DATE(?,'dd/mm/yyyy')
+ 					GROUP BY a.nu_msisdn
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="MSISDN"			showName="MSISDN"   			type="STRING"	/>
+					<campo name="TOTAL"				showName="TOTAL DE UTILIZACOES"	type="STRING"	/>
+               </registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="MKTRelCallMeBackTop50" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DAT_INICIO"/>
+				<param mapName="DAT_FIM"/>
+				<statement>
+					SELECT *
+  					  FROM (
+        				   SELECT a.nu_msisdn AS MSISDN, count(a.nu_msisdn) AS TOTAL
+          					 FROM hsid.wigc_historico_callmeback a
+         					WHERE a.dt_envio_sms &gt;= TO_DATE(?,'dd/mm/yyyy')
+           					  AND a.dt_envio_sms &lt;= TO_DATE(?,'dd/mm/yyyy')
+         					GROUP BY a.nu_msisdn
+         					ORDER BY total DESC
+       					   )
+					 WHERE rownum &lt;= 50
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="MSISDN"			showName="MSISDN"   			type="STRING"	/>
+					<campo name="TOTAL"				showName="TOTAL DE UTILIZACOES"	type="STRING"	/>
+               </registro>
+			</dados>
+		</Relatorio>
+		<Relatorio name="MKTRelMudancaPromocao" format="DELIMITED" showHeader="FALSE" delimitedHdr="TRUE" delimiter=";">
+			<consulta type="SQL">
+				<param mapName="DAT_INICIO"/>
+				<param mapName="DAT_FIM"/>
+				<param mapName="IDT_PROMOCAO"/>
+				<param mapName="IDT_CATEGORIA"/>
+				<statement>
+					SELECT tae.idt_msisdn AS MSISDN,
+					       tgcn.idt_uf AS UF,
+					       tae.nom_operador AS OPERADOR, 
+					       tpp.nom_promocao AS PROMOCAO,
+					       tgpp.des_plano_preco AS PLANO, 
+					       TO_CHAR(tae.dat_aprovisionamento,'dd/mm/yyyy hh24:mm:ss') AS DAT_ATIVACAO
+					       tae.tip_operacao AS TIP_OPERACAO
+					  FROM tbl_apr_eventos tae,
+					       tbl_apr_assinante taa,
+					       tbl_ger_plano_preco tgpp,
+					       tbl_pro_promocao tpp,
+					       tbl_ger_codigo_nacional tgcn
+					 WHERE tae.dat_aprovisionamento &gt;= TO_DATE(?,'dd/mm/yyyy')
+					   AND tae.dat_aprovisionamento &lt; TO_DATE(?,'dd/mm/yyyy')+1
+					   AND tae.tip_operacao IN ('PROMOCAO_TROCA','PROMOCAO_ENTRADA')
+					   AND tae.des_status = 'SUCESSO'
+					   AND tae.cod_retorno = 0
+					   AND tpp.idt_promocao = ?
+					   AND tae.idt_novo_campo = tpp.idt_promocao
+					   AND tae.idt_msisdn = taa.idt_msisdn
+					   AND taa.idt_plano_preco = tgpp.idt_plano_preco
+					   AND tgpp.idt_categoria = ?
+					   AND tgcn.idt_codigo_nacional = SUBSTR(tae.idt_msisdn,3,2)
+				</statement>
+			</consulta>
+			<dados>
+				<registro>
+					<campo name="MSISDN"			showName="MSISDN"   			type="STRING"	/>
+					<campo name="UF"				showName="UF"   				type="STRING"	/>
+					<campo name="OPERADOR"			showName="OPERADOR"   			type="STRING"	/>
+					<campo name="PROMOCAO"			showName="PROMOCAO"   			type="STRING"	/>
+					<campo name="PLANO"				showName="PLANO"   				type="STRING"	/>
+					<campo name="DAT_ATIVACAO"		showName="DATA DE ATIVACAO"		type="STRING"	/>
+					<campo name="TIP_OPERACAO"		showName="TIPO DE OPERACAO"		type="STRING"	/>
+               </registro>
+			</dados>
+		</Relatorio>
+	</Relatorios>
+</RelatorioProperties>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+  <card>
+    <p>
+    Qual o numero aproximado de torpedos que você considera razoavel receber? Clique ok para responder.
+    <select name="r4">
+        <option value="8">8 msg/mes</option>
+        <option value="12">12 msg/mes</option>
+        <option value="20">20 msg/mes</option>
+        <option value="99">Sem limite</option>
+    </select>
+    No futuro, voce se cadastraria para receber sms de assuntos de seu interesse? Clique ok para responder.
+    <select name="r5">
+        <option onpick="#b" value="1">Pouco provavel</option>
+        <option onpick="#b" value="2">Provavel</option>
+        <option onpick="#b" value="3">Muito Provavel</option>
+    </select>
+    </p>
+</card>
+
+<card id="b">
+    <p>
+        <do type="accept">
+            <go enterwait="false" href="!DWIG!/mobileMkt?qt=B&amp;r4=$(r4)&amp;r5=$(r5)" />
+        </do>
+        FIM. <br/>
+        A Brasil Telecom agradece a sua participacao.
+    </p>
+</card>
+
+</wml>

@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.6.5
+Created-By: 1.4.2_03-b02 (Sun Microsystems Inc.)
+Built-By: BT024318
+
+Name: WIGBRT
+Specification-Title: WIGBRT
+Specification-Version: producao - JAVAC 1.4.2_03
+Specification-Vendor: Brasiltelecom
+Implementation-Title: WIGBRT
+Implementation-Version: producao - 04/09/2006 04:51 PM.
+Implementation-Vendor: BrasilTelecom WIG.
+

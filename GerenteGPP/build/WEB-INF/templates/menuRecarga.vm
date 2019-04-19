@@ -1,0 +1,20 @@
+#parse("menuVertical.vm")
+
+<table width="100%">
+<tr>
+<td>
+<h6><b>Recarga</b></h6><br>
+<a href="/gppConsole/showFiltroRecargaGenerica.do"><h6>Inserção de recarga genérica para assinante</h6></a><br>
+<a href="/gppConsole/showFiltroRecargaBanco.do"><h6>Validação de recarga via banco</h6></a><br>
+<a href="/gppConsole/showFiltroRecargaBancoAssinante.do"><h6>Inserção de recarga via banco para assinante</h6></a><br>
+<a href="/gppConsole/showFiltroAjuste.do"><h6>Realização de ajuste</h6></a><br>
+<a href="/gppConsole/showFiltroRecargaXML.do"><h6>Inserção de recarga via XML</h6></a><br>
+<a href="/gppConsole/showFiltroAjusteXML.do"><h6>Realização de ajuste via XML</h6></a><br>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

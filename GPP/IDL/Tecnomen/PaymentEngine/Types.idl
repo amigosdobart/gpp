@@ -1,0 +1,182 @@
+/* $Id: Types.idl,v 1.10 2004/03/08 14:59:39 gerardon Exp $ */
+
+
+//
+// NAME :	Types.idl
+//
+// CREATED BY :	Attila Madarasz
+// DATE :	June 1998
+//
+// COPYRIGHT :	Tecnomen Ltd.
+//
+// DESCRIPTION: 
+// This interface describes the various generic Types 
+//
+#ifndef __TYPES_IDL
+#define __TYPES_IDL
+
+#include <TINCdefs.idl>
+ struct DateTime {
+        short   day;
+        short   month;
+        short   year;
+        short   second;
+        short   minute;
+        short   hour;
+    };
+
+
+#ifdef _TINC_MODULE
+module TINC {
+#endif //_TINC_MODULE
+
+    const short MARKERLEN = 256;
+    const short TYPELENGTH = 30;
+    const short TIMELENGTH = 20;
+
+    struct TDateTime {
+    	short	day;
+	short	month;
+	short	year;
+    	short	second;
+	short 	minute;
+	short	hour;
+    };
+
+    // Structures
+    struct UserList {
+	string<MARKERLEN>	marker;
+	string<TYPELENGTH>	type;
+	string<USER_LOGIN>	name;
+	string<TIMELENGTH>	login_time;
+    };
+
+    // Sequences
+    typedef sequence<UserList> UserListSeq;
+
+    /////////////////////////////////////////////////////////
+    //
+    // Enumerated Types
+    //
+    /////////////////////////////////////////////////////////
+    
+    // to differentiate between basic and complex datatypes
+    enum eFieldType	{basic,		// basic CORBA type
+		     dtime		// TDateTime structure type
+		    };
+    
+    // to differentiate between basic and complex datatypes
+    enum eUsageType	{key,		// mandatory key data
+		     mandatory,	// mandatory data
+		     optional,	// optional data
+		     data		// output data
+		    };
+    
+    // to differentiate between various user types
+    enum eUserType	{eOperator,	         // an Operator
+                     eAgent,	         // an Agent
+                     eVoucherAdministrator,  // an Voucher Administrator
+		     eAdministrator	         // an Administrator
+		    };
+    
+    /////////////////////////////////////////////////////////
+    //
+    // Parameter Input/Output Structures
+    //
+    /////////////////////////////////////////////////////////
+    
+    // record to describe the data
+    struct tincLegendRecord {
+        // field identifier (starting at zero for each operation)
+        long	id;
+    
+        // field name
+        string<30>	name;
+    
+        // whether the field is required or not
+        eUsageType	usage;
+    
+        // type of record
+        eFieldType	type;
+    
+        // field maximum length (used for string types)
+        short	maxLength;
+    
+        // description of field usage
+        string	description;
+    
+        // default value
+        any		defaultValue;
+    };
+    
+    // Legend Sequence
+    typedef sequence<tincLegendRecord> legendSeq;
+    
+    // record used for both in and out parameters
+    struct tincRecord {
+        long	id;
+        any		value;		// interpretted in conjunction with
+				        // the fields 'type'.
+    };
+
+    // Parameter Sequence
+    typedef sequence<tincRecord> tincSeq;
+    
+    // record Sequence (sequence of tincSeq)
+    typedef sequence<tincSeq> recordSeq;
+    
+    // record used for configuration information
+    struct tincConfigRecord {
+        string<30>	name;
+        short	id;
+        string<30>	value;		// interpretted in conjunction with
+				    // the fields 'name'.
+    };
+        
+    // Config Parameter Sequence
+    typedef sequence<tincConfigRecord> configSeq;
+    
+    
+#ifdef _TINC_MODULE
+};
+#endif //_TINC_MODULE
+
+#endif
+    
+/*
+   $Log: Types.idl,v $
+   Revision 1.10  2004/03/08 14:59:39  gerardon
+   Added DateTime outside TINC
+
+   Revision 1.9  2004/03/05 12:11:50  attila
+   Changed the CORBA DateTime to TDateTime to avoid nameclash with IDL GW DateTime
+
+   Revision 1.8  2004/02/27 17:51:16  attila
+   Changed TINC::paramSeq to TINC::tincSeq
+
+   Revision 1.7  2004/02/27 16:45:42  attila
+   changed name of tincSeq to tincSeq
+
+   Revision 1.6  2004/02/16 10:44:38  gerardon
+   Changed name of paramRecord and configREcored
+   to tincParamRecord and tincConfigRecored
+
+   Revision 1.5  2003/12/17 18:43:03  declan
+   Working on TINC
+
+   Revision 1.4  2003/10/16 16:08:42  attila
+   Booked in before attempting to tag with 'evita_1'
+
+   Revision 1.3  2003/02/07 10:25:27  attila
+   Combined global IDL constant defs in TINCdefs.idl
+
+   Revision 1.2  2003/02/05 16:06:08  attila
+   Changed idl_constants.h to idl_constants.idl
+
+   Revision 1.1.1.1  2003/02/03 11:51:06  attila
+   Placed under CVS
+
+   Revision 1.1.1.1  2002/11/05 09:49:04  attila
+   Placed under CVS
+
+*/

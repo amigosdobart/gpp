@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+ "http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+<card id="Itau">
+    <p>
+    Seu saldo e de R$ 150,00 <br/> Clique OK
+    <select title="Banco Itau">
+        <option onpick="!WIGC!?bts=2&amp;btc=7046">Menu Principal</option>
+        <option onpick="#S">Sair</option>
+    </select>
+</p>
+</card>
+
+<card id="S">
+<p>
+    Obrigado por utilizar o Itau Mobile Bank.<br/>Clique OK para sair.
+</p>
+</card>
+</wml>

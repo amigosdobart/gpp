@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+<card id="Rbk">
+    <p>
+    <launchbrowser url="http://200.152.210.49/dmc/nova.jsp?ni=12755&amp;qu=M&amp;pgN=0&amp;cp=titulo_fitness_PIC" >
+        </launchbrowser>
+    </p>
+</card>
+</wml>

@@ -1,0 +1,14 @@
+<root>
+	<CASE>
+		<id_evento>000001</id_evento>
+		<evento>RqAcessoColaborador</evento>
+		<modify_stmp>12/12/12 12:12:12</modify_stmp>
+		<sistema>WPPP</sistema>
+		<acao>ATUA</acao>
+		<ID_USUARIO/>
+		<NOME/>
+		<DEPARTAMENTO/>
+		<CARGO/>
+		<EMAIL/>
+	</CASE>
+</root>

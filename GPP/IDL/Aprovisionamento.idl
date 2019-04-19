@@ -1,0 +1,259 @@
+/*
+ * File.......: Provisioning.idl
+ * Description: Definição de interfaces CORBA para o GPP (Gateway de Pré-Pago)
+ *              para o componente de Aprovisionamento (Provisioning)
+ * Author.....: Daniel Abib
+ * Date.......: 10/02/2004
+ *
+ * Modified by:
+ * Date.......:
+ * Reason.....:
+ */
+
+#include "GPPExceptions.idl"
+
+module com
+{
+	module brt
+	{
+		module gpp
+		{
+			module componentes
+			{
+				module aprovisionamento
+				{
+					module orb
+					{
+						interface aprovisionamento
+						{
+
+							// Classe para retornar dados de desativacao
+							struct retornoDesativacaoAssinante
+							{
+								short	codigoRetorno;
+								string  somaSaldos;
+							};
+
+							short ativaAssinante ( 	in string MSISDN,
+										in string IMSI,
+										in string planoPreco,
+										in double creditoInicial,
+										in short  idioma,
+										in string operador )
+								raises ( comum::gppExceptions::GPPInternalErrorException,
+										 comum::gppExceptions::GPPCorbaException,
+										 comum::gppExceptions::GPPTecnomenException );
+
+							retornoDesativacaoAssinante desativaAssinante ( in string MSISDN,
+													in string motivoDesativacao,
+													in string operador )
+										raises ( comum::gppExceptions::GPPInternalErrorException,
+												 comum::gppExceptions::GPPCorbaException,
+												 comum::gppExceptions::GPPTecnomenException );
+
+							string desativarAssinanteXML ( in string MSISDN,
+ 													       in string motivoDesativacao,
+													       in string operador )
+										raises ( comum::gppExceptions::GPPInternalErrorException,
+												 comum::gppExceptions::GPPCorbaException,
+												 comum::gppExceptions::GPPTecnomenException );
+
+							short alterarStatusAssinante(in string msisdn,
+							                             in short status,
+							                             in string dataExpiracao,
+							                             in string operador);
+
+							short alterarStatusPeriodico(in string msisdn,
+							                             in short status,
+							                             in string dataExpiracao,
+							                             in string operador);
+
+							short bloqueiaAssinante ( in string MSISDN,
+										  in string idBloqueio,
+										  in double tarifa,
+										  in string operador )
+								raises ( comum::gppExceptions::GPPInternalErrorException,
+										 comum::gppExceptions::GPPCorbaException,
+										 comum::gppExceptions::GPPTecnomenException );
+
+
+							short desbloqueiaAssinante ( 	in string MSISDN,
+											in string operador )
+								raises ( comum::gppExceptions::GPPInternalErrorException,
+										 comum::gppExceptions::GPPCorbaException,
+										 comum::gppExceptions::GPPTecnomenException );
+
+
+							short trocaMSISDNAssinante ( 	in string antigoMSISDN,
+										  	in string novoMSISDN,
+										  	in string idTarifa,
+											in double valorTarifa,
+											in string operador	)
+								raises ( comum::gppExceptions::GPPInternalErrorException,
+										 comum::gppExceptions::GPPCorbaException,
+										 comum::gppExceptions::GPPTecnomenException );
+
+
+							short trocaPlanoAssinante (  	in string MSISDN,
+										  	in string novoPlano,
+										  	in double valorMudanca,
+										  	in string operador,
+										  	in double valorFranquia	 )
+								raises ( comum::gppExceptions::GPPInternalErrorException,
+										 comum::gppExceptions::GPPCorbaException,
+										 comum::gppExceptions::GPPTecnomenException );
+
+							short trocaSimCardAssinante ( in string MSISDN,
+										  	in string novoIMSI,
+										  	in double valorMudanca,
+										  	in string operador )
+								raises ( comum::gppExceptions::GPPInternalErrorException,
+										 comum::gppExceptions::GPPCorbaException,
+										 comum::gppExceptions::GPPTecnomenException );
+
+
+							short atualizaFriendsFamilyAssinante ( 	in string MSISDN,
+										in string listaMSISDN,
+										in string operador,
+										in string codigoServico)
+								raises ( comum::gppExceptions::GPPInternalErrorException );
+
+
+							string trocaSenha ( in string GPPTrocaSenha )
+								raises ( comum::gppExceptions::GPPInternalErrorException,
+										 comum::gppExceptions::GPPCorbaException,
+										 comum::gppExceptions::GPPTecnomenException,
+										 comum::gppExceptions::GPPBadXMLFormatException);
+
+							short resetSenha ( in string MSISDN, in string novaSenha)
+										raises ( comum::gppExceptions::GPPInternalErrorException,
+												 comum::gppExceptions::GPPCorbaException,
+												 comum::gppExceptions::GPPTecnomenException );
+
+							string consultaAssinante ( in string MSISDN )
+								raises ( comum::gppExceptions::GPPInternalErrorException,
+										 comum::gppExceptions::GPPCorbaException,
+										 comum::gppExceptions::GPPTecnomenException );
+
+
+							short ativacaoCancelamentoServico ( in string MSISDN,
+															    in string idServico,
+																in short  acao)
+								raises ( comum::gppExceptions::GPPInternalErrorException,
+										 comum::gppExceptions::GPPCorbaException,
+										 comum::gppExceptions::GPPTecnomenException );
+
+							long long bloquearServicos ( in string msisdn )
+								raises ( comum::gppExceptions::GPPInternalErrorException );
+
+							long long desativarHotLine ( in string msisdn, in string categoria )
+								raises ( comum::gppExceptions::GPPInternalErrorException );
+
+							long long desativarHotLineURA ( in string msisdn, in string categoria )
+								raises ( comum::gppExceptions::GPPInternalErrorException );
+
+							void confirmaBloqueioDesbloqueioServicos ( in string xmlAprovisionamento )
+								raises ( comum::gppExceptions::GPPInternalErrorException );
+
+							void enviarSMS ( in string MSISDN, in string mensagem )
+								raises ( comum::gppExceptions::GPPInternalErrorException );
+
+							void enviarSMSMulti ( in string MSISDN, in string mensagem, in string operador )
+								raises ( comum::gppExceptions::GPPInternalErrorException );
+
+						    boolean gravarMensagemSMS (in string msisdnOrigem,
+						    						   in string msisdnDestino,
+						    						   in string mensagem,
+						    						   in long prioridade,
+						    						   in string tipo)
+								raises ( comum::gppExceptions::GPPInternalErrorException);
+
+							short inserePulaPula(in string msisdn,
+												 in string promocao,
+												 in string operador);
+
+							short retiraPulaPula(in string msisdn,
+												 in string operador);
+
+							short trocaPulaPula(in string msisdn,
+												in string promocaoNova,
+												in string operador);
+
+							short trocaPulaPulaPPP(in string msisdn,
+												in long promocaoNova,
+												in string operador,
+												in long motivo,
+												in long tipoDocumento,
+												in string numDocumento);
+
+							short executaPulaPula(in string tipoExecucao,
+												  in string msisdn,
+												  in string dataReferencia,
+												  in string operador,
+												  in long motivo);
+
+						  	short zerarSaldos(in string msisdn,
+						  					in string operador,
+						  					in string tipoTransacao,
+						  					in long codSaldosZerados);
+
+						  	short ativaAssinanteComStatus( in string msisdn,
+												in string imsi,
+												in string planoPreco,
+												in double creditoInicial,
+												in short idioma,
+												in string operador,
+												in short status );
+
+							string cobrarServico(	in string msisdn,
+													in string codigoServico,
+													in string operacao,
+													in string operador)
+								raises ( comum::gppExceptions::GPPInternalErrorException );
+
+							string cadastrarBumerangue(	in string msisdn,
+														in string codigoServico,
+														in string operacao,
+														in string operador)
+								raises ( comum::gppExceptions::GPPInternalErrorException );
+
+							string atualizarAmigosTodaHora(	in string msisdn,
+															in string listaMsisdn,
+															in string codigoServico,
+															in string operacao,
+															in string operador)
+								raises ( comum::gppExceptions::GPPInternalErrorException );
+
+							short reativarAssinante( 	in string msisdnNovo,
+														in string msisdnAntigo,
+														in string operador	);
+
+							short aprovarLote( 	in string lote	)
+								raises ( comum::gppExceptions::GPPInternalErrorException );
+
+							short rejeitarLote( in string lote	)
+								raises ( comum::gppExceptions::GPPInternalErrorException );
+
+							short inserirPromocaoFaleGratisANoite(in string msisdn,
+                                                                  in string promocao,
+																  in string operador);
+
+							short retirarPromocaoFaleGratisANoite(in string msisdn,
+																  in string operador);
+																  
+							short enviarRequisicaoTangram( in string xml	)
+								raises ( comum::gppExceptions::GPPInternalErrorException );
+							
+							short atualizaAmigosDeGraca (in string MSISDN,
+														 in string listaMSISDN,
+														 in string operador,
+														 in string codigoServico);
+							short ativarAssinante ( in string xml );
+							
+						};
+					};
+				};
+			};
+		};
+	};
+};

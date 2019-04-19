@@ -1,0 +1,41 @@
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Denys Oliveira (None) -->
+<GPPExtratoBoomerang>
+	<mensagemComprovante/>
+	<dadosCadastrais>
+		<nome/>
+		<msisdn/>
+		<dataAtivacao/>
+		<plano/>
+		<periodoInicial/>
+		<periodoFinal/>
+		<dataHoraImpressao/>
+	</dadosCadastrais>
+	<dadosCorrespondencia>
+		<endereco/>
+		<complemento/>
+		<cidade/>
+		<bairro/>
+		<uf/>
+		<cep/>
+	</dadosCorrespondencia>
+	<dadosControle>
+		<indRecarga>SIM/NAO</indRecarga>
+	</dadosControle>
+	<mensagemServicos/>
+	<detalhe>
+		<data/>
+		<hora/>
+		<operacao/>
+		<regiaoOrigem/>
+		<numeroDestino/>
+		<duracao/>
+		<valor/>
+	</detalhe>
+	<mensagemTotais/>
+	<total>
+		<numeroChamadas/>
+		<tempoTotal/>
+		<totalBonus/>
+	</total>
+	<mensagemInformativo/>
+</GPPExtratoBoomerang>

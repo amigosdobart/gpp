@@ -1,0 +1,7 @@
+.treeMenu .opcao		{ padding-left: 20px }
+.treeMenu .grupo		{ }
+.treeMenu .container	{ padding-left: 20px }
+.treeMenu .semicheck 	{ background-color:#96BE49;}
+.treeMenu a  			{ text-decoration: none; }
+.treeMenu input			{ background-color: transparent; border: 1px solid #CCCCCC}
+.treeMenu div			{ padding-top: 1px; padding-bottom: 1px }

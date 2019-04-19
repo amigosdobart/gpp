@@ -1,0 +1,15 @@
+#parse("menuVertical.vm")
+<h6><b>Contestação</b></h6>
+<table width="100%">
+    <tr>
+		<td>&nbsp;Data de Execução</td>
+		<td>$procBatchContestacaoForm.dataExecucao</td>
+	</tr>
+	<tr>
+		<td><b>&nbsp;Resultado:</b> </td>
+		<td>$procBatchContestacaoForm.resultado </td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

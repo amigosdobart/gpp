@@ -1,0 +1,581 @@
+/* $Id: TINCdefs.idl,v 1.39 2004/08/24 14:30:21 attila Exp $ */
+
+//. ****************************************************
+//.	NAME		: TINCdefs.idl
+//.	DESCRIPTION	: Constant definitions
+//.	AUTHOR		: Attila Madarasz
+//.	DATE		: Feb 2003
+//. ****************************************************
+
+#ifndef _TINC_DEFS_IDL
+#define _TINC_DEFS_IDL
+
+#ifdef _TINC_MODULE
+module TINC {
+#endif //_TINC_MODULE
+
+    // ******************************************************
+    // Prepaid feature constants
+    // ******************************************************
+    //#ifdef _5_DECIMAL_ACCURACY
+    const long DECIMAL_DIVISOR 		= 100000;
+    //#else
+    //const long DECIMAL_DIVISOR 	= 1000;
+    //#endif
+    
+    // ******************************************************
+    // Prepaid Pi_exception and Pe_exception constants
+    // ******************************************************
+    const string SERVER_PROBLEM 	= "Server Problem";
+    
+    // ************************
+    // Severity Codes passed back by Pi_exception and Pe_exception
+    // ************************
+    const short Normal 			= 0;
+    const short Notify_Admin 		= 1;
+    const short SERVER_MSG_LENGTH 	= 20;
+    
+    // ************************
+    // Error Codes passed back by Pi_exception and Pe_exception
+    // ************************
+    
+    // ************************
+    // Define error codes for General items
+    // ************************
+    const short genBaseErr 			= 0;	// magic number of generic error range
+    const short GENERAL_ERROR			= genBaseErr + 1; // General Server Error
+    const short DATABASE_ERROR			= genBaseErr + 2; // General database problem
+    const short OP_NOT_IMPLEMENTED		= genBaseErr + 3; // Operation not yet implemented
+    const short INIT_ERROR			= genBaseErr + 4; // Initialisation Error
+    const short INVALID_KEY			= genBaseErr + 5; // The Key that was given is incorrect
+    const short FILE_CREATE_ERROR		= genBaseErr + 6; // Cannot create file on server
+    const short FILE_ERROR			= genBaseErr + 7; // Server file error - examine log
+    const short DEFAULTS_FILE_ERROR		= genBaseErr + 8; // Cannot read file on server
+    const short INCOMPLETE_STRUCT		= genBaseErr + 9; // IDL struct recieved was not fully populated by the client
+    const short OFFSET_EXCEEDED			= genBaseErr + 10; // Offset requested exceeds number of records available
+    const short TIMESTAMP_INVALID		= genBaseErr + 11; // Timestamps from the loadme to update were not equal
+    const short INVALID_LENGTH			= genBaseErr + 12; // Invalid Length
+    
+    const short MAX_ENGINES			= genBaseErr + 13; // Max Engines has being reached
+    
+    // ************************
+    // IDL Gateway specific error codes
+    // ************************
+    const short gwayBaseErr 		= 100;
+    const short MAX_TRANSACTIONS_EXCEEDED	= gwayBaseErr; // operation limit reached
+    const short MISSING_KEY             	= gwayBaseErr + 1;// Required key data not given
+    const short UNEXPECTED_ID           	= gwayBaseErr + 2;// Usage error
+    const short UNEXPECTED_TYPE         	= gwayBaseErr + 3;// Usage error
+    const short USER_TYPE               	= gwayBaseErr + 4;// not available for this user type
+    const short INVALID_USER_TYPE       	= gwayBaseErr + 5; // Invalid User Type
+    
+    // ************************
+    // user and subscriber related errors
+    // ************************
+    const short userBaseErr 				= 200;	// magic number of user error range
+    const short MAXIMUM_USER_LIMIT			= userBaseErr + 1; // Max number of users logged in
+    const short INVALID_USER_ID				= userBaseErr + 2; // Invalid user id number
+    const short INVALID_PASSWORD			= userBaseErr + 3; // Incorrect password supplied
+    const short INVALID_LOGIN_DETAILS			= userBaseErr + 4; // Invalid user name or password
+    const short INVALID_LOGIN_NAME			= userBaseErr + 5; // Invalid user login id supplied
+    const short INVALID_VALUE				= userBaseErr + 6; // Cannot recharge by this amount
+    const short LOGIN_IN_USE				= userBaseErr + 7; // This Login name is already being used
+    const short NO_CDRS_AVAILABLE			= userBaseErr + 8; // No CDRs stored for this subscriber
+    const short INCOMPLETE_LOGIN			= userBaseErr + 9; // Missing login or user name
+    const short AGENT_DENIED				= userBaseErr + 10; // Agent does'nt have permission for this operation
+    const short SUBSCRIBER_DENIED			= userBaseErr + 11; // Subscriber does'nt have permission for this operation
+    const short MISSING_ESN				= userBaseErr + 12; // No ESN number supplied
+    const short ESN_IN_USE			       	= userBaseErr + 13; // ESN number already in use by other subscriber
+    const short ESN_IN_USE_BY				= userBaseErr + 14; // ESN number already in use by Subscriber
+    const short RANGE_EXCEEDED				= userBaseErr + 15; // Cannot allocate range this size with the MIN supplied - range is too big
+    const short NO_MIN_AVAILABLE			= userBaseErr + 16; // No MIN matching prefix given
+    const short SUB_NUMB_TOO_SHORT			= userBaseErr + 17; // Subscriber Number too short for CDR file
+    const short SUB_EXISTS_IN_CACHE			= userBaseErr + 18; // Subscriber currently in cache
+    const short SMID_IN_USE				= userBaseErr + 19; // SM number already in use
+    const short VOUCHER_TRACK_NO			= userBaseErr + 20; // Voucher Tracking not allowed
+    const short INVALID_SMID				= userBaseErr + 21; // SM number not valid
+    const short UPDATE_MIN_FAILURE			= userBaseErr + 22; // updateMIN Failed
+    const short INVALID_FF_PHONE_NUMBERS_LENGTH		= userBaseErr + 23; // Invalid length of F&F Phone Numbers String
+    const short INVALID_FF_PHONE_NUMBER_CHARACTERS	= userBaseErr + 24; //Invalid F&F Characters 
+    // New for 4.3.5
+    const short INVALID_LANGUAGE_ID         		= userBaseErr + 25; //Language Id is invalid
+    const short PP_SERVICE_EXISTS        	   	= userBaseErr + 26; //Prepaid Service Exists
+    const short VMAIL_SERVICE_EXISTS        		= userBaseErr + 27; //VoiceMail Service Exists
+    const short MANY_SERVICE_EXISTS         		= userBaseErr + 28; //More than one Service Exists
+    const short INVALID_EXPIRY 				= userBaseErr + 29; 
+    const short INVALID_BALANCE        		     	= userBaseErr + 30; 
+    const short INVALID_SUBCLASS       		     	= userBaseErr + 31;
+    const short INVALID_BLOCKING_TABLE      		= userBaseErr + 32; 
+    const short INVALID_LANGUAGE            		= userBaseErr + 33; 
+    const short INVALID_DIALECT             		= userBaseErr + 34; 
+    const short INVALID_PROFILE             		= userBaseErr + 35; 
+    const short INVALID_PIN_NUMBER          		= userBaseErr + 36; 
+    const short INVALID_PIN_STATUS          		= userBaseErr + 37; 
+    const short INVALID_FF                  		= userBaseErr + 38; 
+    const short INVALID_DEALER              		= userBaseErr + 39; 
+    const short INVALID_PRE_LDC             		= userBaseErr + 40; 
+    const short INVALID_FF_EXPIRY           		= userBaseErr + 41; 
+    const short INVALID_FF_DISCOUNT         		= userBaseErr + 42; 
+    const short INVALID_FF_SUB_LEVEL        		= userBaseErr + 43; 
+    const short INVALID_RECHARGE_DISCOUNT_SUB_LEVEL	= userBaseErr + 44; 
+    const short INVALID_RECHARGE_DISCOUNT   		= userBaseErr + 45; 
+    const short INVALID_SM_ENABLED          		= userBaseErr + 46; 
+    const short INVALID_SM_PACKAGE_ID       		= userBaseErr + 47; 
+    const short INVALID_LIFE_CYCLE_REPEAT_FLAG 		= userBaseErr + 48; 
+    
+    // ************************
+    // Define error codes for Voucher related items
+    // ************************
+    const short vBaseErr 			= 500;	// magic number of voucher error range
+    const short ORDER_NOT_FOUND 		= vBaseErr + 1; // No such Print Order
+    const short ORDER_ITEM_NOT_PRINTED 		= vBaseErr + 2; // Order item must be in a 'printed' state for regeneration
+    const short ORDER_NOT_PRINTED 		= vBaseErr + 3; // Order must be in a 'printed' state for regeneration
+    const short NOT_IN_STOCK 			= vBaseErr + 4; // Can only issue from available stock
+    const short BOX_ROLLBACK_ERROR 		= vBaseErr + 5; // Could not rollback box issue
+    const short BATCH_ROLLBACK_ERROR 		= vBaseErr + 6; // Could not rollback batch issue
+    const short BOX_ISSUE_ERROR 		= vBaseErr + 7; // Could not commit issue of vouchers
+    const short BATCH_ISSUE_ERROR 		= vBaseErr + 8; // Could not commit issue of vouchers
+    const short BATCH_ACTIVATE_ERROR 		= vBaseErr + 9; // Could not commit activation of vouchers
+    const short VOUCHER_ACTIVATE_ERROR 		= vBaseErr + 10; // Could not commit activation of vouchers
+    const short BATCH_NOT_ISSUED 		= vBaseErr + 11; // Can only activate batches issued to you
+    const short BOX_PENDING_TRAN 		= vBaseErr + 12; // Transaction already pending on this box
+    const short BATCH_PENDING_TRAN 		= vBaseErr + 13; // Transaction already pending on this batch
+    const short INVALID_BOX			= vBaseErr + 14; // No Such Box
+    const short INVALID_BATCH 			= vBaseErr + 15; // No Such Batch
+    const short INVALID_VOUCHER 		= vBaseErr + 16; // No Such Voucher
+    const short VOUCHER_LENGTH_ERROR 		= vBaseErr + 17; // Invalid Voucher length 
+    const short VOUCHER_STATE_ERROR 		= vBaseErr + 18; // INCORRECT_VOUCHER_STATE
+    const short VOUCHER_ALREADY_USED 		= vBaseErr + 19; // Cannot re-use a voucher
+    const short VOUCHER_ALREADY_USED_BY 	= vBaseErr + 20; // Voucher already used by Subscriber
+    const short VOUCHER_ISSUE_ERROR         	= vBaseErr + 21; // Could not commit issue of vouchers
+    const short VOUCHER_CANCEL_ERROR        	= vBaseErr + 22; // Could not rollback issue of vouchers
+    const short CANCEL_BATCH_ACTIVATE       	= vBaseErr + 23; // Could not rollback batch activation
+    const short VOUCHER_ACTIVATE_CANCEL     	= vBaseErr + 24; // Could not rollback batch activation
+    const short VOUCHER_NOT_FOUND           	= vBaseErr + 25;// Invalid Voucher not found
+    const short INVALID_VOUCHER_LENGTH      	= vBaseErr + 26;// Invalid Voucher not found
+    const short NO_SUCH_BATCH               	= vBaseErr + 27;// Voucher batch does not exist
+    const short NON_ISSUED_ACTIVATE         	= vBaseErr + 28; // Can only activate an issued batch
+    const short NO_SUCH_BOX                 	= vBaseErr + 29;// Voucher Box does not exist
+    const short INVALID_BATCH_NO            	= vBaseErr + 30;// No Such Batch
+    const short INVALID_BOX_NO              	= vBaseErr + 31;// No Such Box
+    const short VOUCHER_DOES_NOT_EXIST      	= vBaseErr + 32; // Voucher does not exist
+    const short INCORRECT_VOUCHER_STATE     	= vBaseErr + 33; // Voucher is not in an Activated State
+    
+    // ************************
+    // Job Control error codes
+    // ************************
+    const short jobBaseErr 			= 900;
+    const short JOB_ERROR			= jobBaseErr + 1; // a job Operation failed
+    const short JOB_WARNING			= jobBaseErr + 2; // a job Check Job via Job Managment GUI failed
+    const short PROV_UNEXPECTED_PARAM		= jobBaseErr + 3; // unexpected parameter when creating a Sub
+    const short PROV_UNEXPECTED_TYPE		= jobBaseErr + 4; // unexpected parameter type when creating a Sub
+    const short COMMIC_FAILURE			= jobBaseErr + 5; // unexpected exception when trying to communicate with the commic server 
+    const short JOB_WIP				= jobBaseErr + 6; // job still in progress
+    const short INVALID_SERVICE_TYPE		= jobBaseErr + 7; // called getJobListings with invalid service type
+    const short INVALID_JOB_OWNER		= jobBaseErr + 8; // called getJobListings with invalid job owner
+    const short INVALID_NUM_PARAMS		= jobBaseErr + 9; // called any JobMgr i/f method with wrong num params
+    const short INVALID_START_TIME              = jobBaseErr + 10; // called setJobTimes with invalid/bad start time for job
+    const short INVALID_END_TIME                = jobBaseErr + 11; // called setJobTimes with invalid/bad end time for job
+    const short INVALID_JOB_NO                  = jobBaseErr + 12; // called i/f method with illegal job number
+    const short JOB_NOT_FOUND                   = jobBaseErr + 13; // specified non existing job number
+    const short JOB_STATE_PROHIBITS_TIME_CHANGE = jobBaseErr + 14; // cannot setJobTimes with job in current state
+    const short INVALID_OPERATION_FOR_JOB_TYPE  = jobBaseErr + 15; // cannot setJobTimes with job in current state
+
+    // ************************
+    // Payment Engine error codes
+    // ************************
+    const short peBaseErr 			= 1000;	// PaymentEngine Base
+    const short MAX_RECHARGE_EXCEEDED	        = peBaseErr + 1; // Max recharge value exceeded
+    const short INVALID_CREDIT			= peBaseErr + 2; // Incomplete or invalid credit card details
+    const short CARD_EXPIRED			= peBaseErr + 3; // Credit card has expired
+    const short CREDIT_LIMIT_EXCEEDED 		= peBaseErr + 4; // This recharge would exceed the max allowed credit
+    const short BLOCK_RECHARGE			= peBaseErr + 5; // Recharge Blocked to many Vouchers in Queue 
+    const short NO_SHUTDOWN_RECHARGE 		= peBaseErr + 6; // Cannot Recharge a Subscriber in a state fo Shutdown
+    const short AMOUNT_LE_SURCHARGE		= peBaseErr + 7; // Recharge Failed, Ammount lessthan Surcharge
+    const short ACCOUNT_BLOCKED			= peBaseErr + 8; // Subscriber Account Blocked
+    const short INVALID_ACCOUNT_STATUS		= peBaseErr + 9; // Invalid acount Status
+    const short INVALID_SERVICE_STATUS		= peBaseErr + 10; // Invalid service Status
+    const short VOUCHER_QUEUE_ERROR	        = peBaseErr + 11; // Voucher Queue Error
+    
+    // ************************
+    // Provsioning Base error codes
+    // ************************
+    const short  provisioningBaseErr            = 2000;
+    const short  TUPCreateUserBaseError		= provisioningBaseErr + 0;	
+    const short  TUPDeleteUserBaseError		= provisioningBaseErr + 200;	
+    const short  TUPAddPPServiceBaseError	= provisioningBaseErr + 400;	
+    const short  TUPRemovePPServiceBaseError	= provisioningBaseErr + 600;	
+    const short  TUPUpdatePPMINBaseError	= provisioningBaseErr + 800;	
+    
+    // ************************
+    // CCServer Base error codes
+    // ************************
+    const short  ccBaseErr                       = 4000;
+    const short  TCCGetINUserDetailsBaseError	 = ccBaseErr + 0;
+    const short  TCCUpdateINUserDetailsBaseError = ccBaseErr + 200;
+
+    // ************************
+    // PPServer Base error codes
+    // ************************
+    const short  ppBaseErr                              = 6000;
+    const short  TPPGetSubscriberDetailsBaseError	= ppBaseErr + 0;	
+    const short  TPPUpdateSubscriberDetailsBaseError	= ppBaseErr + 200;	
+    const short  TPPGetCallDetailRecordsBaseError	= ppBaseErr + 400;	
+
+    // ************************
+    // Admin Base error codes
+    // ************************
+    const short  adminBaseErr                           = 8000;
+    const short  TPAGetRechargeBonusMapBaseError	= adminBaseErr + 0;	
+    const short  TPAUpdateRechargeBonusBaseError	= adminBaseErr + 200;	
+    const short  TPAInsertRechargeBonusBaseError	= adminBaseErr + 400;	
+    const short  TPADeleteRechargeBonusBaseError	= adminBaseErr + 600;	
+
+    // ************************
+    // vmServer error codes
+    // ************************
+    const short vmBaseErr                                                    = 3000;
+    // General
+    const short TVM_TEMPORARY_ERROR                                          = vmBaseErr + 1;
+    const short TVM_FATAL_ERROR                                              = vmBaseErr + 2;
+    const short TVM_PROGRAMMING_ERROR                                        = vmBaseErr + 3;
+    // Parameters
+    const short TVM_INVALID_NO_PARAMS                                        = vmBaseErr + 50;
+    const short TVM_INVALID_COMMENT                                          = vmBaseErr + 51;
+    const short TVM_INVALID_STATUS                                           = vmBaseErr + 52;       
+    const short TVM_INVALID_EXPIRY_DATE                                      = vmBaseErr + 53;       
+    const short TVM_INVALID_TARIFF_PLAN_ID                                   = vmBaseErr + 54;       
+    const short TVM_INVALID_ORIGIN_ID                                        = vmBaseErr + 55;       
+    const short TVM_INVALID_ORDER_NO                                         = vmBaseErr + 56;       
+    const short TVM_INVALID_FILE_NAME                                        = vmBaseErr + 57;               
+    const short TVM_INVALID_FILE_KEY                                         = vmBaseErr + 58;       
+    const short TVM_INVALID_DUE_DATE                                         = vmBaseErr + 59;       
+    const short TVM_INVALID_ORDERED_DATE                                     = vmBaseErr + 60;       
+    const short TVM_INVALID_ORDERED_BY                                       = vmBaseErr + 61;       
+    const short TVM_INVALID_JOB_WINDOWS_START_TIME                           = vmBaseErr + 62;       
+    const short TVM_INVALID_JOB_WINDOW_END_TIME                              = vmBaseErr + 63;       
+    const short TVM_INVALID_ITEM_NO                                          = vmBaseErr + 64;       
+    const short TVM_INVALID_USER_LOGIN                                       = vmBaseErr + 65;       
+    const short TVM_INVALID_START_DATE                                       = vmBaseErr + 66;       
+    const short TVM_INVALID_DAYS_DECREMENT                                   = vmBaseErr + 67;       
+    const short TVM_INVALID_BOX_BEGIN                                        = vmBaseErr + 68;       
+    const short TVM_INVALID_BOX_END                                          = vmBaseErr + 69;       
+    const short TVM_INVALID_ORDER_NO_BEGIN                                   = vmBaseErr + 70;     
+    const short TVM_INVALID_ORDER_NO_END                                     = vmBaseErr + 71;       
+    const short TVM_INVALID_ISSUED_BY                                        = vmBaseErr + 72;       
+    const short TVM_INVALID_ISSUED_TO                                        = vmBaseErr + 73;       
+    const short TVM_INVALID_ITEM_QTY                                         = vmBaseErr + 74;       
+    const short TVM_INVALID_VOUCHER_TYPE                                     = vmBaseErr + 75;       
+    const short TVM_INVALID_PER_BOX_QTY                                      = vmBaseErr + 76;       
+    const short TVM_INVALID_VOUCHER_NO                                       = vmBaseErr + 77;       
+    const short TVM_INVALID_PER_BATCH_QTY                                    = vmBaseErr + 78;       
+    const short TVM_INVALID_FACE_VALUE                                       = vmBaseErr + 79;       
+    const short TVM_INVALID_CURRENCY_CODE                                    = vmBaseErr + 80;       
+    const short TVM_INVALID_ART_CODE                                         = vmBaseErr + 81;       
+    const short TVM_INVALID_RECEIVED_BY                                      = vmBaseErr + 82;       
+    const short TVM_INVALID_BOX_NO                                           = vmBaseErr + 83;       
+    const short TVM_INVALID_BATCH_NO                                         = vmBaseErr + 84;       
+    const short TVM_INVALID_BATCH_BEGIN                                      = vmBaseErr + 85;       
+    const short TVM_INVALID_BATCH_END                                        = vmBaseErr + 86;       
+    const short TVM_INVALID_EXPIRED_DAYS_SINCE_TODAY                         = vmBaseErr + 87;       
+    const short TVM_INVALID_USED_DAYS_SINCE_TODAY                            = vmBaseErr + 88;
+    const short TVM_INVALID_ACCOUNT_TYPE                                     = vmBaseErr + 89;
+    const short TVM_INVALID_CONTAINER_ID                                     = vmBaseErr + 90;
+    const short TVM_INVALID_PASSWORD                                         = vmBaseErr + 91;
+    const short TVM_INVALID_START_NO                                         = vmBaseErr + 92;
+    const short TVM_INVALID_END_NO                                           = vmBaseErr + 93;
+    const short TVM_INVALID_ITEM_TYPE                                        = vmBaseErr + 94;
+    const short TVM_INVALID_BONUS_FACE_VALUE                                 = vmBaseErr + 95;
+    const short TVM_INVALID_BONUS_EXPIRY_DATE                                = vmBaseErr + 96;
+    const short TVM_INVALID_DATA_FACE_VALUE                                  = vmBaseErr + 97;
+    const short TVM_INVALID_DATA_EXPIRY_DATE                                 = vmBaseErr + 98;
+    const short TVM_INVALID_SM_FACE_VALUE                                    = vmBaseErr + 99;
+    const short TVM_INVALID_SM_EXPIRY_DATE                                   = vmBaseErr + 100;
+    const short TVM_INVALID_JOB_NO                                           = vmBaseErr + 101;
+    // PrintOrders
+    const short TVM_PRINT_ORDER_ERROR                                        = vmBaseErr + 150;
+    const short TVM_PRINT_ORDER_NO_DOES_NOT_EXIST                            = vmBaseErr + 151;      
+    const short TVM_PRINT_ORDER_NO_ALREADY_EXISTS                            = vmBaseErr + 152;      
+    const short TVM_PRINT_ORDER_NO_ALREADY_ACTIVATED                         = vmBaseErr + 153;      
+    const short TVM_PRINT_ORDER_NO_CREATED                                   = vmBaseErr + 154;      
+    const short TVM_PRINT_ORDER_NO_CHANGE_TO_THIS_STATUS_NOT_PERMITTED       = vmBaseErr + 155;      
+    const short TVM_PRINT_ORDER_NO_CANNOT_UPDATE_AFTER_CREATION              = vmBaseErr + 156;      
+    const short TVM_PRINT_ORDER_NO_MORE_ORDER_NOS                            = vmBaseErr + 157;      
+    const short TVM_PRINT_ORDER_NO_MORE_BOX_NOS                              = vmBaseErr + 158;      
+    const short TVM_PRINT_ORDER_NO_MORE_BATCH_NOS                            = vmBaseErr + 159;      
+    const short TVM_PRINT_ORDER_NO_MORE_VOUCHER_NOS                          = vmBaseErr + 160;      
+    const short TVM_PRINT_ORDER_STATUS_PROHIBITS_REGENERATE                  = vmBaseErr + 161;          
+    const short TVM_PRINT_ORDER_STATUS_PROHIBITS_DELETE                      = vmBaseErr + 162;          
+    const short TVM_PRINT_ORDER_ERROR_DURING_DELETE                          = vmBaseErr + 163;          
+    const short TVM_PRINT_ORDER_MISMATCH_OF_JOB_TO_ORDER_IN_DELETE           = vmBaseErr + 164;          
+    const short TVM_PRINT_ORDER_ERROR_CREATING_FILE                          = vmBaseErr + 165;
+    // PrintOrderItem
+    const short TVM_PRINT_ORDER_ITEM_ERROR                                   = vmBaseErr + 200;      
+    const short TVM_PRINT_ORDER_ITEM_NO_DOES_NOT_EXIST                       = vmBaseErr + 201;      
+    const short TVM_PRINT_ORDER_ITEM_NO_ALREADY_EXISTS                       = vmBaseErr + 202;      
+    const short TVM_PRINT_ORDER_ITEM_ALREADY_ACTIVATED                       = vmBaseErr + 203;      
+    const short TVM_PRINT_ORDER_ITEM_CHANGE_TO_THIS_STATUS_NOT_PERMITTED     = vmBaseErr + 204;       
+    const short TVM_PRINT_ORDER_ITEM_ALREADY_PRINTED                         = vmBaseErr + 205;      
+    const short TVM_PRINT_ORDER_ITEM_MISSING                                 = vmBaseErr + 206;      
+    const short TVM_PRINT_ORDER_ITEM_STATUS_PROHIBITS_REGENERATE             = vmBaseErr + 207;      
+    // Voucher Boxes
+    const short TVM_VOUCHER_BOX_ERROR                                        = vmBaseErr + 250;       
+    const short TVM_VOUCHER_BOX_DOES_NOT_EXIST                               = vmBaseErr + 251;      
+    const short TVM_VOUCHER_BOX_ALREADY_EXISTS                               = vmBaseErr + 252;      
+    const short TVM_VOUCHER_BOX_ALREADY_ACTIVATED                            = vmBaseErr + 253;
+    const short TVM_VOUCHER_BOX_CHANGE_TO_THIS_STATUS_NOT_PERMITTED          = vmBaseErr + 254;      
+    // Voucher Batches
+    const short TVM_VOUCHER_BATCH_ERROR                                      = vmBaseErr + 300;      
+    const short TVM_VOUCHER_BATCH_DOES_NOT_EXIST                             = vmBaseErr + 301;      
+    const short TVM_VOUCHER_BATCH_ALREADY_EXISTS                             = vmBaseErr + 302;       
+    const short TVM_VOUCHER_BATCH_ALREADY_ACTIVATED                          = vmBaseErr + 303;      
+    const short TVM_VOUCHER_BATCH_CHANGE_TO_THIS_STATUS_NOT_PERMITTED        = vmBaseErr + 304;      
+    // Vouchers
+    const short TVM_VOUCHER_ERROR                                            = vmBaseErr + 350;     
+    const short TVM_VOUCHER_NO_DOES_NOT_EXIST                                = vmBaseErr + 351;      
+    const short TVM_VOUCHER_NO_ALREADY_EXISTS                                = vmBaseErr + 352;      
+    const short TVM_VOUCHER_NO_ALREADY_ACTIVATED                             = vmBaseErr + 353;      
+    const short TVM_VOUCHER_NO_CHANGE_TO_THIS_STATUS_NOT_PERMITTED           = vmBaseErr + 354;      
+    const short TVM_VOUCHER_NO_CANNOT_UPDATE_UNTIL_ACTIVATED                 = vmBaseErr + 355;      
+    const short TVM_VOUCHER_NO_NUMBERS_REMAINING                             = vmBaseErr + 356;
+    // Stock Details
+    const short TVM_STOCK_DETAILS_ERROR                                      = vmBaseErr + 400;      
+    const short TVM_STOCK_DETAILS_NO_STOCK                                   = vmBaseErr + 401;     
+    // Stock Summary
+    const short TVM_STOCK_SUMMARY_ERROR                                      = vmBaseErr + 450;     
+    const short TVM_STOCK_SUMMARY_NO_STOCK                                   = vmBaseErr + 451;      
+    // Jobs
+    const short TVM_JOB_ERROR                                                = vmBaseErr + 500;      
+    const short TVM_JOB_CREATE_ERROR                                         = vmBaseErr + 501;      
+    const short TVM_JOB_SUBMIT_ERROR                                         = vmBaseErr + 502;      
+    // Archiving
+    const short TVM_ARCHIVE_VOUCHER_ERROR                                    = vmBaseErr + 550;      
+    // Cleanup
+    const short TVM_CLEANUP_VOUCHER_ERROR                                    = vmBaseErr + 600;      
+    // Range Details Error
+    const short TVM_RANGE_DETAILS_ERROR                                      = vmBaseErr + 650;
+
+    // ******************************************************
+    // Fields Widths
+    // ******************************************************
+    
+    const short VERSION_LEN		= 20;
+    
+    // ************************
+    // Subscriber.idl
+    // ************************
+    
+    // (1) Personal Details
+    const short USER_LOGIN		= 35;
+    const short SUBID_LENGTH		= 35;
+    const short LOCATION_LENGTH		= 6;
+    const short ESN_LENGTH 		= 24;
+    const short SMID_LENGTH		= 30;
+    const short DEALER_LENGTH		= 15;
+    const short USER_NAME		= 31;
+    const short CIVIL_ID		= 21;
+    const short SEX			= 13;
+    const short NATIONALITY		= 21;
+    const short ADDRESS1		= 255;
+    const short ADDRESS2		= 255;
+    const short ADDRESS3		= 255;
+    const short ADDRESS4		= 255;
+    const short ENTIRE_ADDRESS		= 1020;
+    const short PHONE			= 31;
+    const short FAX			= 35;
+    const short EMAIL			= 35;
+    const short SERVICE_PWD		= 8;
+    const short WEB_PASSWORD		= 21;
+    const short AUTHORIZATION		= 21;
+    const short SSNO_LENGTH		= 15;
+    const short EARNING_LENGTH		= 20;
+    const short EDUCATION_LENGTH	= 20;
+    const short EMPLOYMENT_LENGTH 	= 15;
+    const short COMMENT_LENGTH		= 255;
+    const short PIN_LENGTH 		= 4;
+    const short MAX_FF_NUMBERS	 	= 255;
+    const short PREF_LDC_LENGTH		= 2;
+    
+    // (2) Account Details;
+    const short ACCOUNT_NUM		= 25;
+    
+    const short MAX_NOTIFICATION_STATUS = 2;
+    const short MAX_VOUCHER_TYPES_QUEUE	= 4;
+    const short MAX_SUB_OPTIONS		= 1023;
+    const short MAX_PIN	    		= 4;
+    const short MAX_PINSTATUS		= 3;
+    const short MAX_SERVICE_STATUS	= 8;
+    const short MAX_ACCOUNT_STATUS	= 5;
+    
+    // (3) Credit Details
+    const short CARD_NUM		= 50;
+    const short CREDIT_AUTH		= 25;
+    const short CARD_TYPE		= 10;
+    
+    // (4) History Records
+    const short MAX_CDR_LENGTH		= 500;
+    
+    // (5) Vouchers
+    const short VOUCHER_NUM		= 20;
+    const short VOUCHER_TYPE		= 20;
+    const short SERIAL_NUM		= 20;
+    const short CURRENCY_CODE		= 20;
+    const short OPERATION		= 50;
+    const short TARIFFDESC		= 32;
+    const short CALLING_PARTY_LENGTH	= 10;
+    
+    // (6) Profiles
+    const short PROFILE_NAME 	= 30;
+    const short FEATURE_NAME 	= 30;
+    const short FEATURE_VAL 	= 50;
+    const short DISCOUNT_NAME 	= 30;
+    
+    // Server/Service Config
+    const short SVC_NAME_LENGTH     = 30;
+    const short SVC_VALUE_LENGTH    = 50;
+    const short SVC_DESC_LENGTH     = 255;
+    const short SRV_PROCESS_LENGTH  = 40;
+    const short SRV_NAME_LENGTH     = 20;
+    const short SRV_VALUE_LENGTH    = 50;
+    const short SRV_DESC_LENGTH     = 255;
+    
+    // Job Mgr Stuff
+    const short PARAMLENGTH         = 255;
+    
+    // Common Stuff
+    
+    const short MAX_TINYINT 	= 255;
+    const long  MAX_INT        	= 2147483647;
+    const short MAX_PERCENTAGE	= 100;
+
+#ifdef _TINC_MODULE
+};
+#endif //_TINC_MODULE
+
+#endif
+    
+/*
+  $Log: TINCdefs.idl,v $
+  Revision 1.39  2004/08/24 14:30:21  attila
+  Added suppor for LocalCollectCall in Sub_options by increasing MAX_SUB_OPTIONS value
+
+  Revision 1.38  2004/08/19 14:37:20  liam
+  new error code INVALID_OPERATION_FOR_JOB_TYPE
+
+  Revision 1.37  2004/08/17 11:33:17  liam
+  new setJobTimes method
+
+  Revision 1.36  2004/07/22 11:45:41  liam
+  getJobListings work
+
+  Revision 1.35  2004/07/19 10:15:11  liam
+  new codes
+
+  Revision 1.34  2004/07/15 15:29:42  liam
+  more error codes
+
+  Revision 1.33  2004/07/14 13:55:08  liam
+  added regenerate and delete errors
+
+  Revision 1.32  2004/07/05 12:44:59  ronan
+  Adding more return codes
+
+  Revision 1.31  2004/07/02 13:17:09  attila
+  DLY Added Calling party Length
+
+  Revision 1.30  2004/07/01 16:33:49  ronan
+  Adding new voucherno error
+
+  Revision 1.29  2004/07/01 16:31:32  ronan
+  Adding in new error codes
+
+  Revision 1.28  2004/06/30 16:26:24  attila
+  Declan Booked this in, I am misssing the LOCATION_LENGTH from the RechargeGateway
+
+  Revision 1.27  2004/06/29 09:19:10  ronan
+  *** empty log message ***
+
+  Revision 1.26  2004/06/29 09:17:28  ronan
+  Adding TVM_INVALID_START_NO and END_NO
+  Moving Errors up so there is more space for new ones if they change
+
+  Revision 1.25  2004/06/28 16:06:57  ronan
+  Adding INVALID_ITEM_TYPE
+
+  Revision 1.24  2004/06/28 15:50:14  ronan
+  Adding in GetRangeDetails Error
+
+  Revision 1.23  2004/06/21 13:03:52  ronan
+  Adding TVM_INVALID_PASSWORD
+
+  Revision 1.22  2004/06/21 11:59:02  ronan
+  Adding Invalid Container Id return Code
+
+  Revision 1.21  2004/06/17 16:26:54  liam
+  added new error code
+
+  Revision 1.20  2004/06/15 14:40:31  ronan
+  Adding Invalid Account Type Error
+
+  Revision 1.19  2004/06/08 17:02:43  ronan
+  Adding in REturn Codes for the VoucherManagement system
+
+  Revision 1.18  2004/03/11 12:25:34  gerardon
+  Another stupid typo
+
+  Revision 1.17  2004/03/11 12:21:27  gerardon
+  Typo
+
+  Revision 1.16  2004/03/11 12:16:07  gerardon
+  Added AdminServer Base Error Codes
+
+  Revision 1.15  2004/03/08 14:53:43  declan
+  Added inform Servers
+
+  Revision 1.14  2004/03/05 12:11:50  attila
+  Changed the CORBA DateTime to TDateTime to avoid nameclash with IDL GW DateTime
+
+  Revision 1.13  2004/03/01 16:24:40  declan
+  gg
+
+  Revision 1.12  2004/02/21 17:15:26  declan
+  gg
+
+  Revision 1.11  2004/02/20 16:14:44  attila
+  Changed MAX_SERVICESTATUS to 8 for PP4.35
+
+  Revision 1.10  2004/01/20 12:36:38  declan
+  Before Relase of Phase1 Sol Port
+
+  Revision 1.9  2003/12/17 18:43:03  declan
+  Working on TINC
+
+  Revision 1.8  2003/12/16 18:26:59  declan
+  After included TINC package
+
+  Revision 1.7  2003/09/08 16:47:52  declan
+  Fixed some reconnection (to rechargeGateway) logic.
+
+  Revision 1.6  2003/08/20 11:37:42  declan
+  Added some missing voucher related error codes.
+
+  Revision 1.5  2003/07/31 14:37:30  declan
+  Before First real build to test
+  A Lot of debugging removed
+  Fraud coundters working
+  Remove Vouchers working
+
+  Revision 1.4  2003/07/16 14:22:26  fergus
+  Changed ESN_LENGTH from 5 to 24.
+  Changed SERVICE_PWD from 7 to 8.
+
+  Revision 1.3  2003/06/17 17:15:47  attila
+  Merged with Declan's code base.
+
+  Revision 1.2  2003/02/14 15:28:53  attila
+  Worked on threading support ... though not quite there yet :0((
+
+  Revision 1.1  2003/02/07 10:25:26  attila
+  Combined global IDL constant defs in TINCdefs.idl
+
+*/

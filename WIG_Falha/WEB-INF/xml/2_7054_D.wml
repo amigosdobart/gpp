@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE wml PUBLIC "-//SmartTrust//DTD WIG-WML 4.0//EN"
+"http://www.smarttrust.com/DTD/WIG-WML4.0.dtd">
+
+<wml>
+  <card>
+    <p>
+        <setvar name="m1" value="A Brasil Telecom quer ouvir sua opiniao. Sao apenas 5 perguntas. Clique ok e participe gratuitamente" />
+        <plugin name="DITR" destvar="t" params="\x04$(m1)" />
+    Qual a sua faixa etaria? Clique ok para responder
+    <select name="r1">
+        <option value="1">Ate 18 anos</option>
+        <option value="2">19 a 40 anos</option>
+        <option value="3">41 ou mais</option>
+    </select>
+    Voce alguma vez recebeu informativos sobre produtos e servicos por torpedo (sms)? Clique ok para responder
+    <select name="r2">
+        <option value="S">Sim</option>
+        <option value="N">Nao</option>
+    </select>
+    Voce considera positivo receber torpedo-informativo de produtos e servicos? Clique ok para responder
+    <select name="r3">
+        <option onpick="#b" value="N">Nao</option>
+        <option onpick="#c" value="S">Sim</option>
+        <option onpick="#c" value="I">Indiferente</option>
+    </select>
+    </p>
+</card>
+ 
+<card id="b">
+    <p>
+        <do type="accept">
+            <go enterwait="false" href="!DWIG!/mobileMkt?qt=A&amp;r1=$(r1)&amp;r2=$(r2)&amp;r3=$(r3)"/>
+        </do>
+        FIM. <br/>
+        A Brasil Telecom agradece a sua participacao.
+    </p>
+</card>
+
+<card id="c">
+    <p>
+        <do type="accept">
+            <go href="!DWIG!/mobileMkt?qt=A&amp;r1=$(r1)&amp;r2=$(r2)&amp;r3=$(r3)"/>
+        </do>
+    </p>
+</card>
+
+</wml>

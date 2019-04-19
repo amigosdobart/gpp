@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Denys Oliveira (None) -->
+<GPPConsultaPreRecarga>
+	<cpfCnpj>1234512345</cpfCnpj>
+	<categoria>1</categoria>
+	<hashCc>6789067890</hashCc>
+	<sistemaOrigem>CLY</sistemaOrigem>
+	<recargas>
+		<recarga>
+			<msisdn>551188888888</msisdn>
+			<valor>10</valor>
+		</recarga>
+		<recarga>
+			<msisdn>551133333333</msisdn>
+			<valor>10</valor>
+		</recarga>
+	</recargas>
+</GPPConsultaPreRecarga>
